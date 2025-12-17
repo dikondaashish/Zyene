@@ -194,16 +194,17 @@ export default function Home() {
         className="lg:tw-px-10 tw-max-w-[100vw] tw-max-w-lg:tw-mr-auto max-lg:tw-top-0 tw-fixed tw-top-4 lg:tw-left-1/2 lg:tw--translate-x-1/2 tw-z-20 tw-flex tw-h-[60px] tw-w-full 
                 tw-text-gray-700 tw-bg-white dark:tw-text-gray-200 dark:tw-bg-[#17181b] tw-px-[2%] tw-rounded-md lg:tw-max-w-5xl tw-shadow-md dark:tw-shadow-gray-700
                 lg:tw-justify-around lg:!tw-backdrop-blur-lg lg:tw-opacity-[0.99]"
+        style={{ height: 72, maxWidth: 1280 }}
       >
-        <Link className="tw-flex tw-p-[4px] tw-gap-2 tw-place-items-center" href="#">
-          <div className="tw-h-[30px] tw-max-w-[100px]">
+        <Link className="tw-flex tw-p-[4px] tw-gap-1 tw-place-items-center" href="#">
+          <div className="tw-h-[30px] tw-max-w-[100px]" style={{ height: 36, width: 120 }}>
             <img
               src="/logo/logo.png"
               alt="logo"
               className="tw-object-contain tw-h-full tw-w-full dark:tw-invert"
             />
           </div>
-          <span className="tw-text-base tw-font-medium">Zyene™</span>
+          <span className="tw-font-semibold" style={{ fontSize: 28, lineHeight: "28px" }}>Zyene™</span>
         </Link>
         <div
           className={`collapsible-header animated-collapse max-lg:tw-shadow-md ${headerOpenClass}`}
@@ -298,6 +299,7 @@ export default function Home() {
               </nav>
             </div>
             <Link className="header-links" href="#pricing"> Contact Us </Link>
+            <Link className="header-links" href="#blogs"> Blogs </Link>
           </nav>
           <div
             className="lg:tw-mx-4 tw-flex tw-place-items-center tw-gap-[20px] tw-text-base max-md:tw-w-full 
