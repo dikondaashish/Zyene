@@ -7,7 +7,8 @@ export default function Footer() {
         <div className="tw-flex tw-h-full tw-w-[250px] tw-flex-col tw-place-items-center tw-gap-6 max-md:tw-w-full">
           <Link href="#" className="tw-w-full tw-place-items-center tw-flex tw-flex-col tw-gap-6">
             <img src="/logo/logo.png" alt="logo" className="tw-max-w-[120px] dark:tw-invert" />
-            <div className="tw-max-w-[120px] tw-text-center tw-text-3xl tw-h-fit">PIXA</div>
+            <div className="tw-max-w-[120px] tw-text-center tw-text-3xl tw-h-fit">Zyene™</div>
+          <span className="tw-text-gray-500 dark:tw-text-gray-400" style={{ fontSize: 9, lineHeight: "10px", marginTop: 2, whiteSpace: "nowrap" }}>Growth Powered by Intelligence</span>
           </Link>
           <div className="tw-flex tw-gap-4 tw-text-lg">
             <Link href="#" aria-label="Github"><i className="bi bi-github"></i></Link>

@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect } from "react";
-import Hero from "@/components/Hero";
-import TrustedBrands from "@/components/sections/TrustedBrands";
-import APISection from "@/components/sections/APISection";
-import Features from "@/components/sections/Features";
-import PrebuiltTools from "@/components/sections/PrebuiltTools";
-import AdditionalFeatures from "@/components/sections/AdditionalFeatures";
-import OneSubscription from "@/components/sections/OneSubscription";
-import Testimonials from "@/components/sections/Testimonials";
-import Pricing from "@/components/sections/Pricing";
-import Articles from "@/components/sections/Articles";
-import FAQ from "@/components/sections/FAQ";
-import CTA from "@/components/sections/CTA";
-import Newsletter from "@/components/sections/Newsletter";
+import MainHero from "@/components/home/MainHero";
+import InteractiveWidget from "@/components/home/InteractiveWidget";
+import TrustedBrands from "@/components/home/TrustedBrands";
+import APISection from "@/components/home/APISection";
+import Features from "@/components/home/Features";
+import PrebuiltTools from "@/components/home/PrebuiltTools";
+import AdditionalFeatures from "@/components/home/AdditionalFeatures";
+import OneSubscription from "@/components/home/OneSubscription";
+import Testimonials from "@/components/home/Testimonials";
+import Pricing from "@/components/home/Pricing";
+import Articles from "@/components/home/Articles";
+import FAQ from "@/components/home/FAQ";
+import CTA from "@/components/home/CTA";
+import Newsletter from "@/components/home/Newsletter";
 
 export default function Home() {
   useEffect(() => {
@@ -104,7 +105,8 @@ export default function Home() {
 
   return (
     <>
-      <Hero />
+      <MainHero />
+      <InteractiveWidget />
       <TrustedBrands />
       <APISection />
       <Features />
