@@ -21,10 +21,10 @@ export function HeroPill({
   const content = (
     <>
       <div
-        className="tw-w-fit tw-rounded-full tw-px-2 tw-py-0.5 tw-text-xs tw-font-medium sm:tw-text-sm tw-text-center"
-        style={{ backgroundColor: "#e0e7ff", color: "#6366f1" }}
+        className="tw-w-fit tw-rounded-full tw-px-3 tw-py-1 tw-text-xs tw-font-medium sm:tw-text-sm tw-text-center"
+        style={{ backgroundColor: "#6366f1", color: "#ffffff" }}
       >
-        {announcement}
+        <span className="tw-pr-1">{announcement}</span>
       </div>
       <p 
         className="tw-text-xs tw-font-medium sm:tw-text-sm"
@@ -35,7 +35,7 @@ export function HeroPill({
       <svg
         width="12"
         height="12"
-        className="tw-ml-1"
+        className="tw-ml-2 tw-mr-1"
         viewBox="0 0 12 12"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -49,14 +49,14 @@ export function HeroPill({
   );
 
   const pillBaseClasses = cn(
-    "tw-flex tw-w-auto tw-items-center tw-space-x-2 tw-rounded-full",
-    "tw-px-2 tw-py-1 tw-whitespace-pre",
+    "tw-flex tw-w-auto tw-items-center tw-space-x-4 tw-rounded-full",
+    "tw-px-1 tw-py-1.5 tw-whitespace-pre",
     className
   );
 
   const pillStyle = {
-    backgroundColor: "rgba(99, 102, 241, 0.2)",
-    boxShadow: "0 0 0 1px #e0e7ff",
+    backgroundColor: "#ffffff",
+    boxShadow: "0 0 0 1px rgba(99, 102, 241, 0.15)",
   };
 
   if (href) {
