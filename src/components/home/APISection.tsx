@@ -15,8 +15,7 @@ export default function APISection() {
           advanced capabilities in summarization, text generation, and Q&amp;A handling. 
         </p>
         <div className="tw-flex tw-mt-8">
-          <Link href="#" className="tw-shadow-md hover:tw-shadow-xl dark:tw-shadow-gray-800 tw-transition-all tw-duration-300 
-                          tw-border-[1px] tw-p-3 tw-px-4 tw-border-black dark:tw-border-white tw-rounded-md">
+          <Link href="#" className="tw-shadow-md hover:tw-shadow-xl dark:tw-shadow-gray-800 tw-transition-all tw-duration-300 tw-border-[1px] tw-p-3 tw-px-4 tw-border-black dark:tw-border-white tw-rounded-md">
             Check Pixa APIs
           </Link>
         </div>

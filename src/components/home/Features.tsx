@@ -13,8 +13,7 @@ export default function Features() {
           <div className="max-xl:tw-flex max-xl:tw-flex-col tw-place-items-center tw-grid tw-grid-cols-3 tw-gap-8 tw-place-content-center tw-auto-rows-auto">
             {/* Feature Card 1 */}
             <div className="tw-w-[350px] tw-h-[540px] tw-flex max-md:tw-w-full">
-              <Link href="#" className="tw-relative tw-p-10 tw-transition-all tw-duration-300 tw-group/card tw-gap-5 tw-flex 
-                  tw-flex-col tw-w-full tw-h-full tw-bg-[#f6f7fb] dark:tw-bg-[#171717] tw-rounded-3xl hover:tw-scale-[1.02]">
+              <Link href="#" className="tw-relative tw-p-10 tw-transition-all tw-duration-300 tw-group/card tw-gap-5 tw-flex tw-flex-col tw-w-full tw-h-full tw-bg-[#f6f7fb] dark:tw-bg-[#171717] tw-rounded-3xl hover:tw-scale-[1.02]">
                 <div className="tw-overflow-hidden tw-w-full tw-min-h-[180px] tw-h-[180px]">
                   <img src="/images/home/api.png" className="tw-w-full tw-object-contain tw-h-auto" alt="unified interface" />
                 </div>
@@ -31,8 +30,7 @@ export default function Features() {
 
             {/* Feature Card 2 */}
             <div className="tw-w-[350px] tw-h-[540px] tw-flex max-md:tw-w-full">
-              <Link href="#" className="tw-relative tw-p-10 tw-transition-all tw-duration-300 tw-group/card tw-gap-5 tw-flex 
-                  tw-flex-col tw-w-full tw-h-full tw-bg-[#f6f7fb] dark:tw-bg-[#171717] tw-rounded-3xl hover:tw-scale-[1.02]">
+              <Link href="#" className="tw-relative tw-p-10 tw-transition-all tw-duration-300 tw-group/card tw-gap-5 tw-flex tw-flex-col tw-w-full tw-h-full tw-bg-[#f6f7fb] dark:tw-bg-[#171717] tw-rounded-3xl hover:tw-scale-[1.02]">
                 <div className="tw-w-full tw-min-h-[180px] tw-h-[180px] tw-overflow-hidden">
                   <img src="/images/home/api.png" alt="API" className="tw-w-full tw-h-auto tw-object-contain" />
                 </div>
@@ -49,8 +47,7 @@ export default function Features() {
 
             {/* Feature Card 3 */}
             <div className="tw-w-[350px] tw-h-[540px] tw-flex max-md:tw-w-full">
-              <Link href="#" className="tw-relative tw-p-10 tw-transition-all tw-duration-300 tw-group/card tw-gap-5 tw-flex 
-                  tw-flex-col tw-w-full tw-h-full tw-bg-[#f6f7fb] dark:tw-bg-[#171717] tw-rounded-3xl hover:tw-scale-[1.02]">
+              <Link href="#" className="tw-relative tw-p-10 tw-transition-all tw-duration-300 tw-group/card tw-gap-5 tw-flex tw-flex-col tw-w-full tw-h-full tw-bg-[#f6f7fb] dark:tw-bg-[#171717] tw-rounded-3xl hover:tw-scale-[1.02]">
                 <div className="tw-w-full tw-flex tw-place-contet-center tw-min-h-[180px] tw-h-[180px] tw-rounded-xl tw-overflow-hidden">
                   <img src="/images/home/integrations1.png" className="tw-w-full tw-h-auto tw-object-contain" alt="Prebuilt integrations" />
                 </div>
@@ -68,8 +65,7 @@ export default function Features() {
           
           {/* AI Models Card */}
           <div className="tw-w-full md:tw-h-[350px] max-md:tw-min-h-[350px] tw-flex">
-            <Link href="#" className="tw-relative tw-p-10 tw-transition-all tw-duration-300 tw-group/card tw-gap-5 tw-flex 
-                max-md:tw-flex-col tw-w-full tw-h-full tw-bg-[#f6f7fb] dark:tw-bg-[#171717] tw-rounded-3xl hover:tw-scale-[1.02]">
+            <Link href="#" className="tw-relative tw-p-10 tw-transition-all tw-duration-300 tw-group/card tw-gap-5 tw-flex max-md:tw-flex-col tw-w-full tw-h-full tw-bg-[#f6f7fb] dark:tw-bg-[#171717] tw-rounded-3xl hover:tw-scale-[1.02]">
               <div className="tw-text-6xl tw-overflow-hidden tw-rounded-xl tw-w-full tw-h-full max-md:tw-h-[180px]">
                 <img src="/images/home/ai-models.png" className="tw-w-full tw-object-contain tw-h-full" alt="AI models" />
               </div>

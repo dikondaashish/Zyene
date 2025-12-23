@@ -132,9 +132,7 @@ export default function Header() {
 
   return (
     <header
-      className="lg:tw-px-10 tw-max-w-[100vw] tw-max-w-lg:tw-mr-auto max-lg:tw-top-0 tw-fixed tw-top-4 lg:tw-left-1/2 lg:tw--translate-x-1/2 tw-z-20 tw-flex tw-h-[60px] tw-w-full 
-              tw-text-gray-700 tw-bg-white dark:tw-text-gray-200 dark:tw-bg-[#17181b] tw-px-[2%] tw-rounded-md lg:tw-max-w-5xl tw-shadow-md dark:tw-shadow-gray-700
-              lg:tw-justify-around lg:!tw-backdrop-blur-lg lg:tw-opacity-[0.99]"
+      className="lg:tw-px-10 tw-max-w-[100vw] tw-max-w-lg:tw-mr-auto max-lg:tw-top-0 tw-fixed tw-top-4 lg:tw-left-1/2 lg:tw--translate-x-1/2 tw-z-20 tw-flex tw-h-[60px] tw-w-full tw-text-gray-700 tw-bg-white dark:tw-text-gray-200 dark:tw-bg-[#17181b] tw-px-[2%] tw-rounded-md lg:tw-max-w-5xl tw-shadow-md dark:tw-shadow-gray-700 lg:tw-justify-around lg:!tw-backdrop-blur-lg lg:tw-opacity-[0.99]"
       style={{ height: 72, maxWidth: 1280 }}
     >
       <Link className="tw-flex tw-p-[12px] tw-place-items-center lg:tw-ml-5 lg:tw-mr-4" style={{ gap: 8 }} href="#">
@@ -155,8 +153,7 @@ export default function Header() {
         id="collapsed-header-items"
       >
         <nav
-          className="tw-relative tw-flex tw-h-full max-lg:tw-h-max tw-w-max tw-gap-3 tw-text-base max-lg:tw-mt-[30px] max-lg:tw-flex-col 
-                          max-lg:tw-gap-5 lg:tw-mx-auto tw-place-items-center"
+          className="tw-relative tw-flex tw-h-full max-lg:tw-h-max tw-w-max tw-gap-3 tw-text-base max-lg:tw-mt-[30px] max-lg:tw-flex-col max-lg:tw-gap-5 lg:tw-mx-auto tw-place-items-center"
         >
           <Link className="header-links" href="#" style={{ whiteSpace: "nowrap" }}> Home </Link>
 
@@ -172,11 +169,7 @@ export default function Header() {
             <nav 
               id="nav-dropdown-list-0"
               data-open="false"
-              className={`${dropdownOpenClass} lg:tw-fixed tw-flex lg:tw-top-[80px] lg:tw-left-1/2 lg:tw--translate-x-1/2 
-                      tw-w-[90%] tw-rounded-lg
-                      tw-overflow-hidden
-                       tw-bg-white dark:tw-bg-[#17181B] tw-duration-300 
-                       tw-transition-opacity tw-transition-height tw-shadow-lg tw-p-4`}
+              className={`${dropdownOpenClass} lg:tw-fixed tw-flex lg:tw-top-[80px] lg:tw-left-1/2 lg:tw--translate-x-1/2 tw-w-[90%] tw-rounded-lg tw-overflow-hidden tw-bg-white dark:tw-bg-[#17181B] tw-duration-300 tw-transition-opacity tw-transition-height tw-shadow-lg tw-p-4`}
             >
               <div className="tw-grid max-xl:tw-flex max-xl:tw-flex-col tw-justify-around tw-grid-cols-2 tw-w-full">
                 <Link className="header-links tw-flex tw-text-left tw-gap-4 !tw-p-4" href="#">
@@ -282,11 +275,7 @@ export default function Header() {
             <nav 
               id="nav-dropdown-list-2"
               data-open="false"
-              className={`${dropdownOpenClass} lg:tw-fixed tw-flex lg:tw-top-[80px] lg:tw-left-1/2 lg:tw--translate-x-1/2 
-                      tw-w-[90%] tw-rounded-lg
-                      tw-overflow-hidden
-                       tw-bg-white dark:tw-bg-[#17181B] tw-duration-300 
-                       tw-transition-opacity tw-transition-height tw-shadow-lg tw-p-4`}
+              className={`${dropdownOpenClass} lg:tw-fixed tw-flex lg:tw-top-[80px] lg:tw-left-1/2 lg:tw--translate-x-1/2 tw-w-[90%] tw-rounded-lg tw-overflow-hidden tw-bg-white dark:tw-bg-[#17181B] tw-duration-300 tw-transition-opacity tw-transition-height tw-shadow-lg tw-p-4`}
               style={{ maxWidth: 760 }}
             >
               <div className="tw-grid max-xl:tw-flex max-xl:tw-flex-col tw-grid-cols-2 tw-w-full">
@@ -347,11 +336,7 @@ export default function Header() {
             <nav 
               id="nav-dropdown-list-1"
               data-open="false"
-              className={`${dropdownOpenClass} lg:tw-fixed tw-flex lg:tw-top-[80px] lg:tw-left-1/2 lg:tw--translate-x-1/2 
-                      tw-w-[90%] tw-rounded-lg
-                      tw-overflow-hidden
-                       tw-bg-white dark:tw-bg-[#17181B] tw-duration-300 
-                       tw-transition-opacity tw-transition-height tw-shadow-lg tw-p-4`}
+              className={`${dropdownOpenClass} lg:tw-fixed tw-flex lg:tw-top-[80px] lg:tw-left-1/2 lg:tw--translate-x-1/2 tw-w-[90%] tw-rounded-lg tw-overflow-hidden tw-bg-white dark:tw-bg-[#17181B] tw-duration-300 tw-transition-opacity tw-transition-height tw-shadow-lg tw-p-4`}
             >
               <div className="tw-grid max-xl:tw-flex max-xl:tw-flex-col tw-justify-around tw-grid-cols-2 tw-w-full">
                 <Link className="header-links tw-flex tw-text-left tw-gap-4 !tw-p-4" href="/blog">
@@ -432,8 +417,7 @@ export default function Header() {
           <Link className="header-links" href="#pricing" style={{ whiteSpace: "nowrap" }}> Contact Us </Link>
         </nav>
         <div
-          className="lg:tw-mx-4 tw-flex tw-place-items-center tw-gap-[20px] tw-text-base max-md:tw-w-full 
-                          max-md:tw-flex-col max-md:tw-place-items-start"
+          className="lg:tw-mx-4 tw-flex tw-place-items-center tw-gap-[20px] tw-text-base max-md:tw-w-full max-md:tw-flex-col max-md:tw-place-items-start"
         >
           <button 
             type="button" 
@@ -445,8 +429,7 @@ export default function Header() {
           </button>
           <Link
             href="#playground"
-            className="btn tw-flex tw-gap-3 tw-px-3 tw-py-2 tw-transition-transform 
-                          tw-duration-[0.3s] hover:tw-translate-x-2"
+            className="btn tw-flex tw-gap-3 tw-px-3 tw-py-2 tw-transition-transform tw-duration-[0.3s] hover:tw-translate-x-2"
           >
             <span>Get A Proposal</span>
             <i className="bi bi-arrow-right"></i>
