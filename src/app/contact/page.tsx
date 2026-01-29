@@ -6,6 +6,7 @@ import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Mail, MapPin, Phone, Facebook, Linkedin, Instagram, Send, Calendar, Clock } from "lucide-react";
+import { submitContactForm } from "./actions";
 
 const socialLinks = [
   { href: "https://facebook.com", icon: Facebook, label: "Facebook" },
@@ -27,13 +28,23 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    console.log("Contact form submitted:", formData);
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: "", email: "", company: "", message: "" });
+    try {
+      const result = await submitContactForm(formData);
+      
+      if (result.success) {
+        setIsSubmitted(true);
+        setFormData({ name: "", email: "", company: "", message: "" });
+        console.log("Contact form submitted successfully");
+      } else {
+        console.error("Submission failed:", result.message);
+        alert(result.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An unexpected error occurred. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
