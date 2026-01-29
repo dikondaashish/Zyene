@@ -1,4 +1,4 @@
-import Link from "next/link";
+
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Mail, MapPin, Facebook, Linkedin, Instagram, ArrowRight } from "lucide-react";
@@ -86,12 +86,16 @@ export function Contact() {
             Schedule a free consultation and discover how Zyene can transform 
             your digital presence and drive measurable results.
           </p>
-          <Link href="/contact#schedule">
+          <a 
+            href="https://calendly.com/zyene-support/30min" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
             <Button variant="primary" size="lg" className="w-full sm:w-auto">
               Schedule a Meeting
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
     </Section>

@@ -5,8 +5,7 @@ import { Metadata } from "next";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Mail, MapPin, Phone, Facebook, Linkedin, Instagram, Send, Calendar, Clock } from "lucide-react";
-import { submitContactForm } from "./actions";
+import { Mail, MapPin, Phone, Facebook, Linkedin, Instagram, Send, Calendar, Clock, ArrowRight } from "lucide-react";
 
 const socialLinks = [
   { href: "https://facebook.com", icon: Facebook, label: "Facebook" },
@@ -29,7 +28,23 @@ export default function ContactPage() {
     setIsSubmitting(true);
     
     try {
-      const result = await submitContactForm(formData);
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          message: formData.message,
+          botcheck: false, 
+        }),
+      });
+
+      const result = await response.json();
       
       if (result.success) {
         setIsSubmitted(true);
@@ -271,7 +286,22 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <ScheduleForm />
+            <div className="text-center py-8">
+              <p className="text-muted-foreground mb-8">
+                Select a time that works best for you on our calendar.
+              </p>
+              <a 
+                href="https://calendly.com/zyene-support/30min" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-block"
+              >
+                <Button variant="primary" size="lg">
+                  Book Appointment
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </a>
+            </div>
           </Card>
         </div>
       </Section>
@@ -279,120 +309,4 @@ export default function ContactPage() {
   );
 }
 
-function ScheduleForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    console.log("Schedule form submitted:", formData);
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  if (isSubmitted) {
-    return (
-      <div className="text-center py-8">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-          <Send className="h-8 w-8 text-foreground" />
-        </div>
-        <h4 className="text-xl font-semibold text-foreground mb-2">
-          Request Received!
-        </h4>
-        <p className="text-muted-foreground">
-          We&apos;ll reach out within 24 hours to confirm your meeting time.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label
-          htmlFor="schedule-name"
-          className="block text-sm font-medium text-foreground mb-2"
-        >
-          Your Name
-        </label>
-        <input
-          type="text"
-          id="schedule-name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-          placeholder="John Doe"
-        />
-      </div>
-
-      <div>
-        <label
-          htmlFor="schedule-email"
-          className="block text-sm font-medium text-foreground mb-2"
-        >
-          Email Address
-        </label>
-        <input
-          type="email"
-          id="schedule-email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
-          placeholder="john@example.com"
-        />
-      </div>
-
-      <div>
-        <label
-          htmlFor="schedule-message"
-          className="block text-sm font-medium text-foreground mb-2"
-        >
-          What would you like to discuss?
-        </label>
-        <textarea
-          id="schedule-message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          rows={4}
-          className="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
-          placeholder="Tell us about your project or goals..."
-        />
-      </div>
-
-      <Button
-        type="submit"
-        variant="primary"
-        size="lg"
-        className="w-full"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? "Submitting..." : "Request Meeting"}
-        <Send className="ml-2 h-5 w-5" />
-      </Button>
-    </form>
-  );
-}
