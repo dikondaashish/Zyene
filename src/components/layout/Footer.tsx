@@ -18,9 +18,9 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { href: "https://facebook.com", icon: Facebook, label: "Facebook" },
-  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-  { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
+  { href: "https://www.facebook.com/share/17xwRYPuyo/?mibextid=wwXIfr", icon: Facebook, label: "Facebook" },
+  { href: "https://www.linkedin.com/company/zyene/posts/?feedView=all", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://www.instagram.com/zyene_inc/", icon: Instagram, label: "Instagram" },
 ];
 
 export function Footer() {
@@ -92,15 +92,15 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="mailto:hello@zyene.com"
+                  href="mailto:support@zyene.com"
                   className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center space-x-2"
                 >
                   <Mail className="h-4 w-4" />
-                  <span>hello@zyene.com</span>
+                  <span>support@zyene.com</span>
                 </a>
               </li>
               <li className="text-muted-foreground">
-                Based in the United States
+                28 Geary St Ste 650 #1892, San Francisco, CA 94108
               </li>
             </ul>
           </div>

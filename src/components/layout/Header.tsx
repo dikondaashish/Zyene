@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useTheme } from "next-themes";
@@ -9,6 +10,7 @@ import { Button } from "@/components/ui/Button";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/services", label: "Services" },
+  { href: "/#products", label: "Products" },
   { href: "/pricing", label: "Pricing" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -28,7 +30,14 @@ export function Header() {
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-foreground">Zyene</span>
+            <Image 
+              src="/zyene_logo.png" 
+              alt="Zyene" 
+              width={500} 
+              height={50} 
+              priority
+              className="h-12 w-auto object-contain invert dark:invert-0"
+            />
           </Link>
 
           {/* Desktop Navigation */}

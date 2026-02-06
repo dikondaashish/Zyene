@@ -8,9 +8,9 @@ import { Card } from "@/components/ui/Card";
 import { Mail, MapPin, Phone, Facebook, Linkedin, Instagram, Send, Calendar, Clock, ArrowRight } from "lucide-react";
 
 const socialLinks = [
-  { href: "https://facebook.com", icon: Facebook, label: "Facebook" },
-  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-  { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
+  { href: "https://www.facebook.com/share/17xwRYPuyo/?mibextid=wwXIfr", icon: Facebook, label: "Facebook" },
+  { href: "https://www.linkedin.com/company/zyene/posts/?feedView=all", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://www.instagram.com/zyene_inc/", icon: Instagram, label: "Instagram" },
 ];
 
 export default function ContactPage() {
@@ -124,7 +124,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Location</h3>
                   <p className="text-muted-foreground">
-                    United States
+                    28 Geary St Ste 650 #1892, San Francisco, CA 94108
                   </p>
                 </div>
               </div>

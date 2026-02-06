@@ -121,6 +121,23 @@ body {
   animation-delay: 500ms;
 }
 
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 40s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
 /* Gradient text */
 .gradient-text {
   background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);

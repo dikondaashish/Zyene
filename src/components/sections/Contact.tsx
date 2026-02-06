@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/Button";
 import { Mail, MapPin, Facebook, Linkedin, Instagram, ArrowRight } from "lucide-react";
 
 const socialLinks = [
-  { href: "https://facebook.com", icon: Facebook, label: "Facebook" },
-  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-  { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
+  { href: "https://www.facebook.com/share/17xwRYPuyo/?mibextid=wwXIfr", icon: Facebook, label: "Facebook" },
+  { href: "https://www.linkedin.com/company/zyene/posts/?feedView=all", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://www.instagram.com/zyene_inc/", icon: Instagram, label: "Instagram" },
 ];
 
 export function Contact() {
@@ -36,10 +36,10 @@ export function Contact() {
               <div>
                 <h4 className="font-semibold text-foreground mb-1">Email Us</h4>
                 <a
-                  href="mailto:hello@zyene.com"
+                  href="mailto:support@zyene.com"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  hello@zyene.com
+                  support@zyene.com
                 </a>
               </div>
             </div>
@@ -50,8 +50,8 @@ export function Contact() {
               </div>
               <div>
                 <h4 className="font-semibold text-foreground mb-1">Location</h4>
-                <p className="text-muted-foreground">
-                  United States
+                <p className="text-muted-foreground max-w-[250px]">
+                  28 Geary St Ste 650 #1892, San Francisco, CA 94108
                 </p>
               </div>
             </div>
