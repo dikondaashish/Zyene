@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     default: "Zyene | Digital Marketing & AI Solutions",
     template: "%s | Zyene",
   },
+  icons: {
+    icon: "/zyene.png",
+  },
   description:
     "Zyene is a strategy-first digital marketing and AI technology company. We turn strategy into measurable growth with SEO, social media, content marketing, and AI-powered solutions.",
   keywords: [
