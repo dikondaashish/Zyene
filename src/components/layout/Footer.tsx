@@ -7,6 +7,7 @@ const footerLinks = {
     { href: "/services", label: "Services" },
     { href: "/pricing", label: "Pricing" },
     { href: "/contact", label: "Contact" },
+    { href: "https://binary.so/zyene", label: "Careers", external: true },
   ],
   services: [
     { href: "/services#seo", label: "SEO & AEO" },
@@ -58,12 +59,23 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Metadata } from "next";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Mail, MapPin, Phone, Facebook, Linkedin, Instagram, Send, Calendar, Clock, ArrowRight } from "lucide-react";
+import { Mail, MapPin, Facebook, Linkedin, Instagram, Send, Calendar, Clock, ArrowRight } from "lucide-react";
 
 const socialLinks = [
   { href: "https://www.facebook.com/share/17xwRYPuyo/?mibextid=wwXIfr", icon: Facebook, label: "Facebook" },
@@ -22,10 +21,12 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmissionError("");
     
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -49,14 +50,12 @@ export default function ContactPage() {
       if (result.success) {
         setIsSubmitted(true);
         setFormData({ name: "", email: "", company: "", message: "" });
-        console.log("Contact form submitted successfully");
       } else {
-        console.error("Submission failed:", result.message);
-        alert(result.message || "Something went wrong. Please try again.");
+        setSubmissionError(result.message || "Something went wrong. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("An unexpected error occurred. Please try again later.");
+      setSubmissionError("An unexpected error occurred. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -170,6 +169,15 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {submissionError ? (
+                  <p
+                    className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-700"
+                    role="alert"
+                    aria-live="polite"
+                  >
+                    {submissionError}
+                  </p>
+                ) : null}
                 <div>
                   <label
                     htmlFor="name"
@@ -184,6 +192,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    autoComplete="name"
                     className="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
                     placeholder="Your name"
                   />
@@ -203,6 +212,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    autoComplete="email"
                     className="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
                     placeholder="your@email.com"
                   />
@@ -221,6 +231,7 @@ export default function ContactPage() {
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
+                    autoComplete="organization"
                     className="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
                     placeholder="Your company"
                   />
@@ -240,6 +251,7 @@ export default function ContactPage() {
                     onChange={handleChange}
                     required
                     rows={5}
+                    minLength={20}
                     className="w-full px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 resize-none"
                     placeholder="How can we help you?"
                   />
@@ -308,5 +320,4 @@ export default function ContactPage() {
     </>
   );
 }
-
 

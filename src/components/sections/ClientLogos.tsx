@@ -1,6 +1,5 @@
 "use client";
 
-import { Section } from "@/components/ui/Section";
 import { Building2, Globe, Truck, ShoppingCart, Cpu, HeartPulse, Zap, Layers } from "lucide-react";
 
 const clients = [

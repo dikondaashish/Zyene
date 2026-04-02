@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Section, SectionHeader } from "@/components/ui/Section";
+import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/Card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 import { Search, Share2, FileText, Mail, Code, Check, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -170,7 +170,11 @@ export default function ServicesPage() {
                 </div>
               </div>
 
-              <p className="text-lg text-muted-foreground mb-6">
+              <p className="text-lg text-foreground/90 mb-3">
+                {service.description}
+              </p>
+
+              <p className="text-muted-foreground mb-6">
                 {service.details}
               </p>
 
