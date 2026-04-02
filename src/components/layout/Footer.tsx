@@ -7,6 +7,7 @@ const footerLinks = {
     { href: "/services", label: "Services" },
     { href: "/pricing", label: "Pricing" },
     { href: "/contact", label: "Contact" },
+    { href: "https://binary.so/zyene", label: "Careers" },
   ],
   services: [
     { href: "/services#seo", label: "SEO & AEO" },
