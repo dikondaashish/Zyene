@@ -1,7 +1,7 @@
 "use client";
 
 import { Section } from "@/components/ui/Section";
-import { Building2, Globe, Truck, ShoppingCart, Cpu, HeartPulse, Zap, Layers } from "lucide-react";
+import { Building2, Globe, Truck, ShoppingCart, Zap, HeartPulse, Layers } from "lucide-react";
 
 const clients = [
   { name: "Nova Logistics Pvt Ltd", icon: Truck },
@@ -15,12 +15,12 @@ const clients = [
   { name: "MetroLink Dist.", icon: Layers },
   { name: "BlueWave Digital", icon: Zap },
   { name: "Vertex Healthcare", icon: HeartPulse },
-  { name: "GreenField AgroTech", icon: Cpu },
+  { name: "GreenField AgroTech", icon: Zap },
 ];
 
 export function ClientLogos() {
   return (
-    <div className="w-full py-12 bg-background border-y border-border overflow-hidden">
+    <div className="w-full py-20 md:py-28 bg-background border-y border-border overflow-hidden">
       <div className="container mb-8 text-center">
         <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
           Trusted by Innovative Companies

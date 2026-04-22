@@ -1,37 +1,56 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Outfit, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
-const inter = Inter({
-  variable: "--font-inter",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://zyene.com"),
   title: {
-    default: "Zyene | Digital Marketing & AI Solutions",
+    default: "Zyene | AI-Powered Digital Marketing & Business Infrastructure",
     template: "%s | Zyene",
   },
   icons: {
     icon: "/zyene.png",
   },
   description:
-    "Zyene is a strategy-first digital marketing and AI technology company. We turn strategy into measurable growth with SEO, social media, content marketing, and AI-powered solutions.",
+    "Zyene builds the marketing systems, CRM automation, and AI voice tools businesses use to scale. Partner with us to implement measurable growth infrastructure.",
   keywords: [
-    "digital marketing",
+    "digital marketing agency",
     "AI solutions",
-    "SEO",
+    "SEO services",
+    "Zentraic AI voice agent",
+    "Zyene Reviews",
+    "review management platform",
+    "CRM automation",
     "social media marketing",
     "content marketing",
     "email marketing",
     "web development",
-    "AI voice",
-    "marketing agency",
+    "business scaling",
+    "marketing infrastructure",
   ],
   authors: [{ name: "Zyene" }],
   creator: "Zyene",
@@ -40,15 +59,23 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://zyene.com",
     siteName: "Zyene",
-    title: "Zyene | Digital Marketing & AI Solutions",
+    title: "Zyene | AI-Powered Digital Marketing & Business Infrastructure",
     description:
-      "Strategy-first digital marketing and AI technology for measurable growth.",
+      "We build the marketing systems, CRM automation, and AI tools businesses use to scale predictably.",
+    images: [
+      {
+        url: "/zyene_logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Zyene — AI-Powered Business Growth Infrastructure",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Zyene | Digital Marketing & AI Solutions",
+    title: "Zyene | AI-Powered Digital Marketing & Business Infrastructure",
     description:
-      "Strategy-first digital marketing and AI technology for measurable growth.",
+      "We build the marketing systems, CRM automation, and AI tools businesses use to scale predictably.",
   },
   robots: {
     index: true,
@@ -70,7 +97,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${dmSans.variable} ${outfit.variable} ${spaceGrotesk.variable} antialiased`}>
         <ThemeProvider>
           <Header />
           <main className="min-h-screen pt-20">{children}</main>

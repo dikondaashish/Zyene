@@ -7,39 +7,32 @@ import { Quote, ChevronLeft, ChevronRight, User } from "lucide-react";
 
 const testimonials = [
   {
-    quote: "TrackMyOPT helped me stay compliant, track my unemployment days, and even find H-1B sponsor companies. It reduced so much stress during my OPT period.",
-    author: "Rahul S.",
-    role: "STEM OPT Student",
-    company: "",
-    type: "TrackMyOPT Review",
+    quote: "Our rating increased from 4.1 to 4.8 stars in 14 months. The automated response system handles 95% of our reviews, which has directly correlated with a 40% increase in table bookings.",
+    author: "Michael T.",
+    role: "General Manager",
+    company: "Riverfront Dining",
+    type: "Zyene Reviews Case",
   },
   {
-    quote: "The Zyene AI voice agent handles our inbound calls automatically and qualifies leads before they reach our sales team. It saves time and reduces calling costs.",
-    author: "Operations Manager",
-    role: "Operations Manager",
+    quote: "Zentraic AI manages our initial phone screening. It correctly qualifies 85% of inbound leads and updates our CRM automatically, reducing our manual call volume by half.",
+    author: "Sarah J.",
+    role: "Operations Lead",
     company: "TechCo Solutions",
-    type: "Zyene AI Voice Agent Review",
+    type: "Zentraic AI Case",
   },
   {
-    quote: "Their digital marketing team increased our website traffic by over 60% in three months. The SEO and ad campaigns brought us consistent, high-quality leads.",
-    author: "Marketing Head",
-    role: "Marketing Head",
+    quote: "We saw a 3.5x return on ad spend within the first quarter. Their technical SEO implementation increased organic search traffic by 62%, focusing on high-intent service keywords.",
+    author: "David R.",
+    role: "Director of Marketing",
     company: "Nova Retail",
-    type: "Digital Marketing Services",
+    type: "Marketing Performance",
   },
   {
-    quote: "We struggled with online visibility before working with them. Their social media and performance marketing strategy completely transformed our brand reach.",
-    author: "Founder",
+    quote: "The CRM automation system replaced three manual data entry processes. We now have a unified view of our customer lifecycle, saving our sales team approximately 15 hours per week.",
+    author: "Elena M.",
     role: "Founder",
     company: "UrbanEdge Services",
-    type: "Digital Marketing Services",
-  },
-  {
-    quote: "From Google Ads to landing page optimization, their team knows exactly how to generate ROI. Every campaign is data-driven and results-focused.",
-    author: "Director",
-    role: "Director",
-    company: "BrightPath Consulting",
-    type: "Digital Marketing Services",
+    type: "Automation Implementation",
   },
 ];
 
@@ -72,8 +65,8 @@ export function Testimonials() {
   return (
     <Section dark id="testimonials">
       <SectionHeader
-        title="What Clients Say"
-        subtitle="Success stories from businesses and individuals we've helped grow."
+        title="Client Feedback"
+        subtitle="Verified performance data and feedback from our active business partners."
       />
 
       <div className="max-w-4xl mx-auto px-4">
@@ -83,7 +76,7 @@ export function Testimonials() {
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
           {/* Main Card */}
-          <Card className="min-h-[400px] flex flex-col items-center justify-center p-8 md:p-12 text-center transition-all duration-500">
+          <Card className="min-h-96 flex flex-col items-center justify-center p-8 md:p-12 text-center transition-all duration-500">
             <Quote className="h-10 w-10 text-primary/40 mb-8" />
             
             <div className="space-y-8 max-w-2xl mx-auto">

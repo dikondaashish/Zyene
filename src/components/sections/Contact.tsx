@@ -50,7 +50,7 @@ export function Contact() {
               </div>
               <div>
                 <h4 className="font-semibold text-foreground mb-1">Location</h4>
-                <p className="text-muted-foreground max-w-[250px]">
+                <p className="text-muted-foreground max-w-xs">
                   28 Geary St Ste 650 #1892, San Francisco, CA 94108
                 </p>
               </div>
@@ -78,7 +78,7 @@ export function Contact() {
         </div>
 
         {/* CTA card */}
-        <div className="bg-card border border-border rounded-2xl p-8 lg:p-10 flex flex-col justify-center">
+        <div className="bg-card border border-border rounded-2xl p-8 flex flex-col justify-center">
           <h3 className="text-2xl font-bold text-foreground mb-4">
             Ready to Grow?
           </h3>

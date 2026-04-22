@@ -1,5 +1,5 @@
 import { Section, SectionHeader } from "@/components/ui/Section";
-import { Target, LineChart, Cpu } from "lucide-react";
+import { Target, LineChart, Activity } from "lucide-react";
 
 const features = [
   {
@@ -15,7 +15,7 @@ const features = [
       "Every campaign is tracked, analyzed, and optimized to deliver real, quantifiable results.",
   },
   {
-    icon: Cpu,
+    icon: Activity,
     title: "AI-Powered",
     description:
       "We combine human expertise with advanced AI technology to maximize efficiency and impact.",
@@ -26,15 +26,13 @@ export function AboutIntro() {
   return (
     <Section id="about-intro">
       <SectionHeader
-        title="About Zyene"
-        subtitle="We're not just another marketing agency. We're your strategic partner in growth."
+        title="Company"
+        subtitle="Technical implementation of business growth systems."
       />
 
       <div className="max-w-4xl mx-auto text-center mb-16">
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Zyene is a strategy-first marketing partner that focuses on planning, 
-          execution, and measurable outcomes. We combine deep human insight with 
-          advanced AI technology to help businesses of all sizes achieve sustainable growth.
+          Zyene is an AI-powered transformation and SaaS company. We provide the technical infrastructure—from performance marketing and CRM automation to custom AI voice tools—required for scalable business operations.
         </p>
       </div>
 

@@ -2,43 +2,36 @@ import Link from "next/link";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Search, Share2, FileText, Mail, Code, ArrowRight } from "lucide-react";
+import { BarChart3, Laptop, Settings2, MessageSquare, ArrowRight } from "lucide-react";
 
 const services = [
   {
-    icon: Search,
-    title: "SEO + AEO",
+    icon: BarChart3,
+    title: "Digital Marketing",
     description:
-      "Dominate search results with our proven SEO and Answer Engine Optimization strategies. Get found by customers actively searching for your solutions.",
-    href: "/services#seo",
+      "Customer acquisition through paid media, search optimization, and conversion-focused funnels.",
+    href: "/services#digital-marketing",
   },
   {
-    icon: Share2,
-    title: "Social Media Marketing",
+    icon: Laptop,
+    title: "Web & App Development",
     description:
-      "Build a powerful social presence that engages your audience and drives conversions. Strategic content and community management that delivers results.",
-    href: "/services#smm",
-  },
-  {
-    icon: FileText,
-    title: "Content Marketing & Blogging",
-    description:
-      "Compelling content that educates, engages, and converts. From blog posts to whitepapers, we create content that positions you as an industry leader.",
-    href: "/services#content",
-  },
-  {
-    icon: Mail,
-    title: "Email Marketing",
-    description:
-      "Nurture leads and retain customers with strategic email campaigns. Automated sequences and personalized messaging that drives action.",
-    href: "/services#email",
-  },
-  {
-    icon: Code,
-    title: "Web Design & Development",
-    description:
-      "Modern, high-converting websites built for performance. From landing pages to full-scale web applications, we bring your vision to life.",
+      "Technical implementation of high-performance websites and custom software applications.",
     href: "/services#webdev",
+  },
+  {
+    icon: Settings2,
+    title: "CRM & Automation",
+    description:
+      "Standardizing business processes with automated workflows and centralized data management.",
+    href: "/services#crm",
+  },
+  {
+    icon: MessageSquare,
+    title: "AI Solutions",
+    description:
+      "Automated voice agents and chat interfaces designed to handle recurring customer tasks.",
+    href: "/voice",
   },
 ];
 
@@ -46,8 +39,8 @@ export function ServicesOverview() {
   return (
     <Section dark id="services">
       <SectionHeader
-        title="Our Services"
-        subtitle="Comprehensive digital marketing and development solutions tailored to your growth goals."
+        title="Services"
+        subtitle="Technical and marketing infrastructure built for business scaling."
       />
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

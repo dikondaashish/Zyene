@@ -2,134 +2,115 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/Card";
-import { Search, Share2, FileText, Mail, Code, Check, ArrowRight } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/Card";
+import { Search, Code, Check, ArrowRight, Settings, MessageSquare } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Explore Zyene's comprehensive digital marketing and development services including SEO, social media marketing, content marketing, email marketing, and web development.",
+    "Zyene builds the full marketing and technical infrastructure for business scaling — SEO, paid media, web development, CRM automation, and AI voice agents.",
 };
 
 const services = [
   {
-    id: "seo",
+    id: "marketing",
     icon: Search,
-    title: "SEO + AEO",
-    subtitle: "Search Engine & Answer Engine Optimization",
+    title: "Digital Marketing",
+    subtitle: "Lead Generation & Customer Acquisition",
     description:
-      "Dominate search results and AI-powered answer engines with our comprehensive optimization strategies.",
+      "Paid media management, search optimization, and conversion-focused funnels that generate consistent, attributable pipeline.",
     details:
-      "In the age of AI, traditional SEO is not enough. We combine proven search engine optimization techniques with Answer Engine Optimization (AEO) to ensure your brand appears in both traditional search results and AI-generated answers.",
+      "We focus on the technical and strategic layers of customer acquisition. By combining performance marketing with search optimization (SEO) and answer engine optimization (AEO), we build systems that drive consistent lead volume with clear attribution.",
     includes: [
-      "Comprehensive keyword research and strategy",
-      "Technical SEO audit and optimization",
-      "On-page and off-page SEO",
-      "Answer Engine Optimization for AI platforms",
-      "Local SEO optimization",
-      "Monthly performance reporting",
+      "Paid Search & Social Media Management",
+      "Technical SEO & Answer Engine Optimization (AEO)",
+      "Conversion Rate Optimization (CRO)",
+      "Lead Magnet & Funnel Development",
+      "Performance Analytics & Attribution Reporting",
+      "Competitor Gap Analysis",
     ],
     benefits: [
-      "Increased organic visibility",
-      "Higher quality traffic",
-      "Improved user experience",
-      "Long-term sustainable growth",
-    ],
-  },
-  {
-    id: "smm",
-    icon: Share2,
-    title: "Social Media Marketing",
-    subtitle: "Strategic Social Presence",
-    description:
-      "Build a powerful social presence that engages your audience and drives measurable conversions.",
-    details:
-      "Social media is where your audience spends their time. We create strategic, data-driven social media campaigns that build brand awareness, foster community engagement, and convert followers into customers.",
-    includes: [
-      "Social media strategy development",
-      "Content creation and curation",
-      "Community management",
-      "Paid social advertising",
-      "Influencer partnership management",
-      "Analytics and reporting",
-    ],
-    benefits: [
-      "Increased brand awareness",
-      "Higher engagement rates",
-      "Growing follower base",
-      "Improved customer loyalty",
-    ],
-  },
-  {
-    id: "content",
-    icon: FileText,
-    title: "Content Marketing & Blogging",
-    subtitle: "Content That Converts",
-    description:
-      "Compelling content that educates, engages, and positions you as an industry thought leader.",
-    details:
-      "Content is the foundation of digital marketing. We create high-quality, strategic content that attracts your target audience, builds trust, and guides them through the customer journey from awareness to conversion.",
-    includes: [
-      "Content strategy development",
-      "Blog post writing and management",
-      "Long-form content (guides, whitepapers)",
-      "Content calendar planning",
-      "SEO-optimized content",
-      "Content performance analytics",
-    ],
-    benefits: [
-      "Established thought leadership",
-      "Improved SEO rankings",
-      "Higher engagement",
-      "Lead generation support",
-    ],
-  },
-  {
-    id: "email",
-    icon: Mail,
-    title: "Email Marketing",
-    subtitle: "Nurture & Convert",
-    description:
-      "Strategic email campaigns that nurture leads and retain customers with personalized messaging.",
-    details:
-      "Email remains one of the highest ROI marketing channels. We design and execute email marketing strategies that nurture leads, retain existing customers, and drive consistent revenue growth.",
-    includes: [
-      "Email strategy and automation setup",
-      "Newsletter design and management",
-      "Drip campaign creation",
-      "Segmentation and personalization",
-      "A/B testing optimization",
-      "Deliverability management",
-    ],
-    benefits: [
-      "Higher conversion rates",
-      "Improved customer retention",
-      "Automated lead nurturing",
-      "Direct revenue generation",
+      "Predictable, scalable customer acquisition",
+      "Clear ROI and cost-per-lead visibility",
+      "Growing organic search share over time",
+      "Data-backed budget allocation decisions",
     ],
   },
   {
     id: "webdev",
     icon: Code,
-    title: "Web Design & Development",
-    subtitle: "Modern, High-Converting Websites",
+    title: "Web & App Development",
+    subtitle: "Technical Infrastructure",
     description:
-      "Beautiful, performant websites built to convert visitors into customers.",
+      "High-performance websites and custom software built for speed, reliability, and scale.",
     details:
-      "Your website is often the first impression customers have of your brand. We design and develop modern, responsive websites that look stunning, load fast, and are optimized for conversion.",
+      "Our development team builds the technical foundation for your digital operations. We focus on speed, security, and maintainability — ensuring your platform handles high traffic and complex user interactions without breaking.",
     includes: [
-      "Custom website design",
-      "Responsive development",
-      "CMS integration",
-      "Performance optimization",
-      "SEO-friendly architecture",
-      "Ongoing maintenance and support",
+      "Custom React & Next.js Development",
+      "Full-Stack Application Architecture",
+      "E-commerce Platform Implementation",
+      "API Integration & Development",
+      "Performance & Core Web Vitals Optimization",
+      "Security Hardening & Ongoing Maintenance",
     ],
     benefits: [
-      "Professional brand image",
-      "Improved user experience",
-      "Higher conversion rates",
-      "Mobile-friendly design",
+      "Fast, accessible user interfaces",
+      "Scalable backend infrastructure",
+      "Secure data handling and compliance",
+      "Seamless mobile and cross-device experience",
+    ],
+  },
+  {
+    id: "crm",
+    icon: Settings,
+    title: "CRM & Automation",
+    subtitle: "Operational Efficiency",
+    description:
+      "Business process standardization using automated workflows and centralized customer data.",
+    details:
+      "We eliminate manual bottlenecks by implementing and customizing CRM systems. By automating recurring tasks and centralizing customer data, we help businesses improve sales velocity without adding headcount.",
+    includes: [
+      "CRM Implementation (HubSpot, Salesforce)",
+      "Automated Sales & Marketing Workflows",
+      "Data Migration & System Synchronization",
+      "Customer Lifecycle Automation",
+      "Reporting & Dashboard Configuration",
+      "Custom Zapier / Make Integration Builds",
+    ],
+    benefits: [
+      "Less time on manual data entry",
+      "Faster sales cycles with less drop-off",
+      "Standardized, repeatable business processes",
+      "Unified view of every customer and deal",
+    ],
+  },
+  {
+    id: "ai",
+    icon: MessageSquare,
+    title: "AI Solutions",
+    subtitle: "Communication Automation",
+    description:
+      "AI voice agents and chat interfaces that handle high-volume customer interactions automatically.",
+    details:
+      "We deploy AI-driven communication tools that handle inbound calls, qualify leads, and route conversations without human intervention. Our solutions reduce operational overhead while maintaining 24/7 availability.",
+    includes: [
+      "Zentraic AI Voice Agent Deployment",
+      "Automated Inbound & Outbound Call Handling",
+      "Intelligent Chatbot Integration",
+      "Natural Language Data Extraction",
+      "CRM-Integrated Conversation Logging",
+      "Automated Lead Qualification & Routing",
+    ],
+    benefits: [
+      "24/7 availability without staffing costs",
+      "Lower cost-per-interaction at scale",
+      "Consistent, structured lead qualification",
+      "Detailed interaction data for every conversation",
     ],
   },
 ];
@@ -138,29 +119,35 @@ export default function ServicesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="py-20 md:py-28 bg-muted">
+      <section className="py-20 md:py-28 bg-muted" aria-labelledby="services-heading">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+            <h1
+              id="services-heading"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6"
+            >
               Our Services
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground">
-              Comprehensive digital marketing and development solutions designed 
-              to drive measurable growth for your business.
+              Four connected disciplines — marketing, development, automation,
+              and AI — delivered as an integrated system, not isolated projects.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Services */}
-      {services.map((service, index) => (
-        <Section key={service.id} id={service.id} dark={index % 2 === 0}>
+      {/* Service Sections */}
+      {services.map((service, i) => (
+        <Section key={service.id} id={service.id} dark={i % 2 === 0}>
           <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Content */}
+            {/* Description */}
             <div>
               <div className="flex items-center space-x-4 mb-6">
                 <div className="w-14 h-14 rounded-xl bg-muted flex items-center justify-center">
-                  <service.icon className="h-7 w-7 text-foreground" />
+                  <service.icon
+                    className="h-7 w-7 text-foreground"
+                    aria-hidden="true"
+                  />
                 </div>
                 <div>
                   <h2 className="text-3xl font-bold text-foreground">
@@ -170,29 +157,35 @@ export default function ServicesPage() {
                 </div>
               </div>
 
-              <p className="text-lg text-muted-foreground mb-6">
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                 {service.details}
               </p>
 
               <Link href="/contact#schedule">
                 <Button variant="primary" size="lg">
-                  Get Started
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  Book a Free Consultation
+                  <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
                 </Button>
               </Link>
             </div>
 
-            {/* Details cards */}
-            <div className="space-y-6">
+            {/* Detail Cards */}
+            <div className="space-y-5">
               <Card hover={false}>
                 <CardHeader>
                   <CardTitle>What&apos;s Included</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-3">
-                    {service.includes.map((item, i) => (
-                      <li key={i} className="flex items-start space-x-3">
-                        <Check className="h-5 w-5 text-foreground flex-shrink-0 mt-0.5" />
+                  <ul
+                    className="space-y-3"
+                    aria-label={`${service.title} inclusions`}
+                  >
+                    {service.includes.map((item, j) => (
+                      <li key={j} className="flex items-start space-x-3">
+                        <Check
+                          className="h-5 w-5 text-foreground flex-shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
                         <span className="text-muted-foreground">{item}</span>
                       </li>
                     ))}
@@ -202,13 +195,19 @@ export default function ServicesPage() {
 
               <Card hover={false}>
                 <CardHeader>
-                  <CardTitle>Benefits</CardTitle>
+                  <CardTitle>Key Outcomes</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-3">
-                    {service.benefits.map((item, i) => (
-                      <li key={i} className="flex items-start space-x-3">
-                        <Check className="h-5 w-5 text-foreground flex-shrink-0 mt-0.5" />
+                  <ul
+                    className="space-y-3"
+                    aria-label={`${service.title} outcomes`}
+                  >
+                    {service.benefits.map((item, j) => (
+                      <li key={j} className="flex items-start space-x-3">
+                        <Check
+                          className="h-5 w-5 text-foreground flex-shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
                         <span className="text-muted-foreground">{item}</span>
                       </li>
                     ))}
@@ -224,16 +223,16 @@ export default function ServicesPage() {
       <Section>
         <div className="text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-            Ready to Get Started?
+            Not Sure Where to Start?
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            Let&apos;s discuss which services are right for your business and create 
-            a customized growth strategy.
+            Book a free 30-minute call and we&apos;ll review your current situation and
+            tell you exactly which services would move the needle for your business.
           </p>
           <Link href="/contact#schedule">
             <Button variant="primary" size="lg">
-              Schedule a Free Consultation
-              <ArrowRight className="ml-2 h-5 w-5" />
+              Book a Free Strategy Call
+              <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
             </Button>
           </Link>
         </div>
