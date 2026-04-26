@@ -254,35 +254,52 @@ export async function POST(request: NextRequest) {
     logContactDebug("turnstile_verified", { requestId })
 
     const mailResult = await sendWeb3FormsLeadEmail(body)
+    const zohoResult = await appendToZohoContactsSheet(body)
+
     if (!mailResult.ok) {
       logContactDebug("web3forms_failed", { requestId, error: mailResult.error })
-      return NextResponse.json({ error: mailResult.error }, { status: 502 })
+    } else {
+      logContactDebug("web3forms_sent", { requestId })
     }
-    logContactDebug("web3forms_sent", { requestId })
 
-    // Zoho sync is best-effort. Do not fail the user submission if sheet sync fails.
-    const zohoResult = await appendToZohoContactsSheet(body)
     if (!zohoResult.ok) {
       logContactDebug("zoho_sync_failed_non_blocking", {
         requestId,
         error: zohoResult.error,
         details: "details" in zohoResult ? zohoResult.details : undefined,
       })
+    } else {
+      logContactDebug("zoho_sync_success", { requestId })
+    }
+
+    // Accept submission if at least one downstream delivery path succeeds.
+    if (mailResult.ok || zohoResult.ok) {
+      const warning =
+        !mailResult.ok && zohoResult.ok
+          ? "Submission saved to CRM. Email notification is pending."
+          : mailResult.ok && !zohoResult.ok
+            ? "Submission email sent, but CRM sync is pending."
+            : undefined
+
+      logContactDebug("submission_success", {
+        requestId,
+        warning: warning ?? null,
+      })
+
       return NextResponse.json({
         ok: true,
         message: "Contact submission received.",
         sourcePage: body.sourcePage || "/contact",
-        warning: "Submission email sent, but CRM sync is pending.",
+        warning,
       })
     }
-    logContactDebug("zoho_sync_success", { requestId })
 
-    logContactDebug("submission_success", { requestId })
-    return NextResponse.json({
-      ok: true,
-      message: "Contact submission received.",
-      sourcePage: body.sourcePage || "/contact",
-    })
+    return NextResponse.json(
+      {
+        error: "Submission could not be delivered right now. Please try again shortly.",
+      },
+      { status: 502 }
+    )
   } catch {
     logContactDebug("unexpected_error", { requestId })
     return NextResponse.json({ error: "Unexpected server error." }, { status: 500 })

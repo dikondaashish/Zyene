@@ -13,6 +13,7 @@ export function ContactHero() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const [turnstileRenderKey, setTurnstileRenderKey] = useState(0)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -53,8 +54,11 @@ export function ContactHero() {
 
       e.currentTarget.reset()
       setTurnstileToken(null)
+      setTurnstileRenderKey((prev) => prev + 1)
       setSubmitSuccess("Thanks! We received your details. Our team will reach out soon.")
     } catch (error) {
+      setTurnstileToken(null)
+      setTurnstileRenderKey((prev) => prev + 1)
       setSubmitError(error instanceof Error ? error.message : "Could not submit your request right now.")
     } finally {
       setSubmitting(false)
@@ -253,6 +257,7 @@ export function ContactHero() {
               {turnstileSiteKey ? (
                 <div>
                   <Turnstile
+                    key={turnstileRenderKey}
                     sitekey={turnstileSiteKey}
                     onVerify={(token) => {
                       setTurnstileToken(token)
@@ -273,7 +278,7 @@ export function ContactHero() {
 
               <button 
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || !turnstileToken}
                 className="w-full h-[56px] bg-white text-[#0A1015] hover:bg-white/90 font-bold text-[14px] rounded-[4px] transition-all tracking-wide uppercase"
               >
                 {submitting ? "Submitting..." : "Submit"}
