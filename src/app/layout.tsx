@@ -19,6 +19,15 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "AI Supply - Framer template for AI startups",
   description: "A sleek and responsive Framer template designed for AI-powered startups and tech innovators.",
+  icons: {
+    icon: [
+      { url: "/favicon/favicon.ico", type: "image/x-icon" },
+      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    apple: [{ url: "/favicon/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  manifest: "/favicon/site.webmanifest",
 };
 
 export default function RootLayout({

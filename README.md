@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zyene Website
 
-## Getting Started
+Marketing and operations automation website built with Next.js App Router.
 
-First, run the development server:
+## Stack
+
+- Next.js 14 (App Router)
+- React 18
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Vercel Analytics
+
+## Main Areas
+
+- Site pages: home, about, contact, careers, use-cases, legal pages
+- Contact flow:
+  - Cloudflare Turnstile validation
+  - Abstract email reputation check
+  - Zoho Sheet sync
+- Careers talent-pool flow with Turnstile + Zoho sync
+
+## Project Structure
+
+- `src/app`: routes and API handlers
+- `src/components`: UI sections, layout, and shared components
+- `src/lib`: shared client/server helpers and validators
+- `public`: static assets (images, favicon set)
+
+## Environment Variables
+
+Create `.env.local` and configure required keys:
+
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY`
+- `TURNSTILE_SECRET_KEY`
+- `ABSTRACT_EMAIL_REPUTATION_API_KEY`
+- `ZOHO_OAUTH_CLIENT_ID`
+- `ZOHO_OAUTH_CLIENT_SECRET`
+- `ZOHO_OAUTH_REFRESH_TOKEN` (or `ZOHO_REFRESH_TOKEN`)
+- `ZOHO_CONTACT_SHEET_API_URL`
+- `ZOHO_CONTACT_WORKSHEET`
+- `ZOHO_CONTACT_APPEND_METHOD`
+- `ZOHO_SHEET_API_URL`
+- `ZOHO_SHEET_WORKSHEET`
+- `ZOHO_SHEET_APPEND_METHOD`
+- `NEXT_PUBLIC_CAL_SCHEDULE_URL`
+- `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` (if using Web3Forms client send)
+
+## Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Quality Checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deploy on Vercel and ensure all required environment variables are set in Project Settings.

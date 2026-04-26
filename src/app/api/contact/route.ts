@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getFirstContactError, validateContactInput } from "@/lib/validators"
 import { validateEmailWithAbstract } from "@/lib/emailReputation"
+import { verifyTurnstileToken } from "@/lib/server/turnstile"
+import { appendRowToZohoSheet } from "@/lib/server/zoho"
 
 type ContactPayload = {
   fullName: string
@@ -15,10 +17,6 @@ type ContactPayload = {
   turnstileToken?: string
 }
 
-type TurnstileVerificationResult =
-  | { ok: true }
-  | { ok: false; error: string; details?: string[] }
-
 function validateContactPayload(body: ContactPayload) {
   const errors = validateContactInput(body)
   return getFirstContactError(errors)
@@ -30,77 +28,6 @@ function logContactDebug(step: string, metadata: Record<string, unknown> = {}) {
   console.log(`[contact-api] ${step}`, metadata)
 }
 
-async function verifyTurnstileToken(token: string, ip?: string | null) {
-  const secret = process.env.TURNSTILE_SECRET_KEY
-  if (!secret) {
-    return { ok: false, error: "Turnstile secret key is not configured." }
-  }
-
-  const params = new URLSearchParams({
-    secret,
-    response: token,
-  })
-
-  if (ip) {
-    params.set("remoteip", ip)
-  }
-
-  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: params.toString(),
-  })
-
-  if (!response.ok) {
-    return { ok: false, error: "Could not verify security check." }
-  }
-
-  const data = (await response.json()) as {
-    success?: boolean
-    "error-codes"?: string[]
-  }
-
-  if (!data.success) {
-    return {
-      ok: false,
-      error: "Security verification failed. Please try again.",
-      details: data["error-codes"] ?? [],
-    } satisfies TurnstileVerificationResult
-  }
-
-  return { ok: true } satisfies TurnstileVerificationResult
-}
-
-async function getZohoAccessToken(options?: { skipDirectToken?: boolean }) {
-  const directToken = process.env.ZOHO_CONTACT_OAUTH_ACCESS_TOKEN || process.env.ZOHO_OAUTH_ACCESS_TOKEN
-  if (!options?.skipDirectToken && directToken) return directToken
-
-  const clientId = process.env.ZOHO_OAUTH_CLIENT_ID
-  const clientSecret = process.env.ZOHO_OAUTH_CLIENT_SECRET
-  const refreshToken = process.env.ZOHO_OAUTH_REFRESH_TOKEN || process.env.ZOHO_REFRESH_TOKEN
-  const accountsBaseUrl = process.env.ZOHO_ACCOUNTS_BASE_URL || "https://accounts.zoho.com"
-
-  if (!clientId || !clientSecret || !refreshToken) {
-    return null
-  }
-
-  const tokenRes = await fetch(`${accountsBaseUrl}/oauth/v2/token`, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      grant_type: "refresh_token",
-      client_id: clientId,
-      client_secret: clientSecret,
-      refresh_token: refreshToken,
-    }).toString(),
-  })
-
-  if (!tokenRes.ok) return null
-
-  const tokenData = (await tokenRes.json()) as { access_token?: string }
-  return tokenData.access_token ?? null
-}
-
 async function appendToZohoContactsSheet(body: ContactPayload) {
   const sheetApiUrl = process.env.ZOHO_CONTACT_SHEET_API_URL
   const worksheetName = process.env.ZOHO_CONTACT_WORKSHEET || "Sheet1"
@@ -108,11 +35,6 @@ async function appendToZohoContactsSheet(body: ContactPayload) {
 
   if (!sheetApiUrl) {
     return { ok: false, error: "Zoho contacts sheet API URL is not configured." }
-  }
-
-  const accessToken = await getZohoAccessToken()
-  if (!accessToken) {
-    return { ok: false, error: "Zoho contacts sheet access token is not available." }
   }
 
   const createdAt = new Date().toISOString()
@@ -131,57 +53,13 @@ async function appendToZohoContactsSheet(body: ContactPayload) {
     status: "New",
   }
 
-  const params = new URLSearchParams({
+  return appendRowToZohoSheet({
+    sheetApiUrl,
+    worksheetName,
     method,
-    worksheet_name: worksheetName,
-    json_data: JSON.stringify([row]),
+    row,
+    directTokenEnvNames: ["ZOHO_CONTACT_OAUTH_ACCESS_TOKEN", "ZOHO_OAUTH_ACCESS_TOKEN"],
   })
-
-  const runZohoAppend = async (token: string) =>
-    fetch(sheetApiUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Zoho-oauthtoken ${token}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: params.toString(),
-    })
-
-  let zohoRes = await runZohoAppend(accessToken)
-
-  // If the direct token is stale/expired, refresh and retry once.
-  if (zohoRes.status === 401) {
-    const refreshedToken = await getZohoAccessToken({ skipDirectToken: true })
-    if (refreshedToken) {
-      zohoRes = await runZohoAppend(refreshedToken)
-    }
-  }
-
-  const responseText = await zohoRes.text()
-  let parsed: Record<string, unknown> | null = null
-  try {
-    parsed = JSON.parse(responseText) as Record<string, unknown>
-  } catch {
-    parsed = null
-  }
-
-  const zohoStatus = typeof parsed?.status === "string" ? parsed.status : null
-  const zohoErrorCode = typeof parsed?.error_code === "number" ? parsed.error_code : null
-  const zohoErrorMessage =
-    typeof parsed?.error_message === "string"
-      ? parsed.error_message
-      : "Failed to append contact row in Zoho Sheet."
-
-  if (!zohoRes.ok || zohoStatus === "failure") {
-    return {
-      ok: false,
-      error: zohoErrorMessage,
-      errorCode: zohoErrorCode,
-      details: responseText,
-    }
-  }
-
-  return { ok: true }
 }
 
 export async function POST(request: NextRequest) {

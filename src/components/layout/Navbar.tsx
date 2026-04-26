@@ -7,6 +7,7 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { SITE_DATA } from "@/lib/constants"
+import { ScheduleCallModal } from "@/components/shared/ScheduleCallModal"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -168,26 +169,12 @@ export function Navbar() {
         </motion.div>
       )}
 
-      {isCalOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative w-full max-w-[960px] h-[80vh] bg-white rounded-xl overflow-hidden shadow-2xl">
-            <button
-              type="button"
-              aria-label="Close scheduling popup"
-              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/70 text-white hover:bg-black transition-colors"
-              onClick={() => setIsCalOpen(false)}
-            >
-              ×
-            </button>
-            <iframe
-              src={scheduleCallUrl}
-              title="Schedule a Call"
-              className="w-full h-full border-0"
-              allow="camera; microphone; autoplay; encrypted-media; fullscreen"
-            />
-          </div>
-        </div>
-      )}
+      <ScheduleCallModal
+        open={isCalOpen}
+        onClose={() => setIsCalOpen(false)}
+        scheduleCallUrl={scheduleCallUrl}
+        title="Schedule a Call"
+      />
     </motion.nav>
   )
 }
