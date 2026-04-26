@@ -6,7 +6,7 @@ import Image from "next/image"
 import { MapPin, Phone, Mail } from "lucide-react"
 import Link from "next/link"
 import { Turnstile } from "react-turnstile"
-import { type ContactFieldErrors, validateContactInput } from "@/lib/validators"
+import { type ContactFieldErrors, isValidEmail, validateContactInput } from "@/lib/validators"
 
 export function ContactHero() {
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
@@ -15,6 +15,7 @@ export function ContactHero() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({})
+  const [checkingEmail, setCheckingEmail] = useState(false)
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const [turnstileRenderKey, setTurnstileRenderKey] = useState(0)
 
@@ -25,6 +26,39 @@ export function ContactHero() {
       delete next[name as keyof ContactFieldErrors]
       return next
     })
+  }
+
+  const checkEmailReputation = async (email: string) => {
+    const normalized = email.trim()
+    if (!normalized || !isValidEmail(normalized)) return true
+
+    setCheckingEmail(true)
+    try {
+      const response = await fetch("/api/contact/validate-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: normalized }),
+      })
+
+      const data = (await response.json().catch(() => null)) as { error?: string } | null
+      if (!response.ok) {
+        setFieldErrors((prev) => ({
+          ...prev,
+          workEmail: data?.error || "Please use a valid work email address.",
+        }))
+        return false
+      }
+
+      setFieldErrors((prev) => {
+        if (!prev.workEmail) return prev
+        const next = { ...prev }
+        delete next.workEmail
+        return next
+      })
+      return true
+    } finally {
+      setCheckingEmail(false)
+    }
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -61,6 +95,12 @@ export function ContactHero() {
       return
     }
 
+    const emailOk = await checkEmailReputation(payload.workEmail)
+    if (!emailOk) {
+      setSubmitError("Please fix the highlighted fields.")
+      return
+    }
+
     setSubmitting(true)
     try {
       // Client-side Web3Forms call (free-plan compatible).
@@ -93,6 +133,9 @@ export function ContactHero() {
 
       const data = (await response.json().catch(() => null)) as { error?: string } | null
       if (!response.ok) {
+        if (data?.error?.length && data.error.toLowerCase().includes("email")) {
+          setFieldErrors((prev) => ({ ...prev, workEmail: data.error as string }))
+        }
         throw new Error(data?.error || "Could not submit your request right now.")
       }
 
@@ -212,6 +255,9 @@ export function ContactHero() {
                   autoComplete="email"
                   placeholder="john.doe@zyene.com"
                   aria-invalid={Boolean(fieldErrors.workEmail)}
+                  onBlur={(event) => {
+                    void checkEmailReputation(event.currentTarget.value)
+                  }}
                   className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
                     fieldErrors.workEmail
                       ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
@@ -219,6 +265,9 @@ export function ContactHero() {
                   }`}
                 />
                 {fieldErrors.workEmail ? <p className="text-[12px] text-[#F97066]">{fieldErrors.workEmail}</p> : null}
+                {checkingEmail && !fieldErrors.workEmail ? (
+                  <p className="text-[12px] text-white/60">Checking email...</p>
+                ) : null}
               </div>
             </div>
 
@@ -377,7 +426,7 @@ export function ContactHero() {
 
               <button 
                 type="submit"
-                disabled={submitting || !turnstileToken}
+                disabled={submitting || checkingEmail || !turnstileToken}
                 className="w-full h-[56px] bg-white text-[#0A1015] hover:bg-white/90 font-bold text-[14px] rounded-[4px] transition-all tracking-wide uppercase"
               >
                 {submitting ? "Submitting..." : "Submit"}

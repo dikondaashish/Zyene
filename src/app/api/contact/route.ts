@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getFirstContactError, validateContactInput } from "@/lib/validators"
+import { validateEmailWithAbstract } from "@/lib/emailReputation"
 
 type ContactPayload = {
   fullName: string
@@ -198,6 +199,18 @@ export async function POST(request: NextRequest) {
     if (validationError) {
       logContactDebug("validation_failed", { requestId, reason: validationError })
       return NextResponse.json({ error: validationError }, { status: 400 })
+    }
+
+    const emailValidation = await validateEmailWithAbstract(body.workEmail)
+    if (!emailValidation.ok) {
+      logContactDebug("validation_failed", { requestId, reason: "email_reputation_failed" })
+      return NextResponse.json(
+        {
+          error: emailValidation.message || "Please use a valid work email address.",
+          field: "workEmail",
+        },
+        { status: 400 }
+      )
     }
 
     if (!body?.turnstileToken) {
