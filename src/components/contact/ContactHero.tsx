@@ -18,6 +18,7 @@ export function ContactHero() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const form = e.currentTarget
     setSubmitError(null)
     setSubmitSuccess(null)
 
@@ -26,7 +27,7 @@ export function ContactHero() {
       return
     }
 
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(form)
     const payload = {
       fullName: String(formData.get("fullName") || ""),
       workEmail: String(formData.get("workEmail") || ""),
@@ -78,7 +79,7 @@ export function ContactHero() {
         throw new Error(data?.error || "Could not submit your request right now.")
       }
 
-      e.currentTarget.reset()
+      form.reset()
       setTurnstileToken(null)
       setTurnstileRenderKey((prev) => prev + 1)
       setSubmitSuccess(
