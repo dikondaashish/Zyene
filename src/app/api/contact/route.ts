@@ -232,17 +232,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: verification.error, details: verification.details }, { status: 400 })
     }
 
-    const zohoResult = await appendToZohoContactsSheet(body)
-    if (!zohoResult.ok) {
-      return NextResponse.json(
-        { error: zohoResult.error, details: "details" in zohoResult ? zohoResult.details : undefined },
-        { status: 502 }
-      )
-    }
-
     const mailResult = await sendWeb3FormsLeadEmail(body)
     if (!mailResult.ok) {
       return NextResponse.json({ error: mailResult.error }, { status: 502 })
+    }
+
+    // Zoho sync is best-effort. Do not fail the user submission if sheet sync fails.
+    const zohoResult = await appendToZohoContactsSheet(body)
+    if (!zohoResult.ok) {
+      return NextResponse.json({
+        ok: true,
+        message: "Contact submission received.",
+        sourcePage: body.sourcePage || "/contact",
+        warning: "Submission email sent, but CRM sync is pending.",
+      })
     }
 
     return NextResponse.json({
