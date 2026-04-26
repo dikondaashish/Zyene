@@ -92,14 +92,18 @@ async function appendToZohoContactsSheet(body: ContactPayload) {
   const sheetApiUrl = process.env.ZOHO_CONTACT_SHEET_API_URL
   const worksheetName = process.env.ZOHO_CONTACT_WORKSHEET || "Sheet1"
   const method = process.env.ZOHO_CONTACT_APPEND_METHOD || "worksheet.records.add"
+  const apiKey = process.env.ZOHO_CONTACT_API_KEY
 
   if (!sheetApiUrl) {
     return { ok: false, error: "Zoho contacts sheet API URL is not configured." }
   }
 
-  const accessToken = await getZohoAccessToken()
-  if (!accessToken) {
-    return { ok: false, error: "Zoho contacts sheet access token is not available." }
+  let accessToken: string | null = null
+  if (!apiKey) {
+    accessToken = await getZohoAccessToken()
+    if (!accessToken) {
+      return { ok: false, error: "Zoho contacts sheet access token is not available." }
+    }
   }
 
   const createdAt = new Date().toISOString()
@@ -131,12 +135,23 @@ async function appendToZohoContactsSheet(body: ContactPayload) {
     json_data: JSON.stringify([row]),
   })
 
+  if (apiKey) {
+    // Some Zoho endpoints (especially legacy sheet APIs) accept API keys as query/body params.
+    const apiKeyParamName = process.env.ZOHO_CONTACT_API_KEY_PARAM || "apikey"
+    params.set(apiKeyParamName, apiKey)
+  }
+
+  const headers: HeadersInit = {
+    "Content-Type": "application/x-www-form-urlencoded",
+  }
+
+  if (accessToken) {
+    headers.Authorization = `Zoho-oauthtoken ${accessToken}`
+  }
+
   const zohoRes = await fetch(sheetApiUrl, {
     method: "POST",
-    headers: {
-      Authorization: `Zoho-oauthtoken ${accessToken}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
+    headers,
     body: params.toString(),
   })
 
