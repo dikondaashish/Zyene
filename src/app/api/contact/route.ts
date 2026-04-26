@@ -70,7 +70,7 @@ async function getZohoAccessToken() {
 
   const clientId = process.env.ZOHO_OAUTH_CLIENT_ID
   const clientSecret = process.env.ZOHO_OAUTH_CLIENT_SECRET
-  const refreshToken = process.env.ZOHO_OAUTH_REFRESH_TOKEN
+  const refreshToken = process.env.ZOHO_OAUTH_REFRESH_TOKEN || process.env.ZOHO_REFRESH_TOKEN
   const accountsBaseUrl = process.env.ZOHO_ACCOUNTS_BASE_URL || "https://accounts.zoho.com"
 
   if (!clientId || !clientSecret || !refreshToken) {
@@ -294,9 +294,18 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    const debug =
+      process.env.CONTACT_API_DEBUG === "true"
+        ? {
+            web3forms: mailResult.ok ? "ok" : mailResult.error,
+            zoho: zohoResult.ok ? "ok" : zohoResult.error,
+          }
+        : undefined
+
     return NextResponse.json(
       {
         error: "Submission could not be delivered right now. Please try again shortly.",
+        debug,
       },
       { status: 502 }
     )
