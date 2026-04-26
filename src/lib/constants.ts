@@ -1,5 +1,5 @@
 export const SITE_DATA = {
-  logoDark: "/images/Logo_white.png",
+  logoDark: "/images/Logo_White.png",
   logoLight: "/images/Logo_Black.png",
   heroBg: "/images/hero-mesh.jpg",
   badgeIcon: "/images/badge-icon.png",
@@ -238,5 +238,5 @@ export const SITE_DATA = {
     ]
   },
   footerCtaBg: "/images/footer-cta-bg.png",
-  testimonialBg: "/images/Logo_white.png"
+  testimonialBg: "/images/Logo_White.png"
 };

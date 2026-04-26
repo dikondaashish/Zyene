@@ -59,7 +59,7 @@ export function CareersHero() {
           >
             <div className="relative w-5 h-5 flex-shrink-0">
               <Image 
-                src="/images/Logo_white.png" 
+                src="/images/Logo_White.png"
                 alt="Zyene Logo" 
                 fill 
                 className="object-contain"
