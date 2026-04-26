@@ -64,9 +64,9 @@ async function verifyTurnstileToken(token: string, ip?: string | null) {
   return { ok: true } satisfies TurnstileVerificationResult
 }
 
-async function getZohoAccessToken() {
+async function getZohoAccessToken(options?: { skipDirectToken?: boolean }) {
   const directToken = process.env.ZOHO_CONTACT_OAUTH_ACCESS_TOKEN || process.env.ZOHO_OAUTH_ACCESS_TOKEN
-  if (directToken) return directToken
+  if (!options?.skipDirectToken && directToken) return directToken
 
   const clientId = process.env.ZOHO_OAUTH_CLIENT_ID
   const clientSecret = process.env.ZOHO_OAUTH_CLIENT_SECRET
@@ -137,14 +137,25 @@ async function appendToZohoContactsSheet(body: ContactPayload) {
     json_data: JSON.stringify([row]),
   })
 
-  const zohoRes = await fetch(sheetApiUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Zoho-oauthtoken ${accessToken}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: params.toString(),
-  })
+  const runZohoAppend = async (token: string) =>
+    fetch(sheetApiUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Zoho-oauthtoken ${token}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params.toString(),
+    })
+
+  let zohoRes = await runZohoAppend(accessToken)
+
+  // If the direct token is stale/expired, refresh and retry once.
+  if (zohoRes.status === 401) {
+    const refreshedToken = await getZohoAccessToken({ skipDirectToken: true })
+    if (refreshedToken) {
+      zohoRes = await runZohoAppend(refreshedToken)
+    }
+  }
 
   const responseText = await zohoRes.text()
   let parsed: Record<string, unknown> | null = null
