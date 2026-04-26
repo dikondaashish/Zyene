@@ -59,11 +59,31 @@ function isClearlyInvalid(data: AbstractApiResponse) {
   return null
 }
 
+function isProviderErrorResponse(data: AbstractApiResponse | null) {
+  if (!data) return false
+
+  const error = data.error
+  if (typeof error === "string" && error.trim()) return true
+  if (error && typeof error === "object") return true
+
+  const errorMessage = data.error_message
+  if (typeof errorMessage === "string" && errorMessage.trim()) return true
+
+  const message = data.message
+  if (typeof message === "string" && /invalid|error|failed|unauthorized|forbidden/i.test(message)) {
+    return true
+  }
+
+  return false
+}
+
 async function fetchAbstractEmailCheck(url: string) {
   const response = await fetch(url, { method: "GET", cache: "no-store" })
-  if (!response.ok) return null
   const parsed = (await response.json().catch(() => null)) as AbstractApiResponse | null
-  return parsed
+  return {
+    ok: response.ok,
+    data: parsed,
+  }
 }
 
 export async function validateEmailWithAbstract(email: string): Promise<EmailValidationResult> {
@@ -76,19 +96,30 @@ export async function validateEmailWithAbstract(email: string): Promise<EmailVal
   const reputationUrl = `https://emailreputation.abstractapi.com/v1/?api_key=${apiKey}&email=${encodedEmail}`
   const validationUrl = `https://emailvalidation.abstractapi.com/v1/?api_key=${apiKey}&email=${encodedEmail}`
 
-  let data = await fetchAbstractEmailCheck(reputationUrl)
-  if (!data) {
-    data = await fetchAbstractEmailCheck(validationUrl)
+  // Validation endpoint is stronger for format/MX/SMTP checks.
+  const validation = await fetchAbstractEmailCheck(validationUrl)
+  if (validation.ok && validation.data) {
+    const invalidReason = isClearlyInvalid(validation.data)
+    if (invalidReason) {
+      return { ok: false, message: invalidReason }
+    }
   }
 
-  if (!data) {
-    // Do not block leads if provider is temporarily unavailable.
-    return { ok: true }
+  const reputation = await fetchAbstractEmailCheck(reputationUrl)
+  if (reputation.ok && reputation.data) {
+    const invalidReason = isClearlyInvalid(reputation.data)
+    if (invalidReason) {
+      return { ok: false, message: invalidReason }
+    }
   }
 
-  const invalidReason = isClearlyInvalid(data)
-  if (invalidReason) {
-    return { ok: false, message: invalidReason }
+  // If provider explicitly responded with errors (invalid key/plan/endpoint), fail clearly.
+  if (
+    isProviderErrorResponse(validation.data) ||
+    isProviderErrorResponse(reputation.data) ||
+    (!validation.ok && !reputation.ok)
+  ) {
+    return { ok: false, message: "We could not verify this email. Please enter a valid work email." }
   }
 
   return { ok: true }

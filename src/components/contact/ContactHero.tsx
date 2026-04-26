@@ -16,6 +16,7 @@ export function ContactHero() {
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({})
   const [checkingEmail, setCheckingEmail] = useState(false)
+  const [workEmailValue, setWorkEmailValue] = useState("")
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const [turnstileRenderKey, setTurnstileRenderKey] = useState(0)
 
@@ -30,7 +31,14 @@ export function ContactHero() {
 
   const checkEmailReputation = async (email: string) => {
     const normalized = email.trim()
-    if (!normalized || !isValidEmail(normalized)) return true
+    if (!normalized) return true
+    if (!isValidEmail(normalized)) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        workEmail: "Please enter a valid work email address.",
+      }))
+      return false
+    }
 
     setCheckingEmail(true)
     try {
@@ -60,6 +68,11 @@ export function ContactHero() {
       setCheckingEmail(false)
     }
   }
+
+  const normalizedWorkEmail = workEmailValue.trim()
+  const hasTypedWorkEmail = normalizedWorkEmail.length > 0
+  const isWorkEmailFormatValid = hasTypedWorkEmail && isValidEmail(normalizedWorkEmail)
+  const isSubmitBlockedByEmail = !hasTypedWorkEmail || !isWorkEmailFormatValid || Boolean(fieldErrors.workEmail)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -258,6 +271,35 @@ export function ContactHero() {
                   onBlur={(event) => {
                     void checkEmailReputation(event.currentTarget.value)
                   }}
+                  onChange={(event) => {
+                    const value = event.currentTarget.value
+                    setWorkEmailValue(value)
+                    const trimmed = value.trim()
+                    if (!trimmed) {
+                      setFieldErrors((prev) => {
+                        if (!prev.workEmail) return prev
+                        const next = { ...prev }
+                        delete next.workEmail
+                        return next
+                      })
+                      return
+                    }
+
+                    if (!isValidEmail(trimmed)) {
+                      setFieldErrors((prev) => ({
+                        ...prev,
+                        workEmail: "Please enter a valid work email address.",
+                      }))
+                      return
+                    }
+
+                    setFieldErrors((prev) => {
+                      if (!prev.workEmail) return prev
+                      const next = { ...prev }
+                      delete next.workEmail
+                      return next
+                    })
+                  }}
                   className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
                     fieldErrors.workEmail
                       ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
@@ -426,7 +468,7 @@ export function ContactHero() {
 
               <button 
                 type="submit"
-                disabled={submitting || checkingEmail || !turnstileToken}
+                disabled={submitting || checkingEmail || isSubmitBlockedByEmail || !turnstileToken}
                 className="w-full h-[56px] bg-white text-[#0A1015] hover:bg-white/90 font-bold text-[14px] rounded-[4px] transition-all tracking-wide uppercase"
               >
                 {submitting ? "Submitting..." : "Submit"}
