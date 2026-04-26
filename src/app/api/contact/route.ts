@@ -17,6 +17,12 @@ type TurnstileVerificationResult =
   | { ok: true }
   | { ok: false; error: string; details?: string[] }
 
+function logContactDebug(step: string, metadata: Record<string, unknown> = {}) {
+  if (process.env.CONTACT_API_DEBUG !== "true") return
+  // Never log secret values or full payload content.
+  console.log(`[contact-api] ${step}`, metadata)
+}
+
 async function verifyTurnstileToken(token: string, ip?: string | null) {
   const secret = process.env.TURNSTILE_SECRET_KEY
   if (!secret) {
@@ -92,18 +98,14 @@ async function appendToZohoContactsSheet(body: ContactPayload) {
   const sheetApiUrl = process.env.ZOHO_CONTACT_SHEET_API_URL
   const worksheetName = process.env.ZOHO_CONTACT_WORKSHEET || "Sheet1"
   const method = process.env.ZOHO_CONTACT_APPEND_METHOD || "worksheet.records.add"
-  const apiKey = process.env.ZOHO_CONTACT_API_KEY
 
   if (!sheetApiUrl) {
     return { ok: false, error: "Zoho contacts sheet API URL is not configured." }
   }
 
-  let accessToken: string | null = null
-  if (!apiKey) {
-    accessToken = await getZohoAccessToken()
-    if (!accessToken) {
-      return { ok: false, error: "Zoho contacts sheet access token is not available." }
-    }
+  const accessToken = await getZohoAccessToken()
+  if (!accessToken) {
+    return { ok: false, error: "Zoho contacts sheet access token is not available." }
   }
 
   const createdAt = new Date().toISOString()
@@ -135,23 +137,12 @@ async function appendToZohoContactsSheet(body: ContactPayload) {
     json_data: JSON.stringify([row]),
   })
 
-  if (apiKey) {
-    // Some Zoho endpoints (especially legacy sheet APIs) accept API keys as query/body params.
-    const apiKeyParamName = process.env.ZOHO_CONTACT_API_KEY_PARAM || "apikey"
-    params.set(apiKeyParamName, apiKey)
-  }
-
-  const headers: HeadersInit = {
-    "Content-Type": "application/x-www-form-urlencoded",
-  }
-
-  if (accessToken) {
-    headers.Authorization = `Zoho-oauthtoken ${accessToken}`
-  }
-
   const zohoRes = await fetch(sheetApiUrl, {
     method: "POST",
-    headers,
+    headers: {
+      Authorization: `Zoho-oauthtoken ${accessToken}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
     body: params.toString(),
   })
 
@@ -221,9 +212,15 @@ async function sendWeb3FormsLeadEmail(body: ContactPayload) {
 }
 
 export async function POST(request: NextRequest) {
+  const requestId = `contact_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
   try {
     const body = (await request.json()) as ContactPayload
-    const warnings: string[] = []
+    logContactDebug("request_received", {
+      requestId,
+      sourcePage: body?.sourcePage || "/contact",
+      hasTurnstileToken: Boolean(body?.turnstileToken),
+      hasPhone: Boolean(body?.phone),
+    })
 
     if (
       !body?.fullName ||
@@ -234,46 +231,60 @@ export async function POST(request: NextRequest) {
       !body?.helpType ||
       !body?.message
     ) {
+      logContactDebug("validation_failed", { requestId, reason: "missing_required_fields" })
       return NextResponse.json({ error: "Please fill all required fields." }, { status: 400 })
     }
 
     if (!body?.turnstileToken) {
-      warnings.push("Security check token missing.")
-    } else {
-      const forwardedFor = request.headers.get("x-forwarded-for")
-      const ip = forwardedFor ? forwardedFor.split(",")[0]?.trim() : null
-      const verification = await verifyTurnstileToken(body.turnstileToken, ip)
-      if (!verification.ok) {
-        warnings.push("Security verification failed.")
-      }
+      logContactDebug("validation_failed", { requestId, reason: "missing_turnstile_token" })
+      return NextResponse.json({ error: "Security check is required." }, { status: 400 })
     }
 
+    const forwardedFor = request.headers.get("x-forwarded-for")
+    const ip = forwardedFor ? forwardedFor.split(",")[0]?.trim() : null
+    const verification = await verifyTurnstileToken(body.turnstileToken, ip)
+    if (!verification.ok) {
+      logContactDebug("turnstile_failed", {
+        requestId,
+        error: verification.error,
+        details: verification.details,
+      })
+      return NextResponse.json({ error: verification.error, details: verification.details }, { status: 400 })
+    }
+    logContactDebug("turnstile_verified", { requestId })
+
     const mailResult = await sendWeb3FormsLeadEmail(body)
+    if (!mailResult.ok) {
+      logContactDebug("web3forms_failed", { requestId, error: mailResult.error })
+      return NextResponse.json({ error: mailResult.error }, { status: 502 })
+    }
+    logContactDebug("web3forms_sent", { requestId })
+
+    // Zoho sync is best-effort. Do not fail the user submission if sheet sync fails.
     const zohoResult = await appendToZohoContactsSheet(body)
-
-    // Accept the submission if at least one downstream delivery path succeeds.
-    if (mailResult.ok || zohoResult.ok) {
-      if (!mailResult.ok) warnings.push("Email notification is pending.")
-      if (!zohoResult.ok) warnings.push("CRM sync is pending.")
-
+    if (!zohoResult.ok) {
+      logContactDebug("zoho_sync_failed_non_blocking", {
+        requestId,
+        error: zohoResult.error,
+        details: "details" in zohoResult ? zohoResult.details : undefined,
+      })
       return NextResponse.json({
         ok: true,
         message: "Contact submission received.",
         sourcePage: body.sourcePage || "/contact",
-        warning: warnings.length > 0 ? warnings.join(" ") : undefined,
+        warning: "Submission email sent, but CRM sync is pending.",
       })
     }
+    logContactDebug("zoho_sync_success", { requestId })
 
-    warnings.push("Email notification is pending.")
-    warnings.push("CRM sync is pending.")
-
+    logContactDebug("submission_success", { requestId })
     return NextResponse.json({
       ok: true,
       message: "Contact submission received.",
       sourcePage: body.sourcePage || "/contact",
-      warning: warnings.join(" "),
     })
   } catch {
+    logContactDebug("unexpected_error", { requestId })
     return NextResponse.json({ error: "Unexpected server error." }, { status: 500 })
   }
 }

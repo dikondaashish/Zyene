@@ -18,9 +18,13 @@ export function ContactHero() {
     e.preventDefault()
     setSubmitError(null)
     setSubmitSuccess(null)
-    const form = e.currentTarget
 
-    const formData = new FormData(form)
+    if (!turnstileToken) {
+      setSubmitError("Please complete the security check.")
+      return
+    }
+
+    const formData = new FormData(e.currentTarget)
     const payload = {
       fullName: String(formData.get("fullName") || ""),
       workEmail: String(formData.get("workEmail") || ""),
@@ -31,7 +35,7 @@ export function ContactHero() {
       helpType: String(formData.get("helpType") || ""),
       message: String(formData.get("message") || ""),
       sourcePage: typeof window !== "undefined" ? window.location.pathname : "/contact",
-      turnstileToken: turnstileToken ?? undefined,
+      turnstileToken,
     }
 
     setSubmitting(true)
@@ -42,25 +46,14 @@ export function ContactHero() {
         body: JSON.stringify(payload),
       })
 
-      const data = (await response.json().catch(() => null)) as
-        | { error?: string; warning?: string }
-        | null
+      const data = (await response.json().catch(() => null)) as { error?: string } | null
       if (!response.ok) {
         throw new Error(data?.error || "Could not submit your request right now.")
       }
 
-      form.reset()
+      e.currentTarget.reset()
       setTurnstileToken(null)
-      const warningMessage =
-        data && typeof data === "object" && "warning" in data && typeof data.warning === "string"
-          ? data.warning
-          : null
-
-      setSubmitSuccess(
-        warningMessage
-          ? `Thanks! We received your details. ${warningMessage}`
-          : "Thanks! We received your details. Our team will reach out soon."
-      )
+      setSubmitSuccess("Thanks! We received your details. Our team will reach out soon.")
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "Could not submit your request right now.")
     } finally {
