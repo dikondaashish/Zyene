@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { getFirstContactError, validateContactInput } from "@/lib/validators"
 
 type ContactPayload = {
   fullName: string
@@ -16,6 +17,11 @@ type ContactPayload = {
 type TurnstileVerificationResult =
   | { ok: true }
   | { ok: false; error: string; details?: string[] }
+
+function validateContactPayload(body: ContactPayload) {
+  const errors = validateContactInput(body)
+  return getFirstContactError(errors)
+}
 
 function logContactDebug(step: string, metadata: Record<string, unknown> = {}) {
   if (process.env.CONTACT_API_DEBUG !== "true") return
@@ -112,20 +118,13 @@ async function appendToZohoContactsSheet(body: ContactPayload) {
 
   const row = {
     created_at: createdAt,
-    "created_at\n": createdAt,
     full_name: body.fullName,
-    "full_name\n": body.fullName,
     work_email: body.workEmail,
-    "work_email\n": body.workEmail,
-    email: body.workEmail,
     company: body.company,
-    "company\n": body.company,
     job_title: body.jobTitle,
-    "job_title\n": body.jobTitle,
     phone: body.phone || "",
     country: body.country,
     help_type: body.helpType,
-    "help_type\n": body.helpType,
     message: body.message,
     source_page: body.sourcePage || "/contact",
     status: "New",
@@ -195,17 +194,10 @@ export async function POST(request: NextRequest) {
       hasPhone: Boolean(body?.phone),
     })
 
-    if (
-      !body?.fullName ||
-      !body?.workEmail ||
-      !body?.company ||
-      !body?.jobTitle ||
-      !body?.country ||
-      !body?.helpType ||
-      !body?.message
-    ) {
-      logContactDebug("validation_failed", { requestId, reason: "missing_required_fields" })
-      return NextResponse.json({ error: "Please fill all required fields." }, { status: 400 })
+    const validationError = validateContactPayload(body)
+    if (validationError) {
+      logContactDebug("validation_failed", { requestId, reason: validationError })
+      return NextResponse.json({ error: validationError }, { status: 400 })
     }
 
     if (!body?.turnstileToken) {

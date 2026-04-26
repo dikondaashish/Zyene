@@ -6,6 +6,7 @@ import Image from "next/image"
 import { MapPin, Phone, Mail } from "lucide-react"
 import Link from "next/link"
 import { Turnstile } from "react-turnstile"
+import { type ContactFieldErrors, validateContactInput } from "@/lib/validators"
 
 export function ContactHero() {
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
@@ -13,14 +14,25 @@ export function ContactHero() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null)
+  const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({})
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const [turnstileRenderKey, setTurnstileRenderKey] = useState(0)
+
+  const clearFieldError = (name: string) => {
+    if (!(name in fieldErrors)) return
+    setFieldErrors((prev) => {
+      const next = { ...prev }
+      delete next[name as keyof ContactFieldErrors]
+      return next
+    })
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
     setSubmitError(null)
     setSubmitSuccess(null)
+    setFieldErrors({})
 
     if (!turnstileToken) {
       setSubmitError("Please complete the security check.")
@@ -41,11 +53,19 @@ export function ContactHero() {
       turnstileToken,
     }
 
+    const errors = validateContactInput(payload)
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      setSubmitError("Please fix the highlighted fields.")
+      return
+    }
+
     setSubmitting(true)
     try {
       // Client-side Web3Forms call (free-plan compatible).
-      const web3FormsResult = web3FormsAccessKey
-        ? await fetch("https://api.web3forms.com/submit", {
+      if (web3FormsAccessKey) {
+        await fetch("https://api.web3forms.com/submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -62,11 +82,8 @@ export function ContactHero() {
               message: payload.message,
               source_page: payload.sourcePage,
             }),
-          }).then(async (res) => {
-            const data = (await res.json().catch(() => null)) as { success?: boolean } | null
-            return { ok: Boolean(res.ok && data?.success) }
           })
-        : { ok: false }
+      }
 
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -82,11 +99,7 @@ export function ContactHero() {
       form.reset()
       setTurnstileToken(null)
       setTurnstileRenderKey((prev) => prev + 1)
-      setSubmitSuccess(
-        web3FormsResult.ok
-          ? "Thanks! We received your details. Our team will reach out soon."
-          : "Thanks! We received your details. CRM sync completed; email notification is pending."
-      )
+      setSubmitSuccess("Thanks! We received your message and will be in touch shortly.")
     } catch (error) {
       setTurnstileToken(null)
       setTurnstileRenderKey((prev) => prev + 1)
@@ -164,7 +177,12 @@ export function ContactHero() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="bg-white/[0.04] backdrop-blur-2xl border border-white/10 rounded-none p-8 md:p-12"
         >
-          <form className="space-y-6" noValidate onSubmit={handleSubmit}>
+          <form
+            className="space-y-6"
+            noValidate
+            onSubmit={handleSubmit}
+            onChange={(event) => clearFieldError((event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement).name)}
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2.5">
                 <label htmlFor="fullName" className="text-[13px] font-medium text-white/90">Full Name *</label>
@@ -175,8 +193,14 @@ export function ContactHero() {
                   required
                   autoComplete="name"
                   placeholder="John Doe"
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20 transition-all"
+                  aria-invalid={Boolean(fieldErrors.fullName)}
+                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                    fieldErrors.fullName
+                      ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
+                      : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
+                  }`}
                 />
+                {fieldErrors.fullName ? <p className="text-[12px] text-[#F97066]">{fieldErrors.fullName}</p> : null}
               </div>
               <div className="space-y-2.5">
                 <label htmlFor="workEmail" className="text-[13px] font-medium text-white/90">Work Email *</label>
@@ -187,8 +211,14 @@ export function ContactHero() {
                   required
                   autoComplete="email"
                   placeholder="john.doe@zyene.com"
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20 transition-all"
+                  aria-invalid={Boolean(fieldErrors.workEmail)}
+                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                    fieldErrors.workEmail
+                      ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
+                      : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
+                  }`}
                 />
+                {fieldErrors.workEmail ? <p className="text-[12px] text-[#F97066]">{fieldErrors.workEmail}</p> : null}
               </div>
             </div>
 
@@ -202,8 +232,14 @@ export function ContactHero() {
                   required
                   autoComplete="organization"
                   placeholder="Zyene, Inc."
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20 transition-all"
+                  aria-invalid={Boolean(fieldErrors.company)}
+                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                    fieldErrors.company
+                      ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
+                      : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
+                  }`}
                 />
+                {fieldErrors.company ? <p className="text-[12px] text-[#F97066]">{fieldErrors.company}</p> : null}
               </div>
               <div className="space-y-2.5">
                 <label htmlFor="jobTitle" className="text-[13px] font-medium text-white/90">Job Title *</label>
@@ -214,8 +250,14 @@ export function ContactHero() {
                   required
                   autoComplete="organization-title"
                   placeholder="Chief Executive Officer"
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20 transition-all"
+                  aria-invalid={Boolean(fieldErrors.jobTitle)}
+                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                    fieldErrors.jobTitle
+                      ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
+                      : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
+                  }`}
                 />
+                {fieldErrors.jobTitle ? <p className="text-[12px] text-[#F97066]">{fieldErrors.jobTitle}</p> : null}
               </div>
             </div>
 
@@ -228,9 +270,17 @@ export function ContactHero() {
                     name="phone"
                     type="tel"
                     autoComplete="tel"
+                    inputMode="tel"
+                    pattern="[0-9+\-\s()]*"
                     placeholder="+1 234 567 8901"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20 transition-all"
+                    aria-invalid={Boolean(fieldErrors.phone)}
+                    className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                      fieldErrors.phone
+                        ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
+                        : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
+                    }`}
                   />
+                  {fieldErrors.phone ? <p className="text-[12px] text-[#F97066]">{fieldErrors.phone}</p> : null}
                 </div>
                 <div className="space-y-2.5">
                   <label htmlFor="country" className="text-[13px] font-medium text-white/90">Country *</label>
@@ -239,7 +289,12 @@ export function ContactHero() {
                     name="country"
                     required
                     defaultValue="🇺🇸 United States"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-[4px] h-[52px] px-4 text-white focus:outline-none focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20 transition-all"
+                    aria-invalid={Boolean(fieldErrors.country)}
+                    className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white focus:outline-none transition-all ${
+                      fieldErrors.country
+                        ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
+                        : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
+                    }`}
                   >
                     <option value="🇺🇸 United States" className="text-[#0A1015]">🇺🇸 United States</option>
                     <option value="🇨🇦 Canada" className="text-[#0A1015]">🇨🇦 Canada</option>
@@ -249,6 +304,7 @@ export function ContactHero() {
                     <option value="🇩🇪 Germany" className="text-[#0A1015]">🇩🇪 Germany</option>
                     <option value="🌍 Other" className="text-[#0A1015]">🌍 Other</option>
                   </select>
+                  {fieldErrors.country ? <p className="text-[12px] text-[#F97066]">{fieldErrors.country}</p> : null}
                 </div>
               </div>
 
@@ -259,7 +315,12 @@ export function ContactHero() {
                   name="helpType"
                   required
                   defaultValue=""
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-[4px] h-[52px] px-4 text-white focus:outline-none focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20 transition-all"
+                  aria-invalid={Boolean(fieldErrors.helpType)}
+                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white focus:outline-none transition-all ${
+                    fieldErrors.helpType
+                      ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
+                      : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
+                  }`}
                 >
                   <option value="" disabled className="text-[#0A1015]">Select an option</option>
                   <option value="Marketing Automation & Team ppl to hire" className="text-[#0A1015]">Marketing Automation & Team ppl to hire</option>
@@ -268,6 +329,7 @@ export function ContactHero() {
                   <option value="AI Systems & Agents & Team ppl to build" className="text-[#0A1015]">AI Systems & Agents & Team ppl to build</option>
                   <option value="General Inquiry & other" className="text-[#0A1015]">General Inquiry & other</option>
                 </select>
+                {fieldErrors.helpType ? <p className="text-[12px] text-[#F97066]">{fieldErrors.helpType}</p> : null}
               </div>
 
               <div className="space-y-2.5">
@@ -276,11 +338,17 @@ export function ContactHero() {
                   id="message"
                   name="message"
                   required
-                  minLength={10}
+                  minLength={20}
                   placeholder="Enter your message..."
                   rows={4}
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-[4px] p-4 text-white placeholder:text-white/25 focus:outline-none focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20 transition-all resize-none"
+                  aria-invalid={Boolean(fieldErrors.message)}
+                  className={`w-full bg-white/[0.03] border rounded-[4px] p-4 text-white placeholder:text-white/25 focus:outline-none transition-all resize-none ${
+                    fieldErrors.message
+                      ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
+                      : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
+                  }`}
                 />
+                {fieldErrors.message ? <p className="text-[12px] text-[#F97066]">{fieldErrors.message}</p> : null}
               </div>
             </div>
 
