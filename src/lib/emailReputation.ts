@@ -86,6 +86,18 @@ async function fetchAbstractEmailCheck(url: string) {
   }
 }
 
+function isRateLimitResponse(data: AbstractApiResponse | null) {
+  if (!data) return false
+
+  const rawMessage =
+    (typeof data.message === "string" && data.message) ||
+    (typeof data.error === "string" && data.error) ||
+    (typeof data.error_message === "string" && data.error_message) ||
+    ""
+
+  return /more requests per second|rate limit|too many requests|1 request per second/i.test(rawMessage)
+}
+
 export async function validateEmailWithAbstract(email: string): Promise<EmailValidationResult> {
   const apiKey = process.env.ABSTRACT_EMAIL_REPUTATION_API_KEY
   if (!apiKey) {
@@ -94,16 +106,6 @@ export async function validateEmailWithAbstract(email: string): Promise<EmailVal
 
   const encodedEmail = encodeURIComponent(email.trim())
   const reputationUrl = `https://emailreputation.abstractapi.com/v1/?api_key=${apiKey}&email=${encodedEmail}`
-  const validationUrl = `https://emailvalidation.abstractapi.com/v1/?api_key=${apiKey}&email=${encodedEmail}`
-
-  // Validation endpoint is stronger for format/MX/SMTP checks.
-  const validation = await fetchAbstractEmailCheck(validationUrl)
-  if (validation.ok && validation.data) {
-    const invalidReason = isClearlyInvalid(validation.data)
-    if (invalidReason) {
-      return { ok: false, message: invalidReason }
-    }
-  }
 
   const reputation = await fetchAbstractEmailCheck(reputationUrl)
   if (reputation.ok && reputation.data) {
@@ -113,13 +115,14 @@ export async function validateEmailWithAbstract(email: string): Promise<EmailVal
     }
   }
 
-  // If provider explicitly responded with errors (invalid key/plan/endpoint), fail clearly.
-  if (
-    isProviderErrorResponse(validation.data) ||
-    isProviderErrorResponse(reputation.data) ||
-    (!validation.ok && !reputation.ok)
-  ) {
-    return { ok: false, message: "We could not verify this email. Please enter a valid work email." }
+  // Free plan has strict 1 req/sec limit. Do not block leads when this throttles.
+  if (!reputation.ok && isRateLimitResponse(reputation.data)) {
+    return { ok: true }
+  }
+
+  // If provider explicitly responded with non-rate-limit errors, do not hard-block submissions.
+  if (isProviderErrorResponse(reputation.data) || !reputation.ok) {
+    return { ok: true }
   }
 
   return { ok: true }

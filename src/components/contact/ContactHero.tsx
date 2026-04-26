@@ -15,7 +15,6 @@ export function ContactHero() {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<ContactFieldErrors>({})
-  const [checkingEmail, setCheckingEmail] = useState(false)
   const [workEmailValue, setWorkEmailValue] = useState("")
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const [turnstileRenderKey, setTurnstileRenderKey] = useState(0)
@@ -27,46 +26,6 @@ export function ContactHero() {
       delete next[name as keyof ContactFieldErrors]
       return next
     })
-  }
-
-  const checkEmailReputation = async (email: string) => {
-    const normalized = email.trim()
-    if (!normalized) return true
-    if (!isValidEmail(normalized)) {
-      setFieldErrors((prev) => ({
-        ...prev,
-        workEmail: "Please enter a valid work email address.",
-      }))
-      return false
-    }
-
-    setCheckingEmail(true)
-    try {
-      const response = await fetch("/api/contact/validate-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: normalized }),
-      })
-
-      const data = (await response.json().catch(() => null)) as { error?: string } | null
-      if (!response.ok) {
-        setFieldErrors((prev) => ({
-          ...prev,
-          workEmail: data?.error || "Please use a valid work email address.",
-        }))
-        return false
-      }
-
-      setFieldErrors((prev) => {
-        if (!prev.workEmail) return prev
-        const next = { ...prev }
-        delete next.workEmail
-        return next
-      })
-      return true
-    } finally {
-      setCheckingEmail(false)
-    }
   }
 
   const normalizedWorkEmail = workEmailValue.trim()
@@ -104,12 +63,6 @@ export function ContactHero() {
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors)
-      setSubmitError("Please fix the highlighted fields.")
-      return
-    }
-
-    const emailOk = await checkEmailReputation(payload.workEmail)
-    if (!emailOk) {
       setSubmitError("Please fix the highlighted fields.")
       return
     }
@@ -268,9 +221,6 @@ export function ContactHero() {
                   autoComplete="email"
                   placeholder="john.doe@zyene.com"
                   aria-invalid={Boolean(fieldErrors.workEmail)}
-                  onBlur={(event) => {
-                    void checkEmailReputation(event.currentTarget.value)
-                  }}
                   onChange={(event) => {
                     const value = event.currentTarget.value
                     setWorkEmailValue(value)
@@ -307,9 +257,6 @@ export function ContactHero() {
                   }`}
                 />
                 {fieldErrors.workEmail ? <p className="text-[12px] text-[#F97066]">{fieldErrors.workEmail}</p> : null}
-                {checkingEmail && !fieldErrors.workEmail ? (
-                  <p className="text-[12px] text-white/60">Checking email...</p>
-                ) : null}
               </div>
             </div>
 
@@ -468,7 +415,7 @@ export function ContactHero() {
 
               <button 
                 type="submit"
-                disabled={submitting || checkingEmail || isSubmitBlockedByEmail || !turnstileToken}
+                disabled={submitting || isSubmitBlockedByEmail || !turnstileToken}
                 className="w-full h-[56px] bg-white text-[#0A1015] hover:bg-white/90 font-bold text-[14px] rounded-[4px] transition-all tracking-wide uppercase"
               >
                 {submitting ? "Submitting..." : "Submit"}
