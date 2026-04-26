@@ -9,6 +9,7 @@ import { Turnstile } from "react-turnstile"
 
 export function ContactHero() {
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+  const web3FormsAccessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null)
@@ -41,6 +42,31 @@ export function ContactHero() {
 
     setSubmitting(true)
     try {
+      // Client-side Web3Forms call (free-plan compatible).
+      const web3FormsResult = web3FormsAccessKey
+        ? await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              access_key: web3FormsAccessKey,
+              subject: `New Contact Lead - ${payload.helpType}`,
+              from_name: "Zyene Website Contact Form",
+              full_name: payload.fullName,
+              work_email: payload.workEmail,
+              company: payload.company,
+              job_title: payload.jobTitle,
+              phone: payload.phone,
+              country: payload.country,
+              help_type: payload.helpType,
+              message: payload.message,
+              source_page: payload.sourcePage,
+            }),
+          }).then(async (res) => {
+            const data = (await res.json().catch(() => null)) as { success?: boolean } | null
+            return { ok: Boolean(res.ok && data?.success) }
+          })
+        : { ok: false }
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -55,7 +81,11 @@ export function ContactHero() {
       e.currentTarget.reset()
       setTurnstileToken(null)
       setTurnstileRenderKey((prev) => prev + 1)
-      setSubmitSuccess("Thanks! We received your details. Our team will reach out soon.")
+      setSubmitSuccess(
+        web3FormsResult.ok
+          ? "Thanks! We received your details. Our team will reach out soon."
+          : "Thanks! We received your details. CRM sync completed; email notification is pending."
+      )
     } catch (error) {
       setTurnstileToken(null)
       setTurnstileRenderKey((prev) => prev + 1)

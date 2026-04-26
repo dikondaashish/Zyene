@@ -173,44 +173,6 @@ async function appendToZohoContactsSheet(body: ContactPayload) {
   return { ok: true }
 }
 
-async function sendWeb3FormsLeadEmail(body: ContactPayload) {
-  const accessKey = process.env.WEB3FORMS_ACCESS_KEY
-  if (!accessKey) {
-    return { ok: false, error: "Web3Forms access key is not configured." }
-  }
-
-  const payload = {
-    access_key: accessKey,
-    subject: `New Contact Lead - ${body.helpType}`,
-    from_name: "Zyene Website Contact Form",
-    full_name: body.fullName,
-    work_email: body.workEmail,
-    company: body.company,
-    job_title: body.jobTitle,
-    phone: body.phone || "",
-    country: body.country,
-    help_type: body.helpType,
-    message: body.message,
-    source_page: body.sourcePage || "/contact",
-  }
-
-  const web3Res = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  })
-
-  const data = (await web3Res.json().catch(() => null)) as { success?: boolean; message?: string } | null
-  if (!web3Res.ok || !data?.success) {
-    return {
-      ok: false,
-      error: data?.message || "Failed to send lead email.",
-    }
-  }
-
-  return { ok: true }
-}
-
 export async function POST(request: NextRequest) {
   const requestId = `contact_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
   try {
@@ -253,62 +215,24 @@ export async function POST(request: NextRequest) {
     }
     logContactDebug("turnstile_verified", { requestId })
 
-    const mailResult = await sendWeb3FormsLeadEmail(body)
     const zohoResult = await appendToZohoContactsSheet(body)
 
-    if (!mailResult.ok) {
-      logContactDebug("web3forms_failed", { requestId, error: mailResult.error })
-    } else {
-      logContactDebug("web3forms_sent", { requestId })
-    }
-
     if (!zohoResult.ok) {
-      logContactDebug("zoho_sync_failed_non_blocking", {
+      logContactDebug("zoho_sync_failed", {
         requestId,
         error: zohoResult.error,
         details: "details" in zohoResult ? zohoResult.details : undefined,
       })
-    } else {
-      logContactDebug("zoho_sync_success", { requestId })
+      return NextResponse.json({ error: "CRM sync failed. Please try again shortly." }, { status: 502 })
     }
 
-    // Accept submission if at least one downstream delivery path succeeds.
-    if (mailResult.ok || zohoResult.ok) {
-      const warning =
-        !mailResult.ok && zohoResult.ok
-          ? "Submission saved to CRM. Email notification is pending."
-          : mailResult.ok && !zohoResult.ok
-            ? "Submission email sent, but CRM sync is pending."
-            : undefined
-
-      logContactDebug("submission_success", {
-        requestId,
-        warning: warning ?? null,
-      })
-
-      return NextResponse.json({
-        ok: true,
-        message: "Contact submission received.",
-        sourcePage: body.sourcePage || "/contact",
-        warning,
-      })
-    }
-
-    const debug =
-      process.env.CONTACT_API_DEBUG === "true"
-        ? {
-            web3forms: mailResult.ok ? "ok" : mailResult.error,
-            zoho: zohoResult.ok ? "ok" : zohoResult.error,
-          }
-        : undefined
-
-    return NextResponse.json(
-      {
-        error: "Submission could not be delivered right now. Please try again shortly.",
-        debug,
-      },
-      { status: 502 }
-    )
+    logContactDebug("zoho_sync_success", { requestId })
+    logContactDebug("submission_success", { requestId })
+    return NextResponse.json({
+      ok: true,
+      message: "Contact submission received.",
+      sourcePage: body.sourcePage || "/contact",
+    })
   } catch {
     logContactDebug("unexpected_error", { requestId })
     return NextResponse.json({ error: "Unexpected server error." }, { status: 500 })
