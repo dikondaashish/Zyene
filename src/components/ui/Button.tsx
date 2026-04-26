@@ -1,45 +1,62 @@
-import { ReactNode, ButtonHTMLAttributes } from "react";
+"use client"
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  variant?: "primary" | "secondary" | "outline" | "ghost";
-  size?: "sm" | "md" | "lg";
-  className?: string;
+import * as React from "react"
+import { cn } from "@/lib/utils"
+import { motion, HTMLMotionProps } from "framer-motion"
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "dark";
+  size?: "default" | "sm" | "lg" | "icon";
+  asChild?: boolean;
 }
 
-export function Button({
-  children,
-  variant = "primary",
-  size = "md",
-  className = "",
-  ...props
-}: ButtonProps) {
-  const baseStyles =
-    "inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background disabled:opacity-50 disabled:cursor-not-allowed";
-
-  const variantStyles = {
-    primary:
-      "bg-primary text-primary-foreground hover:opacity-90 focus:ring-primary shadow-lg hover:shadow-xl",
-    secondary:
-      "bg-secondary text-secondary-foreground hover:bg-muted focus:ring-secondary",
-    outline:
-      "border-2 border-primary text-foreground hover:bg-primary hover:text-primary-foreground focus:ring-primary",
-    ghost:
-      "text-foreground hover:bg-muted focus:ring-muted",
-  };
-
-  const sizeStyles = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3 text-base",
-    lg: "px-8 py-4 text-lg",
-  };
-
-  return (
-    <button
-      className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
-  );
+const buttonVariants = {
+  primary: "bg-white text-[#0A1015] hover:bg-white/95 backdrop-blur-[4px] shadow-[0_12px_24px_-8px_rgba(0,0,0,0.15)]",
+  secondary: "bg-white/[0.04] text-white hover:bg-white/[0.08] border border-white/10 backdrop-blur-md",
+  outline: "border border-white/10 bg-transparent hover:bg-white/[0.04] text-white",
+  ghost: "hover:bg-white/[0.04] text-[#CECFD0] hover:text-white",
+  dark: "bg-[#0A1015] text-white hover:bg-[#0A1015]/90 shadow-[0_12px_24px_-8px_rgba(0,0,0,0.15)]",
 }
+
+const sizeVariants = {
+  default: "h-[48px] px-6 py-2 text-[15px]",
+  sm: "h-[40px] px-5 text-[14px]",
+  lg: "h-[58px] px-10 text-[16px]",
+  icon: "h-10 w-10",
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant = "primary", size = "default", asChild, children, ...props }, ref) => {
+    const classes = cn(
+      "inline-flex items-center justify-center rounded-[4px] font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue disabled:pointer-events-none disabled:opacity-50",
+      buttonVariants[variant],
+      sizeVariants[size],
+      className
+    )
+
+    if (asChild && React.isValidElement(children)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return React.cloneElement(children as any, {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        className: cn(classes, (children as any).props.className),
+        ...props,
+      })
+    }
+
+    return (
+      <motion.button
+        ref={ref}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        className={classes}
+        {...(props as HTMLMotionProps<"button">)}
+      >
+        {children}
+      </motion.button>
+    )
+  }
+)
+Button.displayName = "Button"
+
+export { Button }

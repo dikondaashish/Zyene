@@ -1,167 +1,117 @@
-import Link from "next/link";
-import { Facebook, Linkedin, Instagram, Mail } from "lucide-react";
+"use client"
 
-const footerLinks = {
-  company: [
-    { href: "/about", label: "About" },
-    { href: "/services", label: "Services" },
-    { href: "/pricing", label: "Pricing" },
-    { href: "/voice", label: "Zentraic AI" },
-    { href: "https://zyenereviews.com", label: "Zyene Reviews", external: true },
-    { href: "/contact", label: "Contact" },
-  ],
-  services: [
-    { href: "/services#marketing", label: "Digital Marketing" },
-    { href: "/services#webdev", label: "Web & App Development" },
-    { href: "/services#crm", label: "CRM & Automation" },
-    { href: "/services#ai", label: "AI Solutions" },
-  ],
-};
+import Link from "next/link"
+import Image from "next/image"
+import { SITE_DATA } from "@/lib/constants"
 
-const socialLinks = [
-  {
-    href: "https://www.facebook.com/share/17xwRYPuyo/?mibextid=wwXIfr",
-    icon: Facebook,
-    label: "Zyene on Facebook",
-  },
-  {
-    href: "https://www.linkedin.com/company/zyene/posts/?feedView=all",
-    icon: Linkedin,
-    label: "Zyene on LinkedIn",
-  },
-  {
-    href: "https://www.instagram.com/zyene_inc/",
-    icon: Instagram,
-    label: "Zyene on Instagram",
-  },
-];
+const FacebookIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+)
+
+const XIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+)
+
+const LinkedinIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+)
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="mt-20 md:mt-32 bg-muted border-t border-border">
-      <div className="container pt-32 pb-16">
-        <div className="h-24" aria-hidden="true" />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand */}
-          <div className="lg:col-span-1">
-            <Link
-              href="/"
-              className="inline-flex items-start mb-2 text-4xl leading-none font-bold font-brandmark text-foreground hover:text-brand transition-colors"
-              aria-label="Zyene home"
-            >
-              <span className="font-brandmark">Zyene</span>
-              <sup className="ml-1 text-xs leading-none font-semibold font-brandmark">™</sup>
-            </Link>
-            <p className="text-sm tracking-[0.12em] text-muted-foreground mb-4 font-brandmark">
-              Growth Powered by Intelligence
-            </p>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              Marketing systems, CRM automation, and AI tools for businesses that want to scale.
-            </p>
-            <div className="flex items-center space-x-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-background hover:bg-accent transition-colors duration-200"
-                  aria-label={social.label}
-                >
-                  <social.icon className="h-5 w-5" aria-hidden="true" />
-                </a>
-              ))}
-            </div>
-          </div>
+    <footer className="bg-[#0A1015] pb-12 px-6 md:px-16 lg:px-24">
+      <div className="max-w-[1400px] mx-auto">
 
-          {/* Company Links */}
-          <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
-              Company
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={`${link.href}-${link.label}`}>
-                  <Link
-                    href={link.href}
-                    target={"external" in link && link.external ? "_blank" : undefined}
-                    rel={"external" in link && link.external ? "noopener noreferrer" : undefined}
-                    className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        {/* Pages Row */}
+        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-6">
+          <div className="flex items-center gap-8 w-full flex-1">
+            <span className="text-[14px] text-white font-medium whitespace-nowrap">Pages</span>
+            <div className="h-px flex-1 bg-[#1F2224] opacity-100" />
           </div>
-
-          {/* Services Links */}
-          <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
-              Services
-            </h3>
-            <ul className="space-y-3">
-              {footerLinks.services.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
-              Contact
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="mailto:support@zyene.com"
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center space-x-2"
-                >
-                  <Mail className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-                  <span>support@zyene.com</span>
-                </a>
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 justify-start md:justify-end">
+            {SITE_DATA.footerLinks.pages.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-[13px] text-[#8A8F98] hover:text-white transition-colors py-1">
+                  {link.label}
+                </Link>
               </li>
-              <li>
-                <address className="not-italic text-muted-foreground leading-relaxed">
-                  28 Geary St Ste 650 #1892<br />
-                  San Francisco, CA 94108
-                </address>
-              </li>
-            </ul>
+            ))}
+          </ul>
+        </div>
+
+        {/* Legal Row */}
+        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-16">
+          <div className="flex items-center gap-8 w-full flex-1">
+            <span className="text-[14px] text-white font-medium whitespace-nowrap">Legal</span>
+            <div className="h-px flex-1 bg-[#1F2224] opacity-100" />
           </div>
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 justify-start md:justify-end">
+            {SITE_DATA.footerLinks.legal.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-[13px] text-[#8A8F98] hover:text-white transition-colors py-1">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 pb-4 md:pb-6 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-muted-foreground text-sm">
-            &copy; {currentYear} Zyene, Inc. All rights reserved.
-          </p>
-          <nav aria-label="Legal links" className="flex items-center space-x-6 text-sm">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+          {/* Left: Logo + Copyright */}
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3">
+              <div className="relative w-8 h-8 flex-shrink-0">
+                <Image
+                  src={SITE_DATA.logoDark}
+                  alt="Zyene Logo"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="font-space-grotesk font-bold text-[28px] tracking-[-0.02em] text-white">
+                  Zyene
+                  <sup className="ml-[-0.15em] inline-block text-[7px] translate-x-[0.8em] -translate-y-[2.1em] shadow-[0px_4px_12px_0px_rgba(0,0,0,0.15)]">TM</sup>
+                </span>
+                <span className="font-space-grotesk text-[9px] tracking-[0.06em] mt-0.5 text-[#CECFD0]">
+                  Growth Powered by Intelligence
+                </span>
+              </div>
+            </div>
+            <p className="text-[13px] text-[#CECFD0]">
+              Zyene 2025. All Rights Reserved
+            </p>
+          </div>
+
+          {/* Right: Social Icons */}
+          <div className="flex items-center gap-3">
             <Link
-              href="/privacy"
-              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener"
+              className="w-10 h-10 rounded-full border border-white/[0.12] flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all"
             >
-              Privacy Policy
+              <FacebookIcon />
             </Link>
             <Link
-              href="/terms"
-              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+              href="https://x.com"
+              target="_blank"
+              rel="noopener"
+              className="w-10 h-10 rounded-full border border-white/[0.12] flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all"
             >
-              Terms of Service
+              <XIcon />
             </Link>
-          </nav>
+            <Link
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener"
+              className="w-10 h-10 rounded-full border border-white/[0.12] flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all"
+            >
+              <LinkedinIcon />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
-  );
+  )
 }

@@ -1,40 +1,57 @@
-import { Metadata } from "next";
-import { ContactPageClient } from "./ContactPageClient";
+import { ContactHero } from "@/components/contact/ContactHero"
+import { ContactGlobalReach } from "@/components/contact/ContactGlobalReach"
+import { StrategyCallWidget } from "@/components/contact/StrategyCallWidget"
+import { WhoThisIsFor } from "@/components/contact/WhoThisIsFor"
+import { WhatHappensNext } from "@/components/contact/WhatHappensNext"
+import { FAQ } from "@/components/home/FAQ"
+import { FooterCTA } from "@/components/home/FooterCTA"
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Get in touch with Zyene. Send a message, book a free 30-minute consultation, or reach us directly at support@zyene.com.",
-};
+const CONTACT_FAQS = [
+  {
+    question: "What happens after I submit the contact form?",
+    answer:
+      "Our team reviews your details, then reaches out with next steps to schedule a strategy conversation and assess fit.",
+  },
+  {
+    question: "What should I prepare before the strategy call?",
+    answer:
+      "Bring context on your current workflows, bottlenecks, tools in use, and goals so we can recommend a practical action plan.",
+  },
+  {
+    question: "Do you work with teams in different regions?",
+    answer:
+      "Yes. We support distributed teams and can align implementation timelines around your operating timezone needs.",
+  },
+  {
+    question: "Can Zyene support both systems and execution?",
+    answer:
+      "Yes. We can help design and deploy systems while also supporting execution so your team can move faster with less overhead.",
+  },
+  {
+    question: "Is there any commitment after the first call?",
+    answer:
+      "No. The first conversation is focused on clarity and fit, so you can decide the right next step with no pressure.",
+  },
+]
+
+export const metadata = {
+  title: "Contact | AI Supply",
+  description: "Get in touch with AI Supply to build the infrastructure for the next decade of work.",
+}
 
 export default function ContactPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="py-20 md:py-28 bg-muted" aria-labelledby="contact-heading">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1
-              id="contact-heading"
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6"
-            >
-              Let&apos;s Talk
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
-              Send a message, book a call, or reach us at{" "}
-              <a
-                href="mailto:support@zyene.com"
-                className="text-foreground underline underline-offset-2 hover:text-brand transition-colors"
-              >
-                support@zyene.com
-              </a>
-              .
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <ContactPageClient />
+      <ContactHero />
+      
+      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
+        <ContactGlobalReach />
+        <WhoThisIsFor />
+        <StrategyCallWidget />
+        <WhatHappensNext />
+        <FAQ faqs={CONTACT_FAQS} sectionClassName="py-24 px-6 md:px-12 lg:px-24 bg-white overflow-hidden" />
+        <FooterCTA />
+      </div>
     </>
-  );
+  )
 }
