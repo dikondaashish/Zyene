@@ -248,26 +248,32 @@ export async function POST(request: NextRequest) {
     }
 
     const mailResult = await sendWeb3FormsLeadEmail(body)
-    if (!mailResult.ok) {
-      return NextResponse.json({ error: mailResult.error }, { status: 502 })
-    }
-
-    // Zoho sync is best-effort. Do not fail the user submission if sheet sync fails.
     const zohoResult = await appendToZohoContactsSheet(body)
-    if (!zohoResult.ok) {
+
+    // Accept the submission if at least one downstream delivery path succeeds.
+    if (mailResult.ok || zohoResult.ok) {
+      const warnings: string[] = []
+      if (!mailResult.ok) warnings.push("Email notification is pending.")
+      if (!zohoResult.ok) warnings.push("CRM sync is pending.")
+
       return NextResponse.json({
         ok: true,
         message: "Contact submission received.",
         sourcePage: body.sourcePage || "/contact",
-        warning: "Submission email sent, but CRM sync is pending.",
+        warning: warnings.length > 0 ? warnings.join(" ") : undefined,
       })
     }
 
-    return NextResponse.json({
-      ok: true,
-      message: "Contact submission received.",
-      sourcePage: body.sourcePage || "/contact",
-    })
+    return NextResponse.json(
+      {
+        error: "Failed to deliver contact submission to upstream services.",
+        details: {
+          web3forms: mailResult.error,
+          zoho: zohoResult.error,
+        },
+      },
+      { status: 502 }
+    )
   } catch {
     return NextResponse.json({ error: "Unexpected server error." }, { status: 500 })
   }
