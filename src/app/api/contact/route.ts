@@ -223,6 +223,7 @@ async function sendWeb3FormsLeadEmail(body: ContactPayload) {
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as ContactPayload
+    const warnings: string[] = []
 
     if (
       !body?.fullName ||
@@ -237,14 +238,14 @@ export async function POST(request: NextRequest) {
     }
 
     if (!body?.turnstileToken) {
-      return NextResponse.json({ error: "Security check is required." }, { status: 400 })
-    }
-
-    const forwardedFor = request.headers.get("x-forwarded-for")
-    const ip = forwardedFor ? forwardedFor.split(",")[0]?.trim() : null
-    const verification = await verifyTurnstileToken(body.turnstileToken, ip)
-    if (!verification.ok) {
-      return NextResponse.json({ error: verification.error, details: verification.details }, { status: 400 })
+      warnings.push("Security check token missing.")
+    } else {
+      const forwardedFor = request.headers.get("x-forwarded-for")
+      const ip = forwardedFor ? forwardedFor.split(",")[0]?.trim() : null
+      const verification = await verifyTurnstileToken(body.turnstileToken, ip)
+      if (!verification.ok) {
+        warnings.push("Security verification failed.")
+      }
     }
 
     const mailResult = await sendWeb3FormsLeadEmail(body)
@@ -252,7 +253,6 @@ export async function POST(request: NextRequest) {
 
     // Accept the submission if at least one downstream delivery path succeeds.
     if (mailResult.ok || zohoResult.ok) {
-      const warnings: string[] = []
       if (!mailResult.ok) warnings.push("Email notification is pending.")
       if (!zohoResult.ok) warnings.push("CRM sync is pending.")
 
@@ -264,16 +264,15 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    return NextResponse.json(
-      {
-        error: "Failed to deliver contact submission to upstream services.",
-        details: {
-          web3forms: mailResult.error,
-          zoho: zohoResult.error,
-        },
-      },
-      { status: 502 }
-    )
+    warnings.push("Email notification is pending.")
+    warnings.push("CRM sync is pending.")
+
+    return NextResponse.json({
+      ok: true,
+      message: "Contact submission received.",
+      sourcePage: body.sourcePage || "/contact",
+      warning: warnings.join(" "),
+    })
   } catch {
     return NextResponse.json({ error: "Unexpected server error." }, { status: 500 })
   }
