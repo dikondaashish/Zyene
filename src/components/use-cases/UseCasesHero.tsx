@@ -91,7 +91,7 @@ export function UseCasesHero() {
               <Image src="/images/Logo_White.png" alt="Zyene Logo" fill className="object-contain" />
             </div>
             <span className="text-[16px] font-medium text-white/90">
-              Zyene Use Cases
+              Use Cases
             </span>
           </motion.div>
           <motion.p
