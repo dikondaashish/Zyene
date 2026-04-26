@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, type Variants } from "framer-motion"
 import { SITE_DATA } from "@/lib/constants"
 import { 
   TrendingUp, 
@@ -20,7 +20,7 @@ const BENEFIT_ICONS = [
   ShieldCheck
 ]
 
-const textRevealVariants = {
+const textRevealVariants: Variants = {
   hidden: { opacity: 0, filter: "blur(10px)", y: 10 },
   visible: (i: number) => ({
     opacity: 1,
@@ -29,7 +29,7 @@ const textRevealVariants = {
     transition: {
       delay: i * 0.05,
       duration: 0.8,
-      ease: [0.16, 1, 0.3, 1]
+      ease: [0.16, 1, 0.3, 1] as const
     }
   })
 }
@@ -46,7 +46,7 @@ export function Benefits() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
             className="text-[14px] font-bold text-[#0A1015] tracking-[0.2em] uppercase mb-8"
           >
             Benefits
@@ -78,7 +78,7 @@ export function Benefits() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] as const }}
                 className="flex flex-col gap-8"
               >
                 {/* Icon Wrapper - Matching Framer Gradient */}
