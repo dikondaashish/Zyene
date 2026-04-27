@@ -42,3 +42,5 @@ next-env.d.ts
 
 # local clone of claude-seo (skills live in .cursor/skills/)
 /claude-seo/
+
+/.cursor/

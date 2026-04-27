@@ -107,7 +107,7 @@ export function Calculator() {
             </h3>
             <div className="h-px w-full bg-black/10" />
             <p className="text-[18px] text-[#4A4F59] leading-[1.6]">
-              AI Supply could reclaim 80% of that — saving <span className="text-[#0A1015] font-semibold font-display tracking-tight">${(potentialSavings).toLocaleString()}/month</span>.
+              Zyene could reclaim 80% of that — saving <span className="text-[#0A1015] font-semibold font-display tracking-tight">${(potentialSavings).toLocaleString()}/month</span>.
             </p>
             <div className="mt-4">
               <Button size="lg" className="w-full" variant="dark" asChild>

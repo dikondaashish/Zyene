@@ -52,6 +52,23 @@ export function Footer() {
           </ul>
         </div>
 
+        {/* SEO Row */}
+        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-10">
+          <div className="flex items-center gap-8 w-full flex-1">
+            <span className="text-[14px] text-white font-medium whitespace-nowrap">SEO</span>
+            <div className="h-px flex-1 bg-[#1F2224] opacity-100" />
+          </div>
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 justify-start md:justify-end">
+            {SITE_DATA.footerLinks.seo.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="text-[13px] text-[#8A8F98] hover:text-white transition-colors py-1">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         {/* Backed by — Google for Startups & Stripe */}
         <div className="mb-14 md:mb-16 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-5">
           <a

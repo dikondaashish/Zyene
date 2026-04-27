@@ -222,36 +222,6 @@ export const SITE_DATA = {
       answer: "Yes. Zyene uses secure, permission-based workflows with encrypted data handling and controlled access so your business data stays protected."
     }
   ],
-  pricing: [
-    {
-      name: "Starter",
-      description: "Best for businesses who test if AI can boost their efficiency.",
-      priceMonthly: 1124,
-      priceYearly: 899,
-      features: [
-        "Automate 3 core workflows",
-        "Up to 5 AI agents",
-        "Standard integrations",
-        "Basic analytics",
-        "Email & chat support",
-        "Onboarding session"
-      ]
-    },
-    {
-      name: "Pro",
-      description: "Best for businesses who are ready to go all-in with AI and fully optimize their ops.",
-      priceMonthly: 2374,
-      priceYearly: 1899,
-      features: [
-        "Unlimited workflows",
-        "Up to 15 AI agents",
-        "Premium integrations (Zapier, Slack, Notion, etc.)",
-        "Advanced reporting",
-        "Dedicated account manager",
-        "Priority support & strategy calls"
-      ]
-    }
-  ],
   footerLinks: {
     pages: [
       { label: "Home", href: "/" },
@@ -268,6 +238,12 @@ export const SITE_DATA = {
       { label: "Privacy policy", href: "/legal/privacy-policy" },
       { label: "Terms & conditions", href: "/legal/terms-conditions" },
     ]
+    ,
+    seo: [
+      { label: "Sitemap", href: "/sitemap.xml" },
+      { label: "Robots", href: "/robots.txt" },
+      { label: "LLMs", href: "/llms.txt" },
+    ],
   },
   footerCtaBg: "/images/footer-cta-bg.png",
   testimonialBg: "/images/Logo_White.png"
