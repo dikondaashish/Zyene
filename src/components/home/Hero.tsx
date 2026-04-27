@@ -141,9 +141,9 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="text-[32px] sm:text-[44px] md:text-[80px] leading-[1.05] font-normal tracking-[-0.04em] text-white max-w-[1000px] mb-6 font-display-serif"
         >
-          AI-Powered Digital Transformation
+          We Build AI Systems
           <br />
-          for Marketing, Sales & Operations
+          That Scale Your Business
         </motion.h1>
 
         {/* Description */}
