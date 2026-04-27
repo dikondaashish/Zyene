@@ -67,7 +67,7 @@ export function Products() {
               {/* Image Header */}
               <div className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-white">
                 <Image 
-                  src="/images/image.png"
+                  src="/images/Zyene Reviews.png"
                   alt="Zyene Reviews Interface" 
                   fill 
                   className="object-contain p-8 md:p-10 transition-transform duration-700 group-hover:scale-[1.02]"

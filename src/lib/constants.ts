@@ -20,7 +20,6 @@ export const SITE_DATA = {
     { label: "Home", href: "/" },
     { label: "Solutions", href: "/solutions" },
     { label: "Use cases", href: "/use-cases" },
-    { label: "Case Studies", href: "/case-studies" },
     { label: "Products", href: "/products" },
     {
       label: "About Us",
@@ -28,6 +27,7 @@ export const SITE_DATA = {
       children: [
         { label: "About", href: "/about" },
         { label: "Careers", href: "/careers" },
+        { label: "Case Studies", href: "/case-studies" },
         { label: "Blog", href: "/blog" },
       ],
     },

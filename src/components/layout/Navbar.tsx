@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, useScroll, useMotionValueEvent } from "framer-motion"
-import { Menu, X, ChevronDown, Building2, UserRoundSearch } from "lucide-react"
+import { Menu, X, ChevronDown, Building2, UserRoundSearch, Newspaper, BriefcaseBusiness } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { SITE_DATA } from "@/lib/constants"
 import { ScheduleCallModal } from "@/components/shared/ScheduleCallModal"
@@ -20,6 +20,8 @@ export function Navbar() {
   const getAboutMenuIcon = (label: string) => {
     if (label.toLowerCase() === "about") return <Building2 className="w-3.5 h-3.5" />
     if (label.toLowerCase() === "careers") return <UserRoundSearch className="w-3.5 h-3.5" />
+    if (label.toLowerCase() === "case studies") return <BriefcaseBusiness className="w-3.5 h-3.5" />
+    if (label.toLowerCase() === "blog") return <Newspaper className="w-3.5 h-3.5" />
     return null
   }
 

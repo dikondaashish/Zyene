@@ -11,7 +11,7 @@ const productCards = [
     subtitle: "Reputation management for local businesses",
     description:
       "Monitor reviews, reply fast, and automate review growth from one place. Built for operators who need daily visibility and better customer trust.",
-    image: "/images/image.png",
+    image: "/images/Zyene Reviews.png",
     imageAlt: "Zyene Reviews brand logo",
     imageFit: "contain",
     imageBg: "bg-white",

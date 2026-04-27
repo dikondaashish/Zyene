@@ -56,7 +56,7 @@ export function ReviewsDeepDive() {
         <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-8 items-center rounded-[20px] border border-[#E4E8EE] bg-[#F8FAFD] p-6 md:p-8">
           <div className="rounded-[12px] bg-white border border-[#E4E8EE] p-4">
             <Image
-              src="/images/image.png"
+              src="/images/Zyene Reviews.png"
               alt="Zyene Reviews logo"
               width={540}
               height={137}
