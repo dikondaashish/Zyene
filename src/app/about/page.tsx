@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { AboutHero } from "@/components/about/AboutHero"
 import { AboutMission } from "@/components/about/AboutMission"
 import { AboutExecutionModel } from "@/components/about/AboutExecutionModel"
@@ -6,6 +7,28 @@ import { Hiring } from "@/components/about/Hiring"
 import { RealNumbers } from "@/components/use-cases/RealNumbers"
 import { FAQ } from "@/components/home/FAQ"
 import { FooterCTA } from "@/components/home/FooterCTA"
+
+export const metadata: Metadata = {
+  title: "About Zyene | AI-Powered Digital Transformation Execution Company",
+  description:
+    "Zyene is an AI-powered digital transformation execution company helping founders, operators, and growth teams transform how their businesses run. We build AI systems with full execution support and measurable outcomes.",
+  keywords: [
+    "about Zyene",
+    "AI digital transformation company",
+    "AI-powered transformation",
+    "digital transformation execution",
+    "AI business transformation company",
+    "operational AI",
+  ],
+  alternates: { canonical: "https://zyene.com/about" },
+  openGraph: {
+    title: "About Zyene | AI-Powered Digital Transformation Execution Company",
+    description:
+      "Zyene helps founders, operators, and growth teams transform how their businesses run with AI systems and full execution support.",
+    url: "https://zyene.com/about",
+    type: "website",
+  },
+}
 
 const ABOUT_FAQS = [
   {

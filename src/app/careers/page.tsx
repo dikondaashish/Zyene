@@ -35,8 +35,24 @@ const CAREERS_FAQS = [
 ]
 
 export const metadata = {
-  title: "Careers | AI Supply",
-  description: "Join us in building the future of autonomous AI workforce. We're hiring builders, thinkers, and systems-minded individuals.",
+  title: "Careers at Zyene | Join Our Digital Transformation Team",
+  description:
+    "Join Zyene — an AI-powered digital transformation execution company. We're hiring builders, operators, and systems-minded individuals to help businesses transform how they run.",
+  keywords: [
+    "Zyene careers",
+    "digital transformation company jobs",
+    "AI transformation company hiring",
+    "AI execution company jobs",
+    "join digital transformation team",
+  ],
+  alternates: { canonical: "https://zyene.com/careers" },
+  openGraph: {
+    title: "Careers at Zyene | Join Our Digital Transformation Team",
+    description:
+      "Zyene is hiring builders and systems thinkers to drive AI-powered digital transformation for businesses. Explore open roles.",
+    url: "https://zyene.com/careers",
+    type: "website",
+  },
 }
 
 export default function CareersPage() {

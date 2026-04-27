@@ -18,7 +18,7 @@ export function Features() {
           className="text-center max-w-[800px] mx-auto mb-12"
         >
           <p className="text-[13px] font-semibold text-[#0A1015] tracking-widest uppercase mb-6">Problem</p>
-          <h2 className="text-[36px] md:text-[48px] leading-[1.05] font-normal tracking-[-0.03em] text-[#0A1015]">
+          <h2 className="text-[26px] sm:text-[32px] md:text-[48px] leading-[1.05] font-normal tracking-[-0.03em] text-[#0A1015]">
             Most Businesses Don&apos;t Have a Growth Problem — They Have a Systems Problem
           </h2>
         </motion.div>
@@ -32,14 +32,14 @@ export function Features() {
             transition={{ duration: 0.6 }}
             className="flex flex-col group"
           >
-            <div className="bg-[#F7F8FA] rounded-[4px] border border-[#EEEEEE] p-12 aspect-[4/3] flex items-center justify-center mb-8 overflow-hidden">
+            <div className="bg-[#F7F8FA] rounded-[4px] border border-[#EEEEEE] p-4 sm:p-8 md:p-12 aspect-[4/3] flex items-center justify-center mb-8 overflow-hidden">
                {/* Visualizer Placeholder - Pie Chart Style */}
-               <div className="relative w-full max-w-[320px] bg-white rounded-xl p-8 shadow-2xl transform transition-transform duration-700 group-hover:scale-105">
-                 <div className="flex flex-col gap-1 mb-8">
+               <div className="relative w-full max-w-[320px] bg-white rounded-xl p-4 sm:p-6 md:p-8 shadow-2xl transform transition-transform duration-700 group-hover:scale-105">
+                 <div className="flex flex-col gap-1 mb-4 md:mb-8">
                   <p className="text-[12px] font-bold text-[#8A8F98] uppercase tracking-widest">Problem Signals</p>
                    <p className="text-[36px] font-semibold text-[#0A1015]">4</p>
                  </div>
-                 <div className="flex items-center gap-10">
+                 <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-10">
                    <div className="flex flex-col gap-4">
                      <div className="flex items-center gap-3">
                        <div className="w-3 h-3 rounded-sm bg-[#0A1015]" />
@@ -80,10 +80,10 @@ export function Features() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="flex flex-col group"
           >
-            <div className="bg-[#F7F8FA] rounded-[4px] border border-[#EEEEEE] p-12 aspect-[4/3] flex items-center justify-center mb-4 overflow-hidden">
+            <div className="bg-[#F7F8FA] rounded-[4px] border border-[#EEEEEE] p-4 sm:p-8 md:p-12 aspect-[4/3] flex items-center justify-center mb-4 overflow-hidden">
                {/* Workflow Issue Table */}
                <div className="w-full bg-white rounded-xl shadow-2xl overflow-hidden transform transition-transform duration-700 group-hover:scale-105 border border-[#EDF1F5]">
-                 <div className="flex items-center justify-between px-5 py-4 bg-[#F9FBFD] border-b border-[#EDF1F5]">
+                 <div className="flex items-center justify-between px-4 sm:px-5 py-4 bg-[#F9FBFD] border-b border-[#EDF1F5]">
                     <span className="text-[10px] font-bold text-[#7D8694] tracking-[0.12em] uppercase">ID</span>
                     <span className="text-[10px] font-bold text-[#7D8694] tracking-[0.12em] uppercase">Workflow</span>
                     <span className="text-[10px] font-bold text-[#7D8694] tracking-[0.12em] uppercase">Issue</span>
@@ -91,10 +91,10 @@ export function Features() {
                  {[1,2,3,4,5].map((i) => (
                    <div
                      key={i}
-                     className="flex items-center justify-between px-5 py-3.5 border-b border-[#F1F4F7] last:border-0 hover:bg-[#FBFCFD] transition-colors"
+                     className="flex items-center justify-between px-3 sm:px-5 py-3.5 border-b border-[#F1F4F7] last:border-0 hover:bg-[#FBFCFD] transition-colors"
                    >
                       <span className="text-[12px] font-semibold text-[#0A1015]">#920{i}</span>
-                      <div className="flex items-center gap-2.5 min-w-[130px]">
+                      <div className="flex items-center gap-2.5 min-w-0 sm:min-w-[130px]">
                         <div className="relative w-6 h-6 rounded-full bg-[#EAF4FF] border border-[#D5E8FF] overflow-hidden flex-shrink-0">
                           <Image src={SITE_DATA.badgeIcon} alt="Lead Capture" fill className="object-contain p-1" />
                         </div>
@@ -122,9 +122,9 @@ export function Features() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-[#F7F8FA] rounded-[4px] border border-[#EEEEEE] overflow-hidden group"
+          className="grid grid-cols-1 md:grid-cols-2 bg-[#F7F8FA] rounded-[4px] border border-[#EEEEEE] overflow-hidden group"
         >
-          <div className="p-12 md:p-20 flex flex-col justify-center">
+          <div className="p-6 sm:p-10 md:p-20 flex flex-col justify-center">
             <h3 className="text-[28px] md:text-[36px] font-normal text-[#0A1015] leading-[1.1] tracking-tight mb-8">
               Visibility is low when systems are fragmented
             </h3>
@@ -132,12 +132,12 @@ export function Features() {
               Without a unified operating layer, leaders can&apos;t see what&apos;s breaking, teams can&apos;t optimize fast enough, and growth depends on hiring more people instead of better systems.
             </p>
           </div>
-          <div className="relative bg-white/50 flex items-center justify-center p-12 overflow-hidden">
+          <div className="relative bg-white/50 flex items-center justify-center p-4 sm:p-8 md:p-12 overflow-hidden">
              {/* Gradient Accent */}
              <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-blue-500/10 via-transparent to-transparent opacity-50" />
              
              {/* Visualizer - Automation Performance Graph */}
-             <div className="relative w-full bg-white rounded-xl shadow-2xl p-8 transform transition-transform duration-700 group-hover:scale-105">
+             <div className="relative w-full bg-white rounded-xl shadow-2xl p-4 sm:p-6 md:p-8 transform transition-transform duration-700 group-hover:scale-105">
                 <div className="flex items-center justify-between mb-5">
                   <p className="text-[12px] font-bold text-[#6B7280] uppercase tracking-[0.14em]">System Friction</p>
                   <span className="text-[12px] font-semibold text-[#0A1015]">Weekly Snapshot</span>

@@ -52,29 +52,31 @@ export function AboutHero() {
 
       <motion.div 
         style={{ y: contentY, opacity }}
-        className="max-w-[1400px] mx-auto w-full grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-24 items-end relative z-10 px-6 lg:px-24"
+        className="max-w-[1400px] mx-auto w-full grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-24 items-end relative z-10 md:px-6 lg:px-24"
       >
         {/* Left: Heading with Word Reveal */}
         <div>
-          {[
-            "Who we are and",
-            "what we’re building"
-          ].map((line, lineIdx) => (
-            <h1 key={lineIdx} className="text-[42px] md:text-[64px] lg:text-[80px] leading-[1.05] font-normal tracking-[-0.04em] text-white font-display-serif">
-              {line.split(" ").map((word, wordIdx) => (
-                <motion.span
-                  key={wordIdx}
-                  custom={lineIdx * 5 + wordIdx}
-                  initial="hidden"
-                  animate="visible"
-                  variants={textRevealVariants}
-                  className="inline-block mr-[0.25em]"
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </h1>
-          ))}
+          <h1 className="text-[34px] sm:text-[42px] md:text-[64px] lg:text-[80px] leading-[1.05] font-normal tracking-[-0.04em] text-white font-display-serif">
+            {[
+              "Who we are and",
+              "what we’re building"
+            ].map((line, lineIdx) => (
+              <span key={lineIdx} className="block">
+                {line.split(" ").map((word, wordIdx) => (
+                  <motion.span
+                    key={wordIdx}
+                    custom={lineIdx * 5 + wordIdx}
+                    initial="hidden"
+                    animate="visible"
+                    variants={textRevealVariants}
+                    className="inline-block mr-[0.25em]"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
+            ))}
+          </h1>
         </div>
 
         {/* Right: Label + Subtext */}

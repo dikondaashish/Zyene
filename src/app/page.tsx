@@ -1,3 +1,5 @@
+import type { Metadata } from "next"
+import Script from "next/script"
 import { Hero } from "@/components/home/Hero"
 import { Features } from "@/components/home/Features"
 import { Process } from "@/components/home/Process"
@@ -13,6 +15,30 @@ import { RealNumbers } from "@/components/use-cases/RealNumbers"
 import { WhoItsFor } from "@/components/home/WhoItsFor"
 import { FAQ } from "@/components/home/FAQ"
 import { FooterCTA } from "@/components/home/FooterCTA"
+
+export const metadata: Metadata = {
+  title: "Zyene | AI-Powered Digital Transformation Execution Company",
+  description:
+    "Zyene is an AI-powered digital transformation execution company. We design and deploy AI systems that transform how you run marketing, sales, and operations — with full execution support. Launch in 1–2 weeks.",
+  keywords: [
+    "AI-powered digital transformation",
+    "digital transformation execution company",
+    "AI digital transformation company",
+    "AI systems for business",
+    "business transformation AI",
+    "AI execution company",
+    "marketing transformation AI",
+    "operations transformation AI",
+  ],
+  alternates: { canonical: "https://zyene.com" },
+  openGraph: {
+    title: "Zyene | AI-Powered Digital Transformation Execution Company",
+    description:
+      "Zyene designs and deploys AI systems that transform how businesses run marketing, sales, and operations — with full execution support and measurable outcomes.",
+    url: "https://zyene.com",
+    type: "website",
+  },
+}
 
 const HOME_FAQS = [
   {
@@ -42,9 +68,78 @@ const HOME_FAQS = [
   },
 ]
 
+const homeJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://zyene.com/#webpage",
+      url: "https://zyene.com",
+      name: "Zyene | AI-Powered Digital Transformation Execution Company",
+      description:
+        "Zyene designs and deploys AI systems that transform how businesses run marketing, sales, and operations — with full execution support and measurable outcomes.",
+      isPartOf: { "@id": "https://zyene.com/#website" },
+      about: { "@id": "https://zyene.com/#organization" },
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://zyene.com/#service",
+      name: "AI-Powered Digital Transformation",
+      provider: { "@id": "https://zyene.com/#organization" },
+      serviceType: "Digital Transformation Execution",
+      description:
+        "Zyene designs and deploys AI systems that transform marketing, sales, and operations workflows for growing businesses. Includes system design, integration, execution support, and reporting.",
+      areaServed: "Worldwide",
+      availableChannel: {
+        "@type": "ServiceChannel",
+        serviceUrl: "https://zyene.com/contact",
+        serviceType: "Online",
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "AI Transformation Services",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Marketing Automation Systems",
+              description:
+                "AI-powered marketing workflow automation connecting CRM, email, and campaigns.",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Operations Automation Systems",
+              description:
+                "AI systems automating repetitive operations tasks with full reporting and control.",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Sales Workflow Automation",
+              description:
+                "AI-driven sales process automation including lead follow-up, CRM sync, and pipeline reporting.",
+            },
+          },
+        ],
+      },
+    },
+  ],
+}
+
 export default function Home() {
   return (
     <>
+      <Script
+        id="homepage-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
+      />
       <Hero />
       {/* Content scrolls over sticky Hero — creating the card-reveal effect */}
       <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">

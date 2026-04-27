@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, useScroll, useMotionValueEvent } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronDown, Building2, UserRoundSearch } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { SITE_DATA } from "@/lib/constants"
 import { ScheduleCallModal } from "@/components/shared/ScheduleCallModal"
@@ -16,6 +16,12 @@ export function Navbar() {
   const [isCalOpen, setIsCalOpen] = React.useState(false)
   const { scrollY } = useScroll()
   const scheduleCallUrl = process.env.NEXT_PUBLIC_CAL_SCHEDULE_URL || "/contact"
+  type NavItem = (typeof SITE_DATA.nav)[number]
+  const getAboutMenuIcon = (label: string) => {
+    if (label.toLowerCase() === "about") return <Building2 className="w-3.5 h-3.5" />
+    if (label.toLowerCase() === "careers") return <UserRoundSearch className="w-3.5 h-3.5" />
+    return null
+  }
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50)
@@ -51,7 +57,7 @@ export function Navbar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'py-4' : 'py-8'}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'py-5' : 'py-9'}`}
     >
       <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
         <Link 
@@ -64,7 +70,7 @@ export function Navbar() {
           <div className="relative w-8 h-8 flex-shrink-0">
             <Image
               src={isDark ? SITE_DATA.logoDark : SITE_DATA.logoLight}
-              alt="AI Supply Logo"
+              alt="Zyene Logo"
               fill
               className="object-contain transition-all duration-300"
             />
@@ -86,19 +92,51 @@ export function Navbar() {
             ? 'bg-white/[0.03] border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.2)]' 
             : 'bg-black/[0.03] border border-black/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.05)]'
         }`}>
-          {SITE_DATA.nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-[13px] font-medium transition-all duration-300 tracking-wide ${
-                isDark 
-                  ? 'text-[#CECFD0] hover:text-white' 
-                  : 'text-[#4A4F59] hover:text-[#0A1015]'
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {SITE_DATA.nav.map((item: NavItem) =>
+            item.children ? (
+              <div key={item.label} className="relative group">
+                <button
+                  type="button"
+                  className={`inline-flex items-center gap-1 text-[13px] font-medium transition-all duration-300 tracking-wide ${
+                    isDark ? "text-[#CECFD0] group-hover:text-white" : "text-[#4A4F59] group-hover:text-[#0A1015]"
+                  }`}
+                >
+                  {item.label}
+                  <ChevronDown className="w-3.5 h-3.5" />
+                </button>
+                <div
+                  className={`absolute left-0 top-[calc(100%+10px)] min-w-[170px] rounded-[8px] border p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${
+                    isDark
+                      ? "bg-[#0A1015]/95 border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.35)]"
+                      : "bg-white border-black/10 shadow-[0_12px_32px_rgba(0,0,0,0.12)]"
+                  }`}
+                >
+                  {item.children.map((child) => (
+                    <Link
+                      key={child.href}
+                      href={child.href}
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-[6px] text-[13px] ${
+                        isDark ? "text-[#CECFD0] hover:bg-white/10 hover:text-white" : "text-[#4A4F59] hover:bg-black/[0.04] hover:text-[#0A1015]"
+                      }`}
+                    >
+                      {getAboutMenuIcon(child.label)}
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-[13px] font-medium transition-all duration-300 tracking-wide ${
+                  isDark ? "text-[#CECFD0] hover:text-white" : "text-[#4A4F59] hover:text-[#0A1015]"
+                }`}
+              >
+                {item.label}
+              </Link>
+            )
+          )}
         </div>
 
         <div className="hidden lg:flex items-center gap-3">
@@ -144,16 +182,35 @@ export function Navbar() {
           className="lg:hidden absolute top-[100%] left-6 right-6 bg-[#0A1015]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden p-8"
         >
           <div className="flex flex-col gap-6">
-            {SITE_DATA.nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-[20px] font-medium text-white transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {SITE_DATA.nav.map((item: NavItem) =>
+              item.children ? (
+                <div key={item.label} className="space-y-3">
+                  <p className="text-[20px] font-medium text-white">{item.label}</p>
+                  <div className="pl-4 border-l border-white/15 space-y-2">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        className="flex items-center gap-2.5 text-[17px] text-[#CECFD0] transition-colors hover:text-white"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {getAboutMenuIcon(child.label)}
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-[20px] font-medium text-white transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
             <Button
               variant="primary"
               className="w-full mt-2"

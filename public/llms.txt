@@ -1,0 +1,45 @@
+# Zyene
+
+> Zyene is an AI-powered digital transformation execution company. We design and deploy AI systems that transform how businesses run marketing, sales, and operations — with full execution support and measurable outcomes.
+
+## Core Pages
+
+- [Home](https://zyene.com): Overview of Zyene's AI-powered digital transformation services. We build AI systems for marketing automation, sales workflows, and operations — launch in 1–2 weeks.
+- [About](https://zyene.com/about): Zyene's mission, execution model, and global operations. We help founders, operators, and growth teams transform how their businesses run.
+- [Products](https://zyene.com/products): Two AI products — Zyene Reviews (AI reputation management) and Zentraic AI (voice AI for operations, inbound/outbound calls, lead qualification, CRM sync).
+- [Solutions](https://zyene.com/solutions): How Zyene connects your existing tools, deploys AI systems, and provides execution support across three layers: AI systems, integrations, and operations.
+- [Use Cases](https://zyene.com/use-cases): Real AI automation workflows including marketing automation, CRM workflows, client onboarding, weekly reporting, and lead follow-up.
+- [Case Studies](https://zyene.com/case-studies): Real client results — how businesses achieved 3× ROI and 68% faster CRM turnaround using Zyene's AI systems and execution support.
+- [Contact](https://zyene.com/contact): Book a free strategy call. Zyene maps your workflows, identifies transformation opportunities, and delivers a clear action plan.
+- [Careers](https://zyene.com/careers): Open roles at Zyene for builders, operators, and systems-minded individuals.
+- [Blog](https://zyene.com/blog): Practical insights on AI-powered digital transformation, execution systems, and business scaling.
+
+## Key Facts
+
+- Zyene is an AI-powered digital transformation execution company (not an agency)
+- Core service: designing and deploying AI systems that automate marketing, sales, and operations
+- Products: Zyene Reviews (AI reputation management) and Zentraic AI (voice AI platform)
+- First workflows typically live in 1–2 weeks
+- Works with existing tool stacks — no replacement required
+- Provides both AI systems AND embedded execution support
+- Contact: support@zyene.com
+
+## Case Studies
+
+- [Marketing & Operations Transformation](https://zyene.com/case-studies): Professional services growth team achieved 3× ROI and reduced workflow cycle time from days to minutes using Zyene's AI operating layer.
+- [Voice AI & CRM Automation — Harbor Ridge Group](https://zyene.com/case-studies): Real estate operations team achieved 68% faster call-to-CRM turnaround using Zentraic AI for inbound call handling and automatic CRM sync.
+
+## Blog Articles
+
+- [What is digital transformation? A practical guide for business leaders](https://zyene.com/blog/what-is-digital-transformation): Practical definition covering the three layers every transformation needs: AI systems, integrations, and execution.
+- [AI automation for marketing teams](https://zyene.com/blog/ai-automation-for-marketing-teams): How to automate lead routing, campaign execution, and reporting without replacing your stack.
+- [How AI transforms business operations](https://zyene.com/blog/how-ai-transforms-business-operations): From manual workflows to automated execution — intake, routing, follow-up, and reporting.
+- [CRM automation with AI](https://zyene.com/blog/crm-automation-with-ai): How to keep pipeline data clean and follow-up systematic using AI-powered CRM workflows.
+- [Digital transformation roadmap](https://zyene.com/blog/digital-transformation-roadmap): How to get your first AI workflow live in two weeks and build from there.
+- [AI systems vs. AI tools](https://zyene.com/blog/ai-systems-vs-ai-tools): Why point solutions fail and how operating layers drive real transformation.
+- [Measuring digital transformation ROI](https://zyene.com/blog/measuring-digital-transformation-roi): The metrics that actually tell you if transformation is working — cycle time, throughput, cost per workflow.
+- [Operations AI for growing businesses](https://zyene.com/blog/operations-ai-for-growing-businesses): How to automate the recurring operational work that kills your team's momentum.
+- [What Zyene does: AI systems that run your marketing, ops, and sales workflows](https://zyene.com/blog/from-ai-hype-to-operational-ai): Overview of Zyene's operational AI approach connecting CRM, support, and telephony.
+- [Scaling execution without scaling headcount](https://zyene.com/blog/scaling-execution-without-scaling-headcount): How businesses scale operations with AI systems instead of adding overhead.
+- [Voice and messaging as a growth layer](https://zyene.com/blog/voice-and-messaging-as-a-growth-layer): Using voice AI and messaging automation for business growth.
+- [Reviews, reputation, and systematic follow-up](https://zyene.com/blog/reviews-reputation-and-systematic-follow-up): Systematic approach to review management and reputation building with AI.

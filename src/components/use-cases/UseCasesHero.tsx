@@ -47,7 +47,7 @@ export function UseCasesHero() {
       <div className="absolute inset-0 z-0">
         <Image
           src={SITE_DATA.heroBg}
-          alt="Background"
+          alt="Zyene digital transformation use cases — hero background"
           fill
           priority
           className="object-cover opacity-100"
@@ -57,26 +57,28 @@ export function UseCasesHero() {
 
       <motion.div 
         style={{ y: contentY, opacity }}
-        className="max-w-[1400px] mx-auto w-full grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-24 items-end relative z-10 px-6 lg:px-24"
+        className="max-w-[1400px] mx-auto w-full grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-24 items-end relative z-10 md:px-6 lg:px-24"
       >
         {/* Left: Headline */}
         <div>
-          {headingLines.map((line, lineIdx) => (
-            <h1 key={lineIdx} className="text-[48px] md:text-[80px] leading-[1.05] font-normal tracking-[-0.04em] text-white">
-              {line.split(" ").map((word, wordIdx) => (
-                <motion.span
-                  key={wordIdx}
-                  custom={lineIdx * 2 + wordIdx}
-                  initial="hidden"
-                  animate="visible"
-                  variants={textRevealVariants}
-                  className="inline-block mr-[0.25em]"
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </h1>
-          ))}
+          <h1 className="text-[36px] sm:text-[44px] md:text-[80px] leading-[1.05] font-normal tracking-[-0.04em] text-white">
+            {headingLines.map((line, lineIdx) => (
+              <span key={lineIdx} className="block">
+                {line.split(" ").map((word, wordIdx) => (
+                  <motion.span
+                    key={wordIdx}
+                    custom={lineIdx * 2 + wordIdx}
+                    initial="hidden"
+                    animate="visible"
+                    variants={textRevealVariants}
+                    className="inline-block mr-[0.25em]"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </span>
+            ))}
+          </h1>
         </div>
 
         {/* Right: Badge + Description */}

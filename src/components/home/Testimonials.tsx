@@ -17,15 +17,13 @@ const textRevealVariants: Variants = {
   })
 }
 
-// Card variant config: first card uses a person image, second uses a dark logo panel
+// Card visuals for testimonial cards
 const CARD_CONFIG = [
   {
-    type: "image" as const,
     imageSrc: "/images/testimonial-avatar.png",
   },
   {
-    type: "logo" as const,
-    logoSrc: "/images/testimonial-logo.png",
+    imageSrc: "/images/-image (2).png",
   }
 ]
 
@@ -79,21 +77,11 @@ export function Testimonials() {
               >
                 {/* Left: Image or Logo Panel */}
                 <div className="w-full md:w-[45%] min-h-[280px] md:min-h-0 relative overflow-hidden flex-shrink-0">
-                  {config.type === "image" ? (
-                    <img
-                      src={config.imageSrc}
-                      alt={testimonial.name}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-[#0A1015] flex items-center justify-center p-8">
-                      <img
-                        src={config.logoSrc!}
-                        alt="Company logo"
-                        className="w-[180px] h-[50px] object-contain"
-                      />
-                    </div>
-                  )}
+                  <img
+                    src={config.imageSrc}
+                    alt={testimonial.name}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
                 </div>
 
                 {/* Right: Content */}

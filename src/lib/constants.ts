@@ -1,23 +1,51 @@
+/** Hero partner strip: icon on the left, company name on the right (except `none`, wordmark-only). */
+export type MarqueePartner = {
+  id: string
+  icon: string
+  labelVariant: "google" | "simple" | "uppercase" | "none"
+  /** Required when labelVariant is simple or uppercase */
+  label?: string
+  /** Default true; set false for colored wordmarks on dark backgrounds */
+  iconInvert?: boolean
+}
+
 export const SITE_DATA = {
   logoDark: "/images/Logo_White.png",
   logoLight: "/images/Logo_Black.png",
   heroBg: "/images/hero-mesh.jpg",
   badgeIcon: "/images/badge-icon.png",
+  /** Stripe “S” mark — local SVG (Brandfetch CDN blocks Next.js optimizer / invalid client id). */
+  stripeFooterIcon: "/images/stripe-icon.svg",
   nav: [
     { label: "Home", href: "/" },
+    { label: "Solutions", href: "/solutions" },
     { label: "Use cases", href: "/use-cases" },
-    { label: "About", href: "/about" },
-    { label: "Careers", href: "/careers" },
+    { label: "Case Studies", href: "/case-studies" },
+    { label: "Blog", href: "/blog" },
+    { label: "Products", href: "/products" },
+    {
+      label: "About Us",
+      href: "/about",
+      children: [
+        { label: "About", href: "/about" },
+        { label: "Careers", href: "/careers" },
+      ],
+    },
     { label: "Contact", href: "/contact" },
   ],
-  marqueeLogos: [
-    "/images/client-logo-1.png",
-    "/images/client-logo-2.png",
-    "/images/client-logo-3.png",
-    "/images/client-logo-4.png",
-    "/images/client-logo-5.png",
-    "/images/client-logo-6.png",
-  ],
+  marqueePartners: [
+    { id: "google", icon: "/images/ai-logos/google.svg", labelVariant: "google" },
+    { id: "openai", icon: "/images/ai-logos/openai.svg", labelVariant: "simple", label: "OpenAI" },
+    { id: "anthropic", icon: "/images/ai-logos/anthropic.svg", labelVariant: "simple", label: "Anthropic" },
+    { id: "scale-ai", icon: "/images/ai-logos/scale-ai.png", labelVariant: "uppercase", label: "Scale AI" },
+    { id: "runway", icon: "/images/ai-logos/runway.png", labelVariant: "uppercase", label: "Runway" },
+    {
+      id: "glean",
+      icon: "/images/ai-logos/glean.svg",
+      labelVariant: "none",
+      iconInvert: false,
+    },
+  ] satisfies MarqueePartner[],
   features: [
     {
       title: "Unify and Analyze All Your Data",
@@ -26,7 +54,7 @@ export const SITE_DATA = {
     },
     {
       title: "Automate High-Frequency Workflows",
-      description: "AI Supply agents break down complex tasks into clear, traceable steps. Eliminate repetitive work and scale your team's output with unmatched efficiency and precision.",
+      description: "Zyene AI systems break down complex tasks into clear, traceable steps. Eliminate repetitive work and scale your team's output with unmatched efficiency and precision.",
       image: "/images/feature2.png"
     },
     {
@@ -149,7 +177,7 @@ export const SITE_DATA = {
       "Human error & delay",
       "Costly scaling"
     ],
-    aiSupply: [
+    zyene: [
       "End-to-end task automation",
       "Unified analysis across all data",
       "Reliable, always-on AI agents",
@@ -165,11 +193,11 @@ export const SITE_DATA = {
       statText: "Average ROI"
     },
     {
-      quote: "Zyene changed how we scale. Instead of hiring for every bottleneck, we deployed AI systems that handle execution and updates end-to-end. We gained operational leverage, improved follow-through, and scaled output without adding overhead.",
-      name: "Marcus Lee",
-      role: "COO, Zentraic Labs",
-      stat: "60%+",
-      statText: "Operational efficiency gains"
+      quote: "Zentraic AI helped us handle inbound calls, qualify leads, and sync every outcome to CRM without manual follow-up. Our team now closes loops faster, misses fewer opportunities, and scales daily call operations without adding extra headcount.",
+      name: "Daniel Carter",
+      role: "Operations Lead, Harbor Ridge Group",
+      stat: "68%",
+      statText: "Faster call-to-CRM turnaround"
     }
   ],
   faqs: [
@@ -227,7 +255,11 @@ export const SITE_DATA = {
   footerLinks: {
     pages: [
       { label: "Home", href: "/" },
+      { label: "Products", href: "/products" },
+      { label: "Solutions", href: "/solutions" },
       { label: "Use cases", href: "/use-cases" },
+      { label: "Case Studies", href: "/case-studies" },
+      { label: "Blog", href: "/blog" },
       { label: "About", href: "/about" },
       { label: "Careers", href: "/careers" },
       { label: "Contact", href: "/contact" },

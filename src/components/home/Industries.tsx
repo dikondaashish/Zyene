@@ -60,7 +60,7 @@ export function Industries({
   return (
     <section id="industries" className="py-24 px-6 bg-white overflow-hidden">
       <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.12fr_0.88fr] gap-12 lg:gap-20 items-start">
           {/* Left Column: Falling Industry Tags Visual */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -125,10 +125,10 @@ export function Industries({
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col"
           >
-            <p className="text-[13px] font-bold text-[#0A1015] uppercase tracking-widest mb-6">
+            <p className="text-[14px] font-bold text-[#0A1015] uppercase tracking-widest mb-6">
               Industries
             </p>
-            <h2 className="text-[36px] md:text-[48px] leading-[1.05] font-normal tracking-[-0.03em] text-[#0A1015] mb-12">
+            <h2 className="text-[38px] md:text-[52px] leading-[1.05] font-normal tracking-[-0.03em] text-[#0A1015] mb-12">
               Built for the real world. Across every industry.
             </h2>
 
@@ -154,7 +154,7 @@ export function Industries({
                       className="w-full flex items-center justify-between py-5 text-left group"
                     >
                       <span
-                        className={`text-[16px] font-medium transition-colors duration-200 ${
+                        className={`text-[17px] font-medium transition-colors duration-200 ${
                           isOpen
                             ? "text-[#0A1015]"
                             : "text-[#4A4F59] group-hover:text-[#0A1015]"
@@ -186,7 +186,7 @@ export function Industries({
                           }}
                           className="overflow-hidden"
                         >
-                          <p className="text-[14px] text-[#4A4F59] leading-[1.6] pb-6 max-w-[460px]">
+                          <p className="text-[15px] text-[#4A4F59] leading-[1.6] pb-6 max-w-[460px]">
                             {ind.description}
                           </p>
                         </motion.div>

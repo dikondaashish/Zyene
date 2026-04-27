@@ -23,7 +23,7 @@ export function HowItWorks() {
             <p className="text-[13px] font-semibold text-[#0A1015] tracking-widest uppercase mb-6">
               How It Works
             </p>
-            <h3 className="text-[32px] md:text-[44px] leading-[1.08] font-normal tracking-[-0.03em] text-[#0A1015]">
+            <h3 className="text-[26px] sm:text-[30px] md:text-[44px] leading-[1.08] font-normal tracking-[-0.03em] text-[#0A1015]">
               Simple Flow
             </h3>
           </div>

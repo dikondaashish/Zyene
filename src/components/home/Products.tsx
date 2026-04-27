@@ -4,24 +4,34 @@ import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
-import { SiGoogle, SiFacebook, SiApple, SiNetflix, SiAirbnb, SiTwitch } from "react-icons/si"
-import { FaAmazon } from "react-icons/fa"
 
-const brands = [
-  { id: "google", name: "Google", Icon: SiGoogle },
-  { id: "amazon", name: "Amazon", Icon: FaAmazon },
-  { id: "facebook", name: "Facebook", Icon: SiFacebook },
-  { id: "apple", name: "Apple", Icon: SiApple },
-  { id: "netflix", name: "Netflix", Icon: SiNetflix },
-  { id: "airbnb", name: "Airbnb", Icon: SiAirbnb },
-  { id: "twitch", name: "Twitch", Icon: SiTwitch },
+const reviewBrands = [
+  { id: "dunkin", name: "Dunkin'", logo: "https://www.google.com/s2/favicons?domain=dunkindonuts.com&sz=64" },
+  { id: "ups-store", name: "The UPS Store", logo: "https://www.google.com/s2/favicons?domain=theupsstore.com&sz=64" },
+  { id: "jiffy-lube", name: "Jiffy Lube", logo: "https://www.google.com/s2/favicons?domain=jiffylube.com&sz=64" },
+  { id: "supercuts", name: "Supercuts", logo: "https://www.google.com/s2/favicons?domain=supercuts.com&sz=64" },
+  { id: "planet-fitness", name: "Planet Fitness", logo: "https://www.google.com/s2/favicons?domain=planetfitness.com&sz=64" },
+  { id: "h-r-block", name: "H&R Block", logo: "https://www.google.com/s2/favicons?domain=hrblock.com&sz=64" },
+  { id: "great-clips", name: "Great Clips", logo: "https://www.google.com/s2/favicons?domain=greatclips.com&sz=64" },
+  { id: "jersey-mikes", name: "Jersey Mike's", logo: "https://www.google.com/s2/favicons?domain=jerseymikes.com&sz=64" },
+]
+
+const voiceBrands = [
+  { id: "bayview-dental", name: "Bayview Dental Studio", logo: "https://www.google.com/s2/favicons?domain=bayviewdental.com&sz=64" },
+  { id: "sunrise-insurance", name: "Sunrise Insurance Group", logo: "https://www.google.com/s2/favicons?domain=sunriseinsurancegroup.com&sz=64" },
+  { id: "best-western", name: "Best Western", logo: "https://www.google.com/s2/favicons?domain=bestwestern.com&sz=64" },
+  { id: "joint-chiro", name: "The Joint Chiropractic", logo: "https://www.google.com/s2/favicons?domain=thejoint.com&sz=64" },
+  { id: "execucar", name: "ExecuCar", logo: "https://www.google.com/s2/favicons?domain=execucar.com&sz=64" },
+  { id: "prime-pest", name: "Prime Pest Control", logo: "https://www.google.com/s2/favicons?domain=primepestcontrol.com&sz=64" },
+  { id: "evergreen-plumbing", name: "Evergreen Plumbing Co.", logo: "https://www.google.com/s2/favicons?domain=evergreenplumbing.com&sz=64" },
+  { id: "wilshire-law", name: "Wilshire Law Firm", logo: "https://www.google.com/s2/favicons?domain=wilshirelawfirm.com&sz=64" },
 ]
 
 export function Products() {
   const [hoveredCard1, setHoveredCard1] = useState<string | null>(null)
   const [hoveredCard2, setHoveredCard2] = useState<string | null>(null)
-  const activeBrand1 = brands.find((b) => b.id === hoveredCard1)
-  const activeBrand2 = brands.find((b) => b.id === hoveredCard2)
+  const activeBrand1 = reviewBrands.find((b) => b.id === hoveredCard1)
+  const activeBrand2 = voiceBrands.find((b) => b.id === hoveredCard2)
 
   return (
     <section className="bg-[#FFFFFF] py-24 px-6 md:px-12 lg:px-24 overflow-hidden">
@@ -46,7 +56,7 @@ export function Products() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Zyene Reviews Card */}
-          <Link href="/products/zyene-reviews" className="group block h-full">
+          <Link href="/products#zyene-reviews" className="group block h-full">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -55,12 +65,12 @@ export function Products() {
               className="bg-[#F7F8FA] rounded-[24px] overflow-hidden flex flex-col h-full border border-transparent transition-all duration-500 hover:shadow-[0_20px_40px_rgba(10,16,21,0.06)] hover:-translate-y-1"
             >
               {/* Image Header */}
-              <div className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[#EAECEF]">
+              <div className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-white">
                 <Image 
-                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop" 
+                  src="/images/image.png"
                   alt="Zyene Reviews Interface" 
                   fill 
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                  className="object-contain p-8 md:p-10 transition-transform duration-700 group-hover:scale-[1.02]"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
@@ -108,13 +118,13 @@ export function Products() {
                           transition={{ duration: 0.16, ease: [0.25, 0.46, 0.45, 0.94] }}
                           className="text-[18px] font-semibold text-[#0A1015] whitespace-nowrap"
                         >
-                          {activeBrand1?.name ?? "leading companies"}
+                          {activeBrand1?.name ?? "rising US businesses"}
                         </motion.p>
                       </AnimatePresence>
                     </div>
                   </div>
                   <div className="grid grid-cols-4 sm:flex sm:flex-wrap items-center gap-1.5 sm:gap-2">
-                    {brands.map(({ id, name, Icon }) => {
+                    {reviewBrands.map(({ id, name, logo }) => {
                       const isActive = hoveredCard1 === id
                       const isDimmed = hoveredCard1 !== null && !isActive
                       return (
@@ -122,16 +132,16 @@ export function Products() {
                           key={id}
                           aria-label={name}
                           className={[
-                            "flex items-center justify-center p-2.5 rounded-lg border transition-all duration-200",
+                            "flex items-center justify-center p-2 rounded-lg border transition-all duration-200 bg-white",
                             isActive
                               ? "border-[#0A1015]/30 text-[#0A1015] bg-[#0A1015]/5"
-                              : "border-transparent text-[#0A1015]/35 hover:text-[#0A1015]/60",
+                              : "border-[#E5E8EC] hover:border-[#CDD5DF]",
                             isDimmed ? "opacity-40" : "",
                           ].join(" ")}
                           onMouseEnter={() => setHoveredCard1(id)}
                           onMouseLeave={() => setHoveredCard1(null)}
                         >
-                          <Icon className="w-5 h-5" />
+                          <img src={logo} alt={name} className="w-5 h-5 object-contain" loading="lazy" />
                         </button>
                       )
                     })}
@@ -143,7 +153,7 @@ export function Products() {
           </Link>
 
           {/* Zentraic AI Card */}
-          <Link href="/products/zentraic-ai" className="group block h-full">
+          <Link href="/products#zentraic-ai" className="group block h-full">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -152,12 +162,12 @@ export function Products() {
               className="bg-[#F7F8FA] rounded-[24px] overflow-hidden flex flex-col h-full border border-transparent transition-all duration-500 hover:shadow-[0_20px_40px_rgba(10,16,21,0.06)] hover:-translate-y-1"
             >
               {/* Image Header */}
-              <div className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[#EAECEF]">
+              <div className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-gradient-to-br from-[#0D5CC8] via-[#0A73D9] to-[#0A95F1]">
                 <Image 
-                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=1600&auto=format&fit=crop" 
+                  src="/images/zentraic-ai-logo.png"
                   alt="Zentraic AI Interface" 
                   fill 
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                  className="object-contain p-8 md:p-10 transition-transform duration-700 group-hover:scale-[1.02]"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
@@ -193,7 +203,7 @@ export function Products() {
                       aria-hidden
                       className="text-[18px] font-semibold text-[#0A1015] whitespace-nowrap opacity-0 pointer-events-none select-none"
                     >
-                      leading companies
+                      call-first US businesses
                     </p>
                     <div className="absolute inset-0 overflow-hidden">
                       <AnimatePresence mode="wait">
@@ -205,13 +215,13 @@ export function Products() {
                           transition={{ duration: 0.16, ease: [0.25, 0.46, 0.45, 0.94] }}
                           className="text-[18px] font-semibold text-[#0A1015] whitespace-nowrap"
                         >
-                          {activeBrand2?.name ?? "leading companies"}
+                          {activeBrand2?.name ?? "call-first US businesses"}
                         </motion.p>
                       </AnimatePresence>
                     </div>
                   </div>
                   <div className="grid grid-cols-4 sm:flex sm:flex-wrap items-center gap-1.5 sm:gap-2">
-                    {brands.map(({ id, name, Icon }) => {
+                    {voiceBrands.map(({ id, name, logo }) => {
                       const isActive = hoveredCard2 === id
                       const isDimmed = hoveredCard2 !== null && !isActive
                       return (
@@ -219,16 +229,16 @@ export function Products() {
                           key={id}
                           aria-label={name}
                           className={[
-                            "flex items-center justify-center p-2.5 rounded-lg border transition-all duration-200",
+                            "flex items-center justify-center p-2 rounded-lg border transition-all duration-200 bg-white",
                             isActive
                               ? "border-[#0A1015]/30 text-[#0A1015] bg-[#0A1015]/5"
-                              : "border-transparent text-[#0A1015]/35 hover:text-[#0A1015]/60",
+                              : "border-[#E5E8EC] hover:border-[#CDD5DF]",
                             isDimmed ? "opacity-40" : "",
                           ].join(" ")}
                           onMouseEnter={() => setHoveredCard2(id)}
                           onMouseLeave={() => setHoveredCard2(null)}
                         >
-                          <Icon className="w-5 h-5" />
+                          <img src={logo} alt={name} className="w-5 h-5 object-contain" loading="lazy" />
                         </button>
                       )
                     })}

@@ -35,8 +35,24 @@ const CONTACT_FAQS = [
 ]
 
 export const metadata = {
-  title: "Contact | AI Supply",
-  description: "Get in touch with AI Supply to build the infrastructure for the next decade of work.",
+  title: "Contact Zyene | Start Your Digital Transformation",
+  description:
+    "Ready to transform your business with AI? Contact Zyene to book a free strategy call. We'll map your workflows, identify transformation opportunities, and deliver a clear action plan.",
+  keywords: [
+    "contact digital transformation company",
+    "book AI transformation call",
+    "digital transformation consultation",
+    "Zyene contact",
+    "AI transformation strategy call",
+  ],
+  alternates: { canonical: "https://zyene.com/contact" },
+  openGraph: {
+    title: "Contact Zyene | Start Your Digital Transformation",
+    description:
+      "Book a free strategy call with Zyene. We'll map your workflows, identify AI transformation opportunities, and deliver a clear action plan.",
+    url: "https://zyene.com/contact",
+    type: "website",
+  },
 }
 
 export default function ContactPage() {

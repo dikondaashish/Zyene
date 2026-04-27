@@ -43,8 +43,8 @@ export function FooterCTA() {
       </div>
 
       {/* Content */}
-      <div className="max-w-[1400px] mx-auto px-6 md:pl-20 relative z-10 pt-32 pb-24">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-16">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-20 relative z-10 pt-24 md:pt-32 pb-20 md:pb-24">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-16">
           {/* Left: Title + Description */}
           <div className="max-w-[500px]">
             <motion.p
@@ -56,7 +56,7 @@ export function FooterCTA() {
             >
               Get started
             </motion.p>
-            <h2 className="text-[32px] md:text-[64px] leading-[1.05] font-normal tracking-[-0.03em] text-white mb-8">
+            <h2 className="text-[26px] sm:text-[32px] md:text-[64px] leading-[1.05] font-normal tracking-[-0.03em] text-white mb-8">
               {headingWords.map((word, i) => (
                 <motion.span
                   key={i}
