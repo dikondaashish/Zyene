@@ -28,9 +28,9 @@ export const SITE_DATA = {
       children: [
         { label: "About", href: "/about" },
         { label: "Careers", href: "/careers" },
+        { label: "Blog", href: "/blog" },
       ],
     },
-    { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ],
   marqueePartners: [
