@@ -237,6 +237,7 @@ export const SITE_DATA = {
     legal: [
       { label: "Privacy policy", href: "/legal/privacy-policy" },
       { label: "Terms & conditions", href: "/legal/terms-conditions" },
+      { label: "Email notice", href: "/legal/email-notice" },
     ]
     ,
     seo: [
