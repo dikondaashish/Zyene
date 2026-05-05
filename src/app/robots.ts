@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next"
 
 const SITE_URL = "https://zyene.com"
+/** Robots `Host:` should be the bare hostname (e.g. Yandex); not a full URL with scheme. */
+const SITE_HOST = new URL(SITE_URL).host
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -28,6 +30,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "Google-Extended", disallow: "/" },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
+    host: SITE_HOST,
   }
 }

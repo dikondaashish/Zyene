@@ -5,7 +5,10 @@ const nextConfig = {
     return [
       { source: "/pricing", destination: "/contact", permanent: true },
       { source: "/privacy", destination: "/legal/privacy-policy", permanent: true },
+      { source: "/privacy-policy", destination: "/legal/privacy-policy", permanent: true },
       { source: "/terms", destination: "/legal/terms-conditions", permanent: true },
+      { source: "/terms-of-service", destination: "/legal/terms-conditions", permanent: true },
+      { source: "/terms-and-conditions", destination: "/legal/terms-conditions", permanent: true },
     ]
   },
   images: {
