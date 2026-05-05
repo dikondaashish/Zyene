@@ -32,7 +32,7 @@ export default function LegalContent() {
           {/* Intro note */}
           <div className="rounded-[12px] border border-[#E3E8EF] bg-[#F8FAFB] px-6 py-5">
             <P>
-              This Privacy Policy explains how <strong>Zyene</strong> ("we", "us", "our") collects, uses, stores, and protects information you provide when visiting <strong>zyene.com</strong> or engaging our services. By using our website or services, you agree to the practices described below.
+              This Privacy Policy explains how <strong>Zyene</strong> (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) collects, uses, stores, and protects information you provide when visiting <strong>zyene.com</strong> or engaging our services. By using our website or services, you agree to the practices described below.
             </P>
           </div>
 
@@ -137,7 +137,7 @@ export default function LegalContent() {
             <ul className="list-disc pl-6 space-y-2">
               <Li><strong>Access</strong> — request a copy of the personal data we hold about you.</Li>
               <Li><strong>Rectification</strong> — ask us to correct inaccurate or incomplete data.</Li>
-              <Li><strong>Erasure ("right to be forgotten")</strong> — request deletion of your personal data where there is no compelling reason for us to keep it.</Li>
+              <Li><strong>Erasure (&quot;right to be forgotten&quot;)</strong> — request deletion of your personal data where there is no compelling reason for us to keep it.</Li>
               <Li><strong>Restriction</strong> — ask us to limit how we use your data in certain circumstances.</Li>
               <Li><strong>Data portability</strong> — receive your data in a structured, machine-readable format.</Li>
               <Li><strong>Objection</strong> — object to processing based on legitimate interests, including direct marketing.</Li>
@@ -164,7 +164,7 @@ export default function LegalContent() {
           {/* 12 */}
           <Section title="12. Changes to This Policy">
             <P>
-              We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. When we do, we will update the "Last updated" date at the bottom of this page. Continued use of our website or services after changes are posted constitutes acceptance of the updated policy.
+              We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. When we do, we will update the &quot;Last updated&quot; date at the bottom of this page. Continued use of our website or services after changes are posted constitutes acceptance of the updated policy.
             </P>
             <P>For material changes that significantly affect how we use your data, we will make reasonable efforts to notify you directly (e.g., by email if we hold your contact details).</P>
           </Section>

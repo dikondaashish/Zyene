@@ -179,7 +179,7 @@ export function Hero() {
           className="w-full flex flex-col items-center gap-6"
         >
           <p className="text-[#8A8F98] text-[12px] font-medium tracking-[0.2em] uppercase opacity-60">
-            We partner with the world's leading organizations to advance their industries:
+            We partner with the world&apos;s leading organizations to advance their industries:
           </p>
           
           <div className="relative w-full overflow-hidden">

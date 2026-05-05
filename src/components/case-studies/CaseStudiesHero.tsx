@@ -82,7 +82,7 @@ export function CaseStudiesHero() {
             transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="text-[15px] md:text-[16px] text-[#CECFD0] leading-[1.6]"
           >
-            How businesses used Zyene's AI systems and execution support to automate workflows, reduce manual overhead, and deliver measurable outcomes across marketing, sales, and operations.
+            How businesses used Zyene&apos;s AI systems and execution support to automate workflows, reduce manual overhead, and deliver measurable outcomes across marketing, sales, and operations.
           </motion.p>
         </div>
       </motion.div>

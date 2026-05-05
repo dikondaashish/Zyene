@@ -16,6 +16,7 @@ export function TalentContactWidget({ roleSlug, roleTitle }: TalentContactWidget
   const [email, setEmail] = React.useState("")
   const [notifyOnReopen, setNotifyOnReopen] = React.useState(true)
   const [turnstileToken, setTurnstileToken] = React.useState<string | null>(null)
+  const [turnstileRenderKey, setTurnstileRenderKey] = React.useState(0)
   const [submitted, setSubmitted] = React.useState(false)
   const [submitting, setSubmitting] = React.useState(false)
   const [submitError, setSubmitError] = React.useState<string | null>(null)
@@ -41,8 +42,8 @@ export function TalentContactWidget({ roleSlug, roleTitle }: TalentContactWidget
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name,
-          email,
+          name: name.trim(),
+          email: email.trim(),
           notifyOnReopen,
           roleSlug,
           roleTitle,
@@ -73,6 +74,8 @@ export function TalentContactWidget({ roleSlug, roleTitle }: TalentContactWidget
       setTurnstileToken(null)
     } catch (error) {
       const message = error instanceof Error ? error.message : "Could not save your info right now. Please try again."
+      setTurnstileToken(null)
+      setTurnstileRenderKey((prev) => prev + 1)
       setSubmitError(message)
     } finally {
       setSubmitting(false)
@@ -143,6 +146,7 @@ export function TalentContactWidget({ roleSlug, roleTitle }: TalentContactWidget
                 {turnstileSiteKey ? (
                   <div className="mb-5">
                     <Turnstile
+                      key={turnstileRenderKey}
                       sitekey={turnstileSiteKey}
                       onVerify={(token) => {
                         setTurnstileToken(token)

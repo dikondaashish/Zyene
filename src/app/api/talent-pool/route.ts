@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { verifyTurnstileToken } from "@/lib/server/turnstile"
 import { appendRowToZohoSheet } from "@/lib/server/zoho"
+import { isValidEmail } from "@/lib/validators"
 
 type TalentPoolPayload = {
   name: string
@@ -15,9 +16,14 @@ type TalentPoolPayload = {
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as TalentPoolPayload
+    const name = String(body?.name || "").trim()
+    const email = String(body?.email || "").trim()
 
-    if (!body?.name || !body?.email) {
+    if (name.length < 2 || !email) {
       return NextResponse.json({ error: "Name and email are required." }, { status: 400 })
+    }
+    if (!isValidEmail(email)) {
+      return NextResponse.json({ error: "Please enter a valid email address.", field: "email" }, { status: 400 })
     }
     if (!body?.turnstileToken) {
       return NextResponse.json({ error: "Security check is required." }, { status: 400 })
@@ -45,10 +51,10 @@ export async function POST(request: NextRequest) {
 
     const row = {
       created_at: new Date().toISOString(),
-      full_name: body.name,
-      name: body.name,
-      fullName: body.name,
-      email: body.email,
+      full_name: name,
+      name,
+      fullName: name,
+      email,
       notify_when_reopen: notifyValue,
       notify: notifyValue,
       notify_reopen: notifyValue,

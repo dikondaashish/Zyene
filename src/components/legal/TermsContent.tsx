@@ -32,14 +32,14 @@ export default function TermsContent() {
           {/* Intro note */}
           <div className="rounded-[12px] border border-[#E3E8EF] bg-[#F8FAFB] px-6 py-5">
             <P>
-              These Terms and Conditions ("Terms") govern your access to and use of the website located at <strong>zyene.com</strong> and any services provided by <strong>Zyene</strong> ("we", "us", "our"). By accessing this website or engaging our services, you agree to be bound by these Terms. If you do not agree, please discontinue use immediately.
+              These Terms and Conditions (&quot;Terms&quot;) govern your access to and use of the website located at <strong>zyene.com</strong> and any services provided by <strong>Zyene</strong> (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;). By accessing this website or engaging our services, you agree to be bound by these Terms. If you do not agree, please discontinue use immediately.
             </P>
           </div>
 
           {/* 1 */}
           <Section title="1. Services">
             <P>
-              Zyene provides AI-powered digital transformation services to businesses, including but not limited to: AI workflow automation, systems integration, CRM automation, marketing and operations AI systems, AI voice and lead management tools, and execution support ("Services"). Specific deliverables, timelines, fees, and engagement terms for any project are set out in a separate written agreement, statement of work, or proposal ("Service Agreement") between Zyene and the client.
+              Zyene provides AI-powered digital transformation services to businesses, including but not limited to: AI workflow automation, systems integration, CRM automation, marketing and operations AI systems, AI voice and lead management tools, and execution support (&quot;Services&quot;). Specific deliverables, timelines, fees, and engagement terms for any project are set out in a separate written agreement, statement of work, or proposal (&quot;Service Agreement&quot;) between Zyene and the client.
             </P>
             <P>
               These Terms apply to your use of our website and, where no separate Service Agreement exists, to your general engagement with Zyene. In the event of any conflict between these Terms and a Service Agreement, the Service Agreement shall prevail.
@@ -78,14 +78,14 @@ export default function TermsContent() {
               You may view and print pages from the website for your own personal, non-commercial reference. You may not reproduce, distribute, modify, create derivative works of, publicly display, publicly perform, republish, download, store, or transmit any of our content without our prior written consent.
             </P>
             <P>
-              Nothing in these Terms grants you any right, title, or interest in Zyene's trademarks, service marks, trade names, or brand identifiers. All rights not expressly granted are reserved.
+              Nothing in these Terms grants you any right, title, or interest in Zyene&apos;s trademarks, service marks, trade names, or brand identifiers. All rights not expressly granted are reserved.
             </P>
           </Section>
 
           {/* 5 */}
           <Section title="5. Client-Owned Materials">
             <P>
-              Where you provide us with data, materials, or content ("Client Materials") as part of a service engagement, you retain all ownership of and responsibility for those Client Materials. You grant Zyene a limited, non-exclusive, royalty-free licence to use, process, and reproduce Client Materials solely to the extent necessary to deliver the agreed Services.
+              Where you provide us with data, materials, or content (&quot;Client Materials&quot;) as part of a service engagement, you retain all ownership of and responsibility for those Client Materials. You grant Zyene a limited, non-exclusive, royalty-free licence to use, process, and reproduce Client Materials solely to the extent necessary to deliver the agreed Services.
             </P>
             <P>
               You warrant that you own or have the necessary rights to provide Client Materials to us, and that such materials do not infringe the intellectual property or other rights of any third party.
@@ -95,7 +95,7 @@ export default function TermsContent() {
           {/* 6 */}
           <Section title="6. Confidentiality">
             <P>
-              Each party acknowledges that in the course of an engagement, it may receive information of a confidential or proprietary nature from the other party ("Confidential Information"). Each party agrees to:
+              Each party acknowledges that in the course of an engagement, it may receive information of a confidential or proprietary nature from the other party (&quot;Confidential Information&quot;). Each party agrees to:
             </P>
             <ul className="list-disc pl-6 space-y-2">
               <Li>Hold all Confidential Information in strict confidence.</Li>
@@ -123,7 +123,7 @@ export default function TermsContent() {
           {/* 8 */}
           <Section title="8. Disclaimer of Warranties">
             <P>
-              Our website and its content are provided on an "as is" and "as available" basis without any warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, title, or non-infringement.
+              Our website and its content are provided on an &quot;as is&quot; and &quot;as available&quot; basis without any warranties of any kind, either express or implied, including but not limited to implied warranties of merchantability, fitness for a particular purpose, title, or non-infringement.
             </P>
             <P>
               We do not warrant that our website will be uninterrupted, error-free, or free of viruses or other harmful components. We do not warrant the accuracy, completeness, or usefulness of any information on the website. Any reliance on such information is at your own risk.
@@ -139,7 +139,7 @@ export default function TermsContent() {
               To the maximum extent permitted by applicable law, Zyene and its officers, directors, employees, agents, suppliers, and licensors shall not be liable for any indirect, incidental, special, consequential, punitive, or exemplary damages — including but not limited to loss of profits, revenue, data, goodwill, or business interruption — arising out of or in connection with your use of our website or services, even if we have been advised of the possibility of such damages.
             </P>
             <P>
-              In no event shall Zyene's total cumulative liability to you for any claims arising under or related to these Terms or a Service Agreement exceed the total fees paid by you to Zyene in the three (3) months immediately preceding the event giving rise to the claim, or USD $500, whichever is greater.
+              In no event shall Zyene&apos;s total cumulative liability to you for any claims arising under or related to these Terms or a Service Agreement exceed the total fees paid by you to Zyene in the three (3) months immediately preceding the event giving rise to the claim, or USD $500, whichever is greater.
             </P>
             <P>
               Some jurisdictions do not allow the exclusion or limitation of certain damages. In such jurisdictions, our liability shall be limited to the greatest extent permitted by applicable law.
@@ -149,7 +149,7 @@ export default function TermsContent() {
           {/* 10 */}
           <Section title="10. Indemnification">
             <P>
-              You agree to indemnify, defend, and hold harmless Zyene and its officers, directors, employees, agents, and licensors from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising out of or relating to: (a) your use of our website or services; (b) your violation of these Terms; (c) your violation of any third-party rights, including intellectual property rights; or (d) any Client Materials you provide to us.
+              You agree to indemnify, defend, and hold harmless Zyene and its officers, directors, employees, agents, and licensors from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys&apos; fees) arising out of or relating to: (a) your use of our website or services; (b) your violation of these Terms; (c) your violation of any third-party rights, including intellectual property rights; or (d) any Client Materials you provide to us.
             </P>
           </Section>
 
@@ -176,7 +176,7 @@ export default function TermsContent() {
           {/* 13 */}
           <Section title="13. Termination">
             <P>
-              Either party may terminate a service engagement in accordance with the terms of the applicable Service Agreement. Where no Service Agreement exists, either party may terminate by providing 14 days' written notice to the other.
+              Either party may terminate a service engagement in accordance with the terms of the applicable Service Agreement. Where no Service Agreement exists, either party may terminate by providing 14 days&apos; written notice to the other.
             </P>
             <P>
               We may immediately terminate or suspend your access to our website or services if you breach these Terms, without notice or liability to you. Upon termination, all licences granted to you under these Terms cease immediately. Provisions that by their nature should survive termination (including Sections 4, 6, 8, 9, 10, 14, and 15) shall survive.
@@ -199,7 +199,7 @@ export default function TermsContent() {
           {/* 15 */}
           <Section title="15. Changes to These Terms">
             <P>
-              We reserve the right to modify these Terms at any time. Updated Terms will be posted on this page with a revised "Last updated" date. Your continued use of our website or services after any changes constitutes your acceptance of the revised Terms. We encourage you to review these Terms periodically.
+              We reserve the right to modify these Terms at any time. Updated Terms will be posted on this page with a revised &quot;Last updated&quot; date. Your continued use of our website or services after any changes constitutes your acceptance of the revised Terms. We encourage you to review these Terms periodically.
             </P>
             <P>For material changes to existing Service Agreements, we will notify you directly and obtain your written agreement before the changes take effect.</P>
           </Section>
