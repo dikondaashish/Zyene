@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  /** Legacy paths still crawled from older site / bookmarks (GSC 404 cleanup). */
+  async redirects() {
+    return [
+      { source: "/pricing", destination: "/contact", permanent: true },
+      { source: "/privacy", destination: "/legal/privacy-policy", permanent: true },
+      { source: "/terms", destination: "/legal/terms-conditions", permanent: true },
+    ]
+  },
   images: {
     remotePatterns: [
       {
