@@ -3,9 +3,9 @@ import EmailCommunicationsContent from "@/components/legal/EmailCommunicationsCo
 import { FooterCTA } from "@/components/home/FooterCTA"
 
 export const metadata = {
-  title: "Email communications notice | Zyene",
+  title: "Email Communications Notice | Zyene",
   description:
-    "Confidentiality, security, and handling guidance for email from Zyene. Link this page from your email signature.",
+    "Confidentiality, security, authority, and privacy guidance for email communications sent by Zyene.",
   alternates: { canonical: "https://zyene.com/legal/email-notice" },
   robots: { index: false },
 }

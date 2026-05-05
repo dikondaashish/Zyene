@@ -1,15 +1,19 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function EmailCommunicationsHero() {
   return (
     <section className="relative w-full h-[40vh] min-h-[350px] bg-[#0A1015] overflow-hidden flex flex-col items-center justify-end pb-16">
       <div className="absolute inset-0 z-0">
-        <img
+        <Image
           src="/images/hero-mesh.jpg"
           alt=""
-          className="w-full h-full object-cover opacity-100"
+          fill
+          sizes="100vw"
+          className="object-cover opacity-100"
+          priority
         />
       </div>
 
@@ -28,7 +32,7 @@ export default function EmailCommunicationsHero() {
           transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="mt-4 text-[15px] md:text-[16px] text-[#8A8F98] max-w-xl mx-auto"
         >
-          Official wording for outbound email. Link to this page from your signature instead of long disclaimers.
+          Confidentiality, security, and handling guidance for email communications sent by Zyene.
         </motion.p>
       </div>
     </section>

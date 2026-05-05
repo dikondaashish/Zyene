@@ -19,6 +19,8 @@ const Li = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function EmailCommunicationsContent() {
+  const noticeUrl = 'https://zyene.com/legal/email-notice';
+
   return (
     <section className="w-full bg-white py-24 md:py-32 overflow-hidden">
       <div className="max-w-[700px] mx-auto px-8 md:px-0">
@@ -31,12 +33,13 @@ export default function EmailCommunicationsContent() {
         >
           <div className="rounded-[12px] border border-[#E3E8EF] bg-[#F8FAFB] px-6 py-5 space-y-3">
             <P>
-              Emails from <strong>Zyene</strong> and our team may include confidential business information. This page
-              summarizes how we expect those messages to be handled. You may link here from your email signature:{' '}
-              <strong className="text-[#0A1015]">https://zyene.com/legal/email-notice</strong>
+              Emails sent by <strong>Zyene</strong> or by members of our team may contain confidential, proprietary,
+              or commercially sensitive information related to our clients, partners, candidates, services, systems, or
+              internal operations. This notice explains how those communications should be handled.
             </P>
             <P className="text-[15px] text-[#5C6369]">
-              This notice is for convenience and clarity. It does not replace our{' '}
+              This notice is provided for clarity and convenience. It does not create a contract, waive any rights,
+              amend any written agreement, or replace our{' '}
               <Link href="/legal/privacy-policy" className="text-[#0A1015] underline underline-offset-2 hover:no-underline">
                 Privacy Policy
               </Link>{' '}
@@ -48,29 +51,41 @@ export default function EmailCommunicationsContent() {
             </P>
           </div>
 
-          <Section title="Confidentiality">
+          <Section title="Intended recipient and confidentiality">
             <P>
-              Messages are intended only for the named recipient(s). If you are not the intended recipient, any review,
-              use, disclosure, or distribution is prohibited. Please notify the sender immediately, delete the message
-              and any attachments from your systems, and do not copy or forward it.
+              Zyene email communications are intended only for the named recipient or the organization authorized to
+              receive them. If you are not the intended recipient, you must not review, use, copy, forward, disclose,
+              or rely on the message or any attachment. Please notify the sender promptly, delete the email and any
+              attachments from your systems, and do not retain copies.
             </P>
           </Section>
 
-          <Section title="Personal views">
+          <Section title="Authority and commitments">
             <P>
-              Unless a message explicitly states otherwise, opinions or recommendations in an email are those of the
-              sender in context of the conversation. They may not reflect the official position of Zyene on every
-              topic.
+              Email communications are often used for day-to-day coordination. Unless expressly stated by an authorized
+              Zyene representative, an email does not modify an existing agreement, create a new contract, approve a
+              statement of work, waive legal rights, or authorize payment terms. Formal commitments must be confirmed in
+              a signed agreement, accepted proposal, approved order form, or another written record clearly authorized
+              by Zyene.
+            </P>
+          </Section>
+
+          <Section title="Professional context">
+            <P>
+              Any views, recommendations, technical notes, or business observations in an email are provided in the
+              context of the specific conversation. They should not be treated as legal, financial, tax, employment, or
+              compliance advice unless Zyene has separately agreed in writing to provide that service.
             </P>
           </Section>
 
           <Section title="Security and attachments">
-            <P>Email and attachments can carry security risks. Recipients should:</P>
+            <P>Email is not a fully secure communication channel. Recipients should:</P>
             <ul className="list-disc pl-6 space-y-2">
               <Li>Use up-to-date antivirus and security software.</Li>
               <Li>Verify unexpected attachments or links with the sender through a separate channel before opening.</Li>
+              <Li>Do not send passwords, access tokens, payment credentials, or highly sensitive data by email.</Li>
               <Li>
-                Report messages that impersonate Zyene to{' '}
+                Report suspected phishing, impersonation, or unauthorized use of the Zyene name to{' '}
                 <a href="mailto:support@zyene.com" className="text-[#0A1015] underline underline-offset-2 hover:no-underline">
                   support@zyene.com
                 </a>
@@ -78,9 +93,18 @@ export default function EmailCommunicationsContent() {
               </Li>
             </ul>
             <P>
-              Zyene uses reasonable measures to reduce risk but cannot guarantee that any email or attachment is free of
-              harmful content. Zyene is not liable for loss or damage arising from email transmission, including from
-              malware, except where applicable law does not allow that limitation.
+              Zyene uses reasonable measures to reduce email security risks, but we cannot guarantee that any email,
+              attachment, or link is free from malicious code, interception, delay, corruption, or delivery error.
+              Recipients remain responsible for applying appropriate security controls before opening or acting on an
+              email.
+            </P>
+          </Section>
+
+          <Section title="Payment and account changes">
+            <P>
+              To help prevent fraud, do not rely solely on email instructions for bank account changes, wire details,
+              payment redirects, vendor onboarding, credential requests, or urgent financial actions. Verify any such
+              request through a known Zyene contact or a trusted communication channel before acting.
             </P>
           </Section>
 
@@ -102,13 +126,14 @@ export default function EmailCommunicationsContent() {
             </P>
           </Section>
 
-          <Section title="Suggested short line for your signature">
+          <Section title="Signature line">
             <div className="rounded-[12px] border border-[#E3E8EF] bg-white px-6 py-5 font-mono text-[14px] text-[#3D4145] leading-relaxed">
-              This email may contain confidential information. If you received it in error, please notify the sender and
-              delete it. Details: https://zyene.com/legal/email-notice
+              This email may contain confidential information intended only for its recipient. If received in error,
+              notify the sender and delete it. Notice: {noticeUrl}
             </div>
             <P className="text-[15px] text-[#5C6369]">
-              Adjust wording to match your role and region if your counsel advises a different formulation.
+              Zyene team members may link to this page from email signatures instead of adding long disclaimer blocks to
+              every message.
             </P>
           </Section>
         </motion.div>
