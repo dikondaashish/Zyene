@@ -2,8 +2,15 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { Check } from "lucide-react"
 import { Turnstile } from "react-turnstile"
+import { Reveal, RevealText } from "@/components/ui/Reveal"
+
+const EASE = [0.16, 1, 0.3, 1] as const
+
+const INPUT_CLASS =
+  "h-[52px] w-full rounded-[14px] border border-[#0A1015]/12 bg-white px-4 text-[15px] text-[#0A1015] transition-all placeholder:text-[#8A8F98] focus:border-[#0099FF]/70 focus:outline-none focus:ring-2 focus:ring-[#0099FF]/20"
 
 type TalentContactWidgetProps = {
   roleSlug?: string
@@ -12,6 +19,7 @@ type TalentContactWidgetProps = {
 
 export function TalentContactWidget({ roleSlug, roleTitle }: TalentContactWidgetProps) {
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+  const reduce = useReducedMotion()
   const [name, setName] = React.useState("")
   const [email, setEmail] = React.useState("")
   const [notifyOnReopen, setNotifyOnReopen] = React.useState(true)
@@ -20,14 +28,6 @@ export function TalentContactWidget({ roleSlug, roleTitle }: TalentContactWidget
   const [submitted, setSubmitted] = React.useState(false)
   const [submitting, setSubmitting] = React.useState(false)
   const [submitError, setSubmitError] = React.useState<string | null>(null)
-
-  const mailtoHref = React.useMemo(() => {
-    const subject = encodeURIComponent("Career Interest - Keep Me in Mind")
-    const body = encodeURIComponent(
-      `Hi Zyene Team,\n\nIf relevant openings come up, please contact me.\n\nName: ${name || "[Your Name]"}\nEmail: ${email || "[Your Email]"}\nNotify me when this role reopens: ${notifyOnReopen ? "Yes" : "No"}\n\nThank you.`
-    )
-    return `mailto:support@zyene.com?subject=${subject}&body=${body}`
-  }, [name, email, notifyOnReopen])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -51,204 +51,152 @@ export function TalentContactWidget({ roleSlug, roleTitle }: TalentContactWidget
           turnstileToken,
         }),
       })
-
-      if (!response.ok) {
-        const errorData = (await response.json().catch(() => null)) as
-          | { error?: string; errorCode?: number }
-          | null
-
-        if (errorData?.errorCode === 2884) {
-          throw new Error(
-            "Setup needed: your Zoho Sheet requires a header row (created_at, full_name, email, notify_when_reopen, role_slug, role_title, source_page, status)."
-          )
-        }
-
-        if (errorData?.error) {
-          throw new Error(errorData.error)
-        }
-
-        throw new Error("Failed to submit")
-      }
-
+      if (!response.ok) throw new Error("Failed to submit")
       setSubmitted(true)
       setTurnstileToken(null)
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Could not save your info right now. Please try again."
+    } catch {
       setTurnstileToken(null)
       setTurnstileRenderKey((prev) => prev + 1)
-      setSubmitError(message)
+      setSubmitError("We could not save your details just now. Please try again, or email support@zyene.com.")
     } finally {
       setSubmitting(false)
     }
   }
 
-  const confettiDots = React.useMemo(
-    () =>
-      Array.from({ length: 14 }).map((_, i) => ({
-        id: i,
-        left: `${8 + ((i * 7) % 84)}%`,
-        delay: i * 0.04,
-        duration: 0.55 + (i % 4) * 0.08,
-      })),
-    []
-  )
-
   return (
-    <section className="bg-white px-6 py-16 md:px-12 lg:px-24">
-      <div className="mx-auto max-w-[980px]">
-        <div className="relative [perspective:1400px]">
-          <motion.div
-            animate={{ rotateY: submitted ? 180 : 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="relative min-h-[420px] [transform-style:preserve-3d]"
-          >
-            <div className="absolute inset-0 rounded-[14px] border border-[#E1E6EC] bg-[#F7F9FC] p-6 md:p-8 shadow-[0_10px_30px_rgba(10,16,21,0.06)] [backface-visibility:hidden]">
-              <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.14em] text-[#8A8F98]">
-                Stay Connected
-              </p>
-              <h3 className="mb-2 text-[28px] md:text-[34px] leading-[1.1] tracking-[-0.02em] text-[#0A1015]">
-                Share your name and email
-              </h3>
-              <p className="mb-6 text-[15px] leading-[1.6] text-[#4A4F59]">
-                If we have a matching role later, we will contact you.
-              </p>
+    <section className="bg-white">
+      <div className="zy-container zy-section grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <RevealText text="Join the talent pool." className="zy-display text-[clamp(34px,4.6vw,64px)] text-[#0A1015]" />
+          <Reveal delay={0.1}>
+            <p className="mt-8 max-w-[420px] text-[17px] leading-[1.6] text-[#4B525C]">
+              Leave your name and email. We review the talent pool every week and reach out when a matching role
+              opens.
+            </p>
+          </Reveal>
+        </div>
 
-              <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
-                    required
-                    className="h-12 rounded-[8px] border border-[#DDE3EA] bg-white px-4 text-[#0A1015] placeholder:text-[#8A8F98] focus:outline-none focus:ring-2 focus:ring-[#0099FF]/25 focus:border-[#0099FF]/70 transition-all"
-                  />
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your.email@example.com"
-                    required
-                    className="h-12 rounded-[8px] border border-[#DDE3EA] bg-white px-4 text-[#0A1015] placeholder:text-[#8A8F98] focus:outline-none focus:ring-2 focus:ring-[#0099FF]/25 focus:border-[#0099FF]/70 transition-all"
-                  />
+        <Reveal className="rounded-[24px] border border-line bg-paper p-7 md:p-10">
+          <AnimatePresence mode="wait" initial={false}>
+            {submitted ? (
+              <motion.div
+                key="done"
+                initial={reduce ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: EASE }}
+                role="status"
+              >
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#0A1015] text-white">
+                  <Check className="h-5 w-5" strokeWidth={2} />
+                </span>
+                <p className="mt-6 text-[24px] font-medium leading-[1.2] tracking-[-0.02em] text-[#0A1015]">
+                  Thanks{name ? `, ${name.split(" ")[0]}` : ""}. You are in the talent pool.
+                </p>
+                <p className="mt-3 max-w-[480px] text-[15.5px] leading-[1.65] text-[#4B525C]">
+                  {notifyOnReopen
+                    ? "We will email you if this role reopens or a similar one becomes available."
+                    : "We will email you if a matching role becomes available."}
+                </p>
+                <Link
+                  href="/careers#open-roles"
+                  className="mt-8 inline-flex text-[14.5px] font-medium text-[#0A1015] underline decoration-[#0A1015]/25 underline-offset-4 transition-colors hover:decoration-[#0A1015]"
+                >
+                  See open roles
+                </Link>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                exit={reduce ? undefined : { opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+                onSubmit={handleSubmit}
+                className="space-y-6"
+              >
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="space-y-2.5">
+                    <label htmlFor="talent-name" className="text-[13px] font-medium text-[#0A1015]">
+                      Full name
+                    </label>
+                    <input
+                      id="talent-name"
+                      type="text"
+                      autoComplete="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Jane Cooper"
+                      required
+                      className={INPUT_CLASS}
+                    />
+                  </div>
+                  <div className="space-y-2.5">
+                    <label htmlFor="talent-email" className="text-[13px] font-medium text-[#0A1015]">
+                      Email
+                    </label>
+                    <input
+                      id="talent-email"
+                      type="email"
+                      autoComplete="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="jane@example.com"
+                      required
+                      className={INPUT_CLASS}
+                    />
+                  </div>
                 </div>
 
-                <label className="mb-5 inline-flex items-center gap-3 text-[14px] text-[#2F343B] cursor-pointer select-none">
+                <label className="flex cursor-pointer select-none items-center gap-3 text-[14.5px] text-[#2F343B]">
                   <input
                     type="checkbox"
                     checked={notifyOnReopen}
                     onChange={(e) => setNotifyOnReopen(e.target.checked)}
-                    className="h-4 w-4 rounded border border-[#C7D0DA] text-[#0A1015] focus:ring-2 focus:ring-[#0099FF]/25"
+                    className="h-4 w-4 rounded border border-[#C7D0DA] accent-[#0A1015]"
                   />
-                  Notify me when this role reopens.
+                  Email me if this role reopens
                 </label>
 
                 {turnstileSiteKey ? (
-                  <div className="mb-5">
-                    <Turnstile
-                      key={turnstileRenderKey}
-                      sitekey={turnstileSiteKey}
-                      onVerify={(token) => {
-                        setTurnstileToken(token)
-                        setSubmitError(null)
-                      }}
-                      onExpire={() => setTurnstileToken(null)}
-                      onError={() => {
-                        setTurnstileToken(null)
-                        setSubmitError("Security check failed. Please retry.")
-                      }}
-                      theme="light"
-                      size="normal"
-                    />
-                  </div>
-                ) : (
-                  <p className="mb-5 text-[13px] text-[#B42318]">
-                    Security check is not configured yet. Please add `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
-                  </p>
-                )}
+                  <Turnstile
+                    key={turnstileRenderKey}
+                    sitekey={turnstileSiteKey}
+                    onVerify={(token) => {
+                      setTurnstileToken(token)
+                      setSubmitError(null)
+                    }}
+                    onExpire={() => setTurnstileToken(null)}
+                    onError={() => {
+                      setTurnstileToken(null)
+                      setSubmitError("The security check could not load. Please refresh and try again.")
+                    }}
+                    theme="light"
+                    size="normal"
+                  />
+                ) : null}
 
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <button
                     type="submit"
-                    disabled={submitting}
-                    className="inline-flex h-12 items-center justify-center rounded-[8px] bg-[#0A1015] px-7 text-[14px] font-medium text-white transition-colors hover:bg-[#111A23]"
+                    disabled={submitting || !turnstileToken}
+                    className="inline-flex h-12 items-center justify-center rounded-full bg-[#0A1015] px-7 text-[14.5px] font-medium text-white transition-[background-color,opacity] duration-300 hover:bg-[#1A222B] disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {submitting ? "Saving..." : "Join Talent Pool"}
+                    {submitting ? "Saving…" : "Join the talent pool"}
                   </button>
-
-                  <Link
-                    href="/careers"
-                    className="inline-flex h-12 items-center justify-center rounded-[8px] border border-[#D5DDE6] bg-white px-6 text-[14px] font-medium text-[#0A1015] transition-colors hover:bg-[#F4F7FA]"
-                  >
-                    View Open Roles
-                  </Link>
-
                   <a
-                    href="mailto:support@zyene.com?subject=Careers%20Inquiry"
-                    className="inline-flex h-12 items-center justify-center rounded-[8px] border border-transparent px-3 text-[14px] font-medium text-[#0A1015]/85 transition-colors hover:text-[#0A1015]"
+                    href="mailto:support@zyene.com?subject=Careers%20inquiry"
+                    className="text-[14.5px] font-medium text-[#0A1015] underline decoration-[#0A1015]/25 underline-offset-4 transition-colors hover:decoration-[#0A1015]"
                   >
-                    Email Recruiting
+                    Or email us directly
                   </a>
                 </div>
                 {submitError ? (
-                  <p className="mt-3 text-[13px] text-[#B42318]">{submitError}</p>
+                  <p role="alert" className="text-[13.5px] text-[#B42318]">
+                    {submitError}
+                  </p>
                 ) : null}
-              </form>
-            </div>
-
-            <div className="absolute inset-0 rounded-[14px] border border-[#E1E6EC] bg-[#F7F9FC] p-6 md:p-8 shadow-[0_10px_30px_rgba(10,16,21,0.06)] [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden">
-              {submitted &&
-                confettiDots.map((dot) => (
-                  <motion.span
-                    key={dot.id}
-                    initial={{ opacity: 0, y: -18, scale: 0.7 }}
-                    animate={{ opacity: [0, 1, 0], y: [0, 34, 56], scale: [0.7, 1, 0.9] }}
-                    transition={{
-                      duration: dot.duration,
-                      delay: dot.delay,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                    className="pointer-events-none absolute top-4 h-2 w-2 rounded-full"
-                    style={{
-                      left: dot.left,
-                      backgroundColor: dot.id % 3 === 0 ? "#0099FF" : dot.id % 2 === 0 ? "#0A1015" : "#8A8F98",
-                    }}
-                  />
-                ))}
-              <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.14em] text-[#8A8F98]">
-                Stay Connected
-              </p>
-              <h3 className="mb-2 text-[28px] md:text-[34px] leading-[1.1] tracking-[-0.02em] text-[#0A1015]">
-                Thanks! We received your interest.
-              </h3>
-              <p className="mb-6 text-[15px] leading-[1.6] text-[#4A4F59]">
-                Expected follow-up timeline: if a relevant role opens, our recruiting team usually reviews talent pool profiles weekly and reaches out by email.
-              </p>
-
-              <div className="mb-6 rounded-[10px] border border-[#D8E0E8] bg-white p-4 md:p-5">
-                <p className="text-[14px] leading-[1.6] text-[#4A4F59]">
-                  We captured interest for <span className="font-medium text-[#0A1015]">{name || "your profile"}</span>. If you opted in, we will notify you when this role reopens.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href={mailtoHref}
-                  className="inline-flex h-12 items-center justify-center rounded-[8px] bg-[#0A1015] px-7 text-[14px] font-medium text-white transition-colors hover:bg-[#111A23]"
-                >
-                  Email Recruiting
-                </a>
-
-                <Link
-                  href="/careers"
-                  className="inline-flex h-12 items-center justify-center rounded-[8px] border border-[#D5DDE6] bg-white px-6 text-[14px] font-medium text-[#0A1015] transition-colors hover:bg-[#F4F7FA]"
-                >
-                  View Open Roles
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+              </motion.form>
+            )}
+          </AnimatePresence>
+        </Reveal>
       </div>
     </section>
   )

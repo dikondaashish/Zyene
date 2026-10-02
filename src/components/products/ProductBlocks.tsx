@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
+import { REVEAL_VIEWPORT } from "@/lib/motion"
 
 const productCards = [
   {
@@ -11,7 +12,7 @@ const productCards = [
     subtitle: "Reputation management for local businesses",
     description:
       "Monitor reviews, reply fast, and automate review growth from one place. Built for operators who need daily visibility and better customer trust.",
-    image: "/images/Zyene Reviews.png",
+    image: "/images/zyene-reviews.png",
     imageAlt: "Zyene Reviews brand logo",
     imageFit: "contain",
     imageBg: "bg-white",
@@ -59,7 +60,7 @@ export function ProductBlocks() {
               key={product.name}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
+              viewport={REVEAL_VIEWPORT}
               transition={{ duration: 0.5, delay: idx * 0.06 }}
               className="rounded-[20px] border border-[#E3E8EF] bg-white overflow-hidden shadow-[0_10px_30px_rgba(15,23,42,0.06)]"
             >

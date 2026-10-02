@@ -5,22 +5,13 @@ import { FooterCTA } from "@/components/home/FooterCTA"
 import { BLOG_POSTS } from "@/lib/blog-posts"
 
 export const metadata: Metadata = {
-  title: "Blog | AI-Powered Digital Transformation Insights — Zyene",
+  title: "Industrial AI Guides",
   description:
-    "Practical insights on AI-powered digital transformation, execution systems, and business scaling. Guides for teams transforming marketing, operations, and sales with AI — written by the Zyene team.",
-  keywords: [
-    "digital transformation blog",
-    "AI-powered transformation insights",
-    "AI digital transformation guides",
-    "operational transformation AI",
-    "business transformation tips",
-    "AI execution systems",
-  ],
+    "Guides on industrial AI for distributors, manufacturers, and specialty contractors: purchase order entry, RFQs, bid intake, ERP integration, and how to measure a pilot.",
   alternates: { canonical: "https://zyene.com/blog" },
   openGraph: {
-    title: "Blog | AI-Powered Digital Transformation Insights — Zyene",
-    description:
-      "Practical insights on AI-powered digital transformation, execution systems, and business scaling from the Zyene team.",
+    title: "Resources | Zyene",
+    description: "Practical notes on production AI for industrial operations, from the Zyene team.",
     url: "https://zyene.com/blog",
     type: "website",
   },
@@ -30,10 +21,10 @@ export default function BlogPage() {
   return (
     <>
       <BlogHero />
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <BlogPostsGrid posts={BLOG_POSTS} />
       </div>
-      <div id="footer-cta">
+      <div>
         <FooterCTA />
       </div>
     </>

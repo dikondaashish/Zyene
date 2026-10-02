@@ -1,137 +1,121 @@
 "use client"
 
 import * as React from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import Link from "next/link"
+import { ArrowUpRight, Plus } from "lucide-react"
 import { SITE_DATA } from "@/lib/constants"
-
-const textRevealVariants = {
-  hidden: { opacity: 0, filter: "blur(10px)", y: 10 },
-  visible: (i: number) => ({
-    opacity: 1,
-    filter: "blur(0px)",
-    y: 0,
-    transition: {
-      delay: i * 0.05,
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    }
-  })
-}
+import { Reveal, RevealText } from "@/components/ui/Reveal"
+import { cn } from "@/lib/utils"
 
 type FAQItem = {
   question: string
   answer: string
 }
 
+type FAQAside = {
+  title: string
+  body: string
+  linkLabel: string
+  href: string
+}
+
 type FAQProps = {
   label?: string
   headingText?: string
   faqs?: FAQItem[]
-  sectionClassName?: string
+  aside?: FAQAside | null
+}
+
+const DEFAULT_ASIDE: FAQAside = {
+  title: "Have a workflow in mind?",
+  body: "Bring one process. We will map it with you and size the opportunity.",
+  linkLabel: "Talk to an engineer",
+  href: "/contact",
 }
 
 export function FAQ({
-  label = "FAQ",
+  label,
   headingText = "Frequently asked questions",
   faqs = SITE_DATA.faqs,
-  sectionClassName = "py-32 px-6 bg-white overflow-hidden",
+  aside = DEFAULT_ASIDE,
 }: FAQProps) {
   const [openIndex, setOpenIndex] = React.useState<number | null>(0)
-  const headingWords = headingText.split(" ")
+  const baseId = React.useId()
 
   return (
-    <section className={sectionClassName}>
-      <div className="max-w-[800px] mx-auto">
-        {/* Title Wrapper - Centered */}
-        <div className="text-center mb-16">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[14px] font-bold text-[#0A1015] tracking-[0.2em] uppercase mb-8"
-          >
-            {label}
-          </motion.p>
-          <h2 className="text-[44px] md:text-[64px] leading-[1.05] font-normal tracking-[-0.03em] text-[#0A1015]">
-            {headingWords.map((word, i) => (
-              <motion.span
-                key={i}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={textRevealVariants}
-                className="inline-block mr-[0.25em]"
+    <section className="bg-white">
+      <div className="zy-container zy-section grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          {label ? (
+            <Reveal className="mb-6">
+              <span className="zy-kicker">{label}</span>
+            </Reveal>
+          ) : null}
+          <RevealText text={headingText} className="zy-display text-[clamp(34px,4.4vw,60px)] text-[#0A1015]" />
+          {aside ? (
+            <Reveal delay={0.1} className="mt-10 hidden rounded-[24px] border border-line bg-paper p-7 lg:block">
+              <p className="text-[16px] font-medium text-[#0A1015]">{aside.title}</p>
+              <p className="mt-2 text-[15px] leading-[1.6] text-[#4B525C]">{aside.body}</p>
+              <Link
+                href={aside.href}
+                className="mt-5 inline-flex items-center gap-1.5 text-[14.5px] font-medium text-[#0A1015] underline decoration-[#0A1015]/25 underline-offset-4 transition-colors hover:decoration-[#0A1015]"
               >
-                {word}
-              </motion.span>
-            ))}
-          </h2>
+                {aside.linkLabel} <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </Reveal>
+          ) : null}
         </div>
 
-        {/* FAQ Accordion */}
-        <div className="flex flex-col">
+        <div className="border-t border-[#0A1015]/12">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index
-
+            const panelId = `${baseId}-panel-${index}`
+            const buttonId = `${baseId}-button-${index}`
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="border-b transition-all duration-300"
-                style={{
-                  borderColor: isOpen ? '#0A1015' : '#EEEEEE',
-                }}
-              >
-                <button
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="w-full py-6 flex justify-between items-center text-left focus:outline-none group"
-                >
-                  <h4 className={`text-[18px] font-bold pr-8 tracking-tight transition-colors duration-300 ${isOpen ? 'text-[#0A1015]' : 'text-[#B0B3B8]'}`}>
-                    {faq.question}
-                  </h4>
-
-                  {/* Plus/X Icon - Two perpendicular bars */}
-                  <div className="relative w-5 h-5 flex-shrink-0 flex items-center justify-center">
-                    <motion.div
-                      animate={{ rotate: isOpen ? -135 : 0 }}
-                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                      className="relative w-[14px] h-[14px]"
+              <Reveal key={faq.question} delay={index * 0.04} className="border-b border-[#0A1015]/12">
+                <h3>
+                  <button
+                    id={buttonId}
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    className="group flex w-full items-center justify-between gap-6 py-7 text-left"
+                  >
+                    <span
+                      className={cn(
+                        "text-[19px] font-medium leading-[1.35] tracking-[-0.015em] transition-colors duration-300 md:text-[21px]",
+                        isOpen ? "text-[#0A1015]" : "text-[#0A1015]/70 group-hover:text-[#0A1015]"
+                      )}
                     >
-                      {/* Horizontal bar */}
-                      <div
-                        className="absolute top-1/2 left-0 right-0 h-[2px] rounded-[10px] -translate-y-1/2"
-                        style={{ backgroundColor: isOpen ? '#101010' : '#0A1015' }}
-                      />
-                      {/* Vertical bar */}
-                      <div
-                        className="absolute left-1/2 top-0 bottom-0 w-[2px] rounded-[10px] -translate-x-1/2"
-                        style={{ backgroundColor: isOpen ? '#101010' : '#0A1015' }}
-                      />
-                    </motion.div>
-                  </div>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
+                      {faq.question}
+                    </span>
+                    <span
+                      className={cn(
+                        "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-500 ease-out-expo",
+                        isOpen
+                          ? "rotate-45 border-[#0A1015] bg-[#0A1015] text-white"
+                          : "border-[#0A1015]/15 text-[#0A1015] group-hover:border-[#0A1015]/40"
+                      )}
                     >
-                      <p className="pb-6 text-[15px] text-[#3D4145] leading-[1.6] max-w-[600px]">
-                        {faq.answer}
-                      </p>
-                    </motion.div>
+                      <Plus className="h-4 w-4" />
+                    </span>
+                  </button>
+                </h3>
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  className={cn(
+                    "grid transition-[grid-template-rows,opacity] duration-500 ease-out-expo",
+                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                   )}
-                </AnimatePresence>
-              </motion.div>
+                >
+                  <div className="overflow-hidden">
+                    <p className="max-w-[640px] pb-8 pr-14 text-[16px] leading-[1.65] text-[#4B525C]">{faq.answer}</p>
+                  </div>
+                </div>
+              </Reveal>
             )
           })}
         </div>

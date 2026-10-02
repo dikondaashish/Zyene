@@ -26,7 +26,7 @@ const USE_CASES_FAQS = [
   {
     question: "How long does implementation usually take?",
     answer:
-      "Most use case implementations can start quickly, with first workflows typically launched in 1-2 weeks based on complexity.",
+      "It depends on the workflow and the systems involved. An assessment maps one workflow and recommends a pilot before any build starts.",
   },
   {
     question: "Will this work with our existing stack?",
@@ -36,7 +36,7 @@ const USE_CASES_FAQS = [
   {
     question: "What outcomes should we expect first?",
     answer:
-      "Teams usually see faster turnaround time, lower manual workload, and more consistent execution visibility across departments.",
+      "A working workflow on one process, with a metric agreed before the pilot. We do not publish results we have not measured on your work.",
   },
 ]
 
@@ -44,15 +44,15 @@ export default function UseCases() {
   return (
     <>
       <UseCasesHero />
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <UseCasesList />
         <AIAction />
         <Industries ctaLabel="Book a Strategy Call" ctaHref="/contact" />
         <RealNumbers />
         <Calculator />
-        <FAQ faqs={USE_CASES_FAQS} sectionClassName="py-24 px-6 md:px-12 lg:px-24 bg-white overflow-hidden" />
+        <FAQ faqs={USE_CASES_FAQS} />
       </div>
-      <div id="footer-cta">
+      <div>
         <FooterCTA />
       </div>
     </>

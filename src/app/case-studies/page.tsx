@@ -6,24 +6,20 @@ import { CASE_STUDIES } from "@/lib/case-studies"
 import { FooterCTA } from "@/components/home/FooterCTA"
 
 export const metadata: Metadata = {
-  title: "Case Studies | AI Digital Transformation Results — Zyene",
+  title: "Industrial AI Workflow Examples",
   description:
-    "See how businesses use Zyene's AI systems and execution support to automate workflows, reduce manual overhead, and deliver measurable digital transformation outcomes across marketing, sales, and operations.",
+    "Reference implementations for distribution, manufacturing, and specialty contractors. Demonstration using synthetic business data, not customer results.",
   keywords: [
-    "digital transformation case studies",
-    "AI transformation results",
-    "AI automation case study",
-    "CRM automation results",
-    "voice AI case study",
-    "Zyene client results",
-    "digital transformation ROI",
-    "AI workflow automation examples",
+    "distributor order automation example",
+    "manufacturing RFQ automation",
+    "contractor bid intake automation",
+    "industrial AI workflow examples",
   ],
   alternates: { canonical: "https://zyene.com/case-studies" },
   openGraph: {
-    title: "Case Studies | AI Digital Transformation Results — Zyene",
+    title: "Example Workflows | Zyene",
     description:
-      "Real outcomes from businesses that replaced manual execution with Zyene's AI-powered workflows. 3× ROI, 68% faster CRM updates, and more.",
+      "Reference implementations using synthetic business data. Not published customer results.",
     url: "https://zyene.com/case-studies",
     type: "website",
   },
@@ -33,15 +29,15 @@ const caseStudiesJsonLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "@id": "https://zyene.com/case-studies",
-  name: "Zyene Case Studies — AI Digital Transformation Results",
+  name: "Zyene example workflows",
   description:
-    "Real-world outcomes from businesses that used Zyene's AI systems and execution support to transform marketing, sales, and operations workflows.",
+    "Reference implementations using synthetic business data for distribution, manufacturing, and specialty contractors.",
   url: "https://zyene.com/case-studies",
   isPartOf: { "@id": "https://zyene.com/#website" },
   about: { "@id": "https://zyene.com/#organization" },
   hasPart: CASE_STUDIES.map((study) => ({
     "@type": "Article",
-    headline: `${study.company} — ${study.industry} Digital Transformation with Zyene`,
+    headline: study.title,
     description: study.challenge,
     author: { "@id": "https://zyene.com/#organization" },
   })),
@@ -56,10 +52,8 @@ export default function CaseStudiesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(caseStudiesJsonLd) }}
       />
       <CaseStudiesHero />
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <CaseStudiesGrid />
-      </div>
-      <div id="footer-cta">
         <FooterCTA />
       </div>
     </>

@@ -4,27 +4,19 @@ import { AboutMission } from "@/components/about/AboutMission"
 import { AboutExecutionModel } from "@/components/about/AboutExecutionModel"
 import { AboutGlobalOperations } from "@/components/about/AboutGlobalOperations"
 import { Hiring } from "@/components/about/Hiring"
-import { RealNumbers } from "@/components/use-cases/RealNumbers"
 import { FAQ } from "@/components/home/FAQ"
 import { FooterCTA } from "@/components/home/FooterCTA"
 
 export const metadata: Metadata = {
-  title: "About Zyene | AI-Powered Digital Transformation Execution Company",
+  title: { absolute: "About Zyene | Applied AI for Industrial Operations" },
   description:
-    "Zyene is an AI-powered digital transformation execution company helping founders, operators, and growth teams transform how their businesses run. We build AI systems with full execution support and measurable outcomes.",
-  keywords: [
-    "about Zyene",
-    "AI digital transformation company",
-    "AI-powered transformation",
-    "digital transformation execution",
-    "AI business transformation company",
-    "operational AI",
-  ],
+    "Zyene is an applied AI engineering company focused on industrial operations for distributors, manufacturers, and specialty contractors.",
+  keywords: ["about Zyene", "applied AI for industrial operations", "industrial AI company", "operational AI"],
   alternates: { canonical: "https://zyene.com/about" },
   openGraph: {
-    title: "About Zyene | AI-Powered Digital Transformation Execution Company",
+    title: "About Zyene | Applied AI for Industrial Operations",
     description:
-      "Zyene helps founders, operators, and growth teams transform how their businesses run with AI systems and full execution support.",
+      "An applied AI engineering company for distributors, manufacturers, and specialty contractors.",
     url: "https://zyene.com/about",
     type: "website",
   },
@@ -32,29 +24,29 @@ export const metadata: Metadata = {
 
 const ABOUT_FAQS = [
   {
-    question: "What is Zyene's core mission?",
+    question: "What is Zyene's mission?",
     answer:
-      "Our mission is to help modern businesses scale with intelligent systems that improve execution quality, speed, and consistency.",
+      "Industrial companies already bought ERP, CRM, and field systems. We build the intelligence layer that connects email, documents, and those systems.",
   },
   {
-    question: "What kind of teams do you work with?",
+    question: "Who do you work with?",
     answer:
-      "We work with founders, operators, and growth teams that want structured systems across marketing, operations, and sales.",
+      "Wholesale distributors, SMB manufacturers, and specialty contractors such as HVAC, electrical, mechanical, plumbing, fire protection, and roofing firms.",
   },
   {
-    question: "What makes Zyene different from typical agencies?",
+    question: "Are you an AI consulting company?",
     answer:
-      "Zyene focuses on building reusable operating systems and measurable process outcomes, not one-off campaigns or disconnected tasks.",
+      "No. We are an applied AI engineering company: we design, build, and integrate production systems. Advice without a working workflow is not what we sell.",
   },
   {
-    question: "Do you support long-term optimization after launch?",
+    question: "Do you stay after launch?",
     answer:
-      "Yes. We continuously review system performance and improve workflows using real usage data and team feedback.",
+      "Yes. Deployment includes monitoring, the agreed metric, employee feedback, and improvement from real use.",
   },
   {
-    question: "How can we start working with Zyene?",
+    question: "How do we start?",
     answer:
-      "You can book a strategy call through the contact page and we will map your current bottlenecks with a clear action plan.",
+      "Book an AI workflow assessment. We map one workflow and recommend a pilot. There is no commitment after the first conversation.",
   },
 ]
 
@@ -62,15 +54,12 @@ export default function About() {
   return (
     <>
       <AboutHero />
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <AboutMission />
-        <RealNumbers variant="aboutTrustedOutcomes" />
         <AboutExecutionModel />
         <AboutGlobalOperations />
-        <FAQ faqs={ABOUT_FAQS} sectionClassName="py-24 px-6 md:px-12 lg:px-24 bg-white overflow-hidden" />
+        <FAQ faqs={ABOUT_FAQS} />
         <Hiring />
-      </div>
-      <div id="footer-cta">
         <FooterCTA />
       </div>
     </>

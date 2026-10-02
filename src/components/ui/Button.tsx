@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { motion, HTMLMotionProps } from "framer-motion"
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "dark";
@@ -11,24 +10,31 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const buttonVariants = {
-  primary: "bg-white text-[#0A1015] hover:bg-white/95 backdrop-blur-[4px] shadow-[0_12px_24px_-8px_rgba(0,0,0,0.15)]",
-  secondary: "bg-white/[0.04] text-white hover:bg-white/[0.08] border border-white/10 backdrop-blur-md",
-  outline: "border border-white/10 bg-transparent hover:bg-white/[0.04] text-white",
-  ghost: "hover:bg-white/[0.04] text-[#CECFD0] hover:text-white",
-  dark: "bg-[#0A1015] text-white hover:bg-[#0A1015]/90 shadow-[0_12px_24px_-8px_rgba(0,0,0,0.15)]",
+  primary:
+    "bg-[#F4F5F2] text-[#0A1015] hover:bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_30px_-12px_rgba(0,0,0,0.45)]",
+  secondary:
+    "bg-white/[0.06] text-white hover:bg-white/[0.12] border border-white/15 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]",
+  outline:
+    "border border-[#0A1015]/15 bg-transparent text-[#0A1015] hover:border-[#0A1015]/40 hover:bg-[#0A1015]/[0.03]",
+  ghost: "text-[#CECFD0] hover:text-white hover:bg-white/[0.06]",
+  dark:
+    "bg-[#0A1015] text-white hover:bg-[#1B252F] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_10px_30px_-14px_rgba(10,16,21,0.55)]",
 }
 
 const sizeVariants = {
-  default: "h-[48px] px-6 py-2 text-[15px]",
-  sm: "h-[40px] px-5 text-[14px]",
-  lg: "h-[58px] px-10 text-[16px]",
+  default: "h-12 px-6 text-[15px]",
+  sm: "h-10 px-5 text-[14px]",
+  lg: "h-14 px-8 text-[15px]",
   icon: "h-10 w-10",
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "default", asChild, children, ...props }, ref) => {
     const classes = cn(
-      "inline-flex items-center justify-center rounded-[4px] font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue disabled:pointer-events-none disabled:opacity-50",
+      "group/btn inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-[-0.005em] whitespace-nowrap",
+      "transition-[background-color,border-color,color,box-shadow,transform] duration-300 ease-out-expo active:scale-[0.98]",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+      "disabled:pointer-events-none disabled:opacity-50",
       buttonVariants[variant],
       sizeVariants[size],
       className
@@ -42,16 +48,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     return (
-      <motion.button
-        ref={ref}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
-        className={classes}
-        {...(props as HTMLMotionProps<"button">)}
-      >
+      <button ref={ref} className={classes} {...props}>
         {children}
-      </motion.button>
+      </button>
     )
   }
 )

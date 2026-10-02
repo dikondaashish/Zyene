@@ -4,7 +4,7 @@ import { WhyWorkWithUs } from "@/components/careers/WhyWorkWithUs"
 import { HowWeHire } from "@/components/careers/HowWeHire"
 import { FAQ } from "@/components/home/FAQ"
 import { FooterCTA } from "@/components/home/FooterCTA"
-import Image from "next/image"
+import { HiringCompliance } from "@/components/careers/HiringCompliance"
 
 const CAREERS_FAQS = [
   {
@@ -35,21 +35,14 @@ const CAREERS_FAQS = [
 ]
 
 export const metadata = {
-  title: "Careers at Zyene | Join Our Digital Transformation Team",
+  title: "Careers",
   description:
-    "Join Zyene — an AI-powered digital transformation execution company. We're hiring builders, operators, and systems-minded individuals to help businesses transform how they run.",
-  keywords: [
-    "Zyene careers",
-    "digital transformation company jobs",
-    "AI transformation company hiring",
-    "AI execution company jobs",
-    "join digital transformation team",
-  ],
+    "Join Zyene and build production AI systems for distributors, manufacturers, and specialty contractors. Open roles in engineering and data.",
   alternates: { canonical: "https://zyene.com/careers" },
   openGraph: {
-    title: "Careers at Zyene | Join Our Digital Transformation Team",
+    title: "Careers at Zyene",
     description:
-      "Zyene is hiring builders and systems thinkers to drive AI-powered digital transformation for businesses. Explore open roles.",
+      "Build production AI systems for industrial operations. Explore open roles at Zyene.",
     url: "https://zyene.com/careers",
     type: "website",
   },
@@ -59,65 +52,21 @@ export default function CareersPage() {
   return (
     <>
       <CareersHero />
-      
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <OpenRoles />
         <WhyWorkWithUs />
         <HowWeHire />
-        <FAQ faqs={CAREERS_FAQS} sectionClassName="py-24 px-6 md:px-12 lg:px-24 bg-white overflow-hidden" />
+        <FAQ
+          faqs={CAREERS_FAQS}
+          aside={{
+            title: "Don’t see your role?",
+            body: "Tell us what you would like to work on. We read every note and keep strong profiles on file.",
+            linkLabel: "Email us",
+            href: "mailto:support@zyene.com?subject=Careers%20inquiry",
+          }}
+        />
 
-        <section className="bg-white px-6 py-24 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-[980px]">
-            <div className="relative overflow-hidden rounded-[12px] border border-[#E2E8EF] bg-white p-6 md:p-7 shadow-[0_10px_24px_rgba(10,16,21,0.05)]">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#0A1015]/20 via-[#0099FF]/45 to-[#0A1015]/20" />
-              <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#8A8F98] mb-2">
-                Hiring Compliance
-              </p>
-              <div className="mb-4 inline-flex items-center rounded-[8px] border border-[#D8E0E8] bg-[#F7F9FC] px-3 py-2">
-                <div className="relative w-[120px] h-[30px]">
-                  <Image
-                    src="/images/e-verify-logo.svg"
-                    alt="E-Verify Logo"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-              <p className="text-[24px] md:text-[28px] leading-[1.12] tracking-[-0.02em] text-[#0A1015] mb-4">
-                U.S. hiring notices and accommodations
-              </p>
-              <p className="text-[14px] leading-[1.7] text-[#3D4145] mb-5 max-w-[820px]">
-                Zyene participates in E-Verify to confirm employment eligibility in the United States.
-                Zyene is an equal opportunity employer. If you need a reasonable accommodation during
-                the hiring process, please contact{" "}
-                <a href="mailto:support@zyene.com" className="text-[#0A1015] underline underline-offset-4">
-                  support@zyene.com
-                </a>
-                .
-              </p>
-              <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href="https://www.e-verify.gov/sites/default/files/everify/posters/EVerifyParticipationPoster.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-[8px] border border-[#D8E0E8] bg-[#F7F9FC] px-4 h-10 text-[13px] font-medium text-[#0A1015] hover:bg-[#EEF2F6] transition-colors"
-                >
-                  E-Verify Participation Notice
-                </a>
-                <a
-                  href="https://www.e-verify.gov/sites/default/files/everify/posters/IER_RighttoWorkPoster.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-[8px] border border-[#D8E0E8] bg-[#F7F9FC] px-4 h-10 text-[13px] font-medium text-[#0A1015] hover:bg-[#EEF2F6] transition-colors"
-                >
-                  Right to Work Notice
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-      <div id="footer-cta">
+        <HiringCompliance />
         <FooterCTA />
       </div>
     </>

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { REVEAL_VIEWPORT } from "@/lib/motion"
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div className="space-y-4">
@@ -24,7 +25,7 @@ export default function TermsContent() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-12"
         >

@@ -1,210 +1,138 @@
 "use client"
 
 import * as React from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 import { SITE_DATA } from "@/lib/constants"
 import { Button } from "@/components/ui/Button"
-import Link from "next/link"
-import {
-  Building2,
-  Truck,
-  Heart,
-  GraduationCap,
-  ShoppingBag,
-  Scale,
-  Home,
-  Monitor,
-} from "lucide-react"
+import { Reveal, RevealText } from "@/components/ui/Reveal"
+import { cn } from "@/lib/utils"
 
-const INDUSTRY_ICONS: Record<string, React.ElementType> = {
-  Finance: Building2,
-  Logistics: Truck,
-  Healthcare: Heart,
-  Education: GraduationCap,
-  "E-commerce": ShoppingBag,
-  Legal: Scale,
-  "Real Estate": Home,
-  SaaS: Monitor,
+const PANEL_META: Record<string, { image: string; alt: string; title: string; systems: string }> = {
+  Distribution: {
+    image: "/images/industrial/hero-distribution.jpg",
+    alt: "Staff walking the main aisle of a distribution center",
+    title: "Wholesale Distribution",
+    systems: "NetSuite, Epicor, Infor, Acumatica",
+  },
+  Manufacturing: {
+    image: "/images/industrial/hero-manufacturing.jpg",
+    alt: "Machinist in a hard hat running a lathe",
+    title: "Manufacturing",
+    systems: "ERP, MES, quality, purchasing",
+  },
+  Contractors: {
+    image: "/images/industrial/hero-contractors.jpg",
+    alt: "Two site leads in hard hats reviewing a rebar deck",
+    title: "Specialty Contractors",
+    systems: "ServiceTitan, Procore, accounting",
+  },
 }
 
-// Pyramid layout: rows of tags that "fall" from top
-const PYRAMID_ROWS = [
-  ["Finance"],
-  ["Logistics", "Healthcare"],
-  ["Education", "E-commerce"],
-  ["Legal", "Real Estate", "SaaS"],
-]
-const INDUSTRY_DETAIL_ORDER = [
-  "Finance",
-  "Logistics",
-  "Healthcare",
-  "Education",
-  "E-commerce",
-  "Legal",
-  "Real Estate",
-  "SaaS",
-]
-
 export function Industries({
-  ctaLabel = "View use cases",
-  ctaHref = "/use-cases",
+  ctaLabel = "See industries",
+  ctaHref = "/industries/wholesale-distribution",
 }: {
   ctaLabel?: string
   ctaHref?: string
 } = {}) {
-  const [activeId, setActiveId] = React.useState<string>("Finance")
-  const activeIndustry = SITE_DATA.industries.find(
-    (ind) => ind.name === activeId
-  ) || SITE_DATA.industries[0]
+  const industries = SITE_DATA.industries.filter((i) => PANEL_META[i.name])
+  const [active, setActive] = React.useState(0)
 
   return (
-    <section id="industries" className="py-24 px-6 bg-white overflow-hidden">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.12fr_0.88fr] gap-12 lg:gap-20 items-start">
-          {/* Left Column: Falling Industry Tags Visual */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative rounded-[4px] border border-[#EEEEEE] overflow-hidden bg-[#F7F8FA] aspect-square flex flex-col justify-end p-6"
-          >
-            {/* Warm gradient background */}
-            <div
-              className="absolute inset-0 opacity-40"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(247,248,250,0) 0%, rgba(255,200,170,0.5) 60%, rgba(200,210,240,0.3) 100%)",
-              }}
+    <section id="industries" className="relative bg-paper">
+      <div className="zy-container zy-section">
+        <div className="mb-14 grid gap-8 lg:mb-20 lg:grid-cols-[1.4fr_1fr] lg:items-end lg:gap-20">
+          <div>
+            <Reveal className="mb-6">
+              <span className="zy-kicker">Industries</span>
+            </Reveal>
+            <RevealText
+              text="Three markets. One operations problem."
+              className="zy-display text-[clamp(34px,5vw,68px)] text-[#0A1015]"
             />
-
-            {/* Falling tags in pyramid layout */}
-            <div className="relative z-10 flex flex-col items-center gap-3 mt-auto">
-              {PYRAMID_ROWS.map((row, rowIndex) => (
-                <div
-                  key={rowIndex}
-                  className="flex items-center justify-center gap-3"
-                >
-                  {row.map((name, colIndex) => {
-                    const Icon = INDUSTRY_ICONS[name] || Building2
-                    const delay = rowIndex * 0.15 + colIndex * 0.08
-
-                    return (
-                      <motion.button
-                        key={name}
-                        initial={{ opacity: 0, y: -80 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        transition={{
-                          duration: 0.6,
-                          delay,
-                          ease: [0.16, 1, 0.3, 1],
-                        }}
-                        onClick={() => setActiveId(name)}
-                        className={`flex items-center gap-2 px-5 py-3 rounded-[4px] text-[12px] font-medium transition-all duration-300 shadow-sm whitespace-nowrap ${
-                          activeId === name
-                            ? "bg-[#0A1015] text-white shadow-xl"
-                            : "bg-white text-[#4A4F59] border border-[#EEEEEE] hover:border-[#CCCCCC]"
-                        }`}
-                      >
-                        <Icon className="w-3.5 h-3.5" />
-                        {name}
-                      </motion.button>
-                    )
-                  })}
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Right Column: Heading + Accordion */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col"
-          >
-            <p className="text-[14px] font-bold text-[#0A1015] uppercase tracking-widest mb-6">
-              Industries
+          </div>
+          <Reveal delay={0.1} className="flex flex-col items-start gap-7">
+            <p className="max-w-[440px] text-[17px] leading-[1.6] text-[#4B525C]">
+              Different documents, the same pattern: information arrives as files, and people carry it into the
+              systems by hand.
             </p>
-            <h2 className="text-[38px] md:text-[52px] leading-[1.05] font-normal tracking-[-0.03em] text-[#0A1015] mb-12">
-              Built for the real world. Across every industry.
-            </h2>
-
-            {/* Accordion List */}
-            <div className="flex flex-col">
-              {SITE_DATA.industries
-                .filter((ind) => INDUSTRY_DETAIL_ORDER.includes(ind.name))
-                .sort(
-                  (a, b) =>
-                    INDUSTRY_DETAIL_ORDER.indexOf(a.name) - INDUSTRY_DETAIL_ORDER.indexOf(b.name)
-                )
-                .map((ind) => {
-                const isOpen = activeId === ind.name
-                return (
-                  <div
-                    key={ind.name}
-                    className="border-b border-[#EEEEEE]"
-                  >
-                    <button
-                      onClick={() =>
-                        setActiveId(isOpen ? "" : ind.name)
-                      }
-                      className="w-full flex items-center justify-between py-5 text-left group"
-                    >
-                      <span
-                        className={`text-[17px] font-medium transition-colors duration-200 ${
-                          isOpen
-                            ? "text-[#0A1015]"
-                            : "text-[#4A4F59] group-hover:text-[#0A1015]"
-                        }`}
-                      >
-                        {ind.name}
-                      </span>
-                      <span
-                        className={`text-[20px] leading-none transition-transform duration-300 ${
-                          isOpen
-                            ? "rotate-45 text-[#0A1015]"
-                            : "text-[#8A8F98]"
-                        }`}
-                      >
-                        +
-                      </span>
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          key="content"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{
-                            duration: 0.35,
-                            ease: [0.16, 1, 0.3, 1],
-                          }}
-                          className="overflow-hidden"
-                        >
-                          <p className="text-[15px] text-[#4A4F59] leading-[1.6] pb-6 max-w-[460px]">
-                            {ind.description}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                )
-              })}
-            </div>
-
-            {/* CTA Button */}
-            <div className="mt-10">
-              <Button variant="dark" asChild className="px-10 h-14 text-base">
-                <Link href={ctaHref}>{ctaLabel}</Link>
-              </Button>
-            </div>
-          </motion.div>
+            <Button variant="dark" asChild>
+              <Link href={ctaHref}>
+                {ctaLabel}
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </Reveal>
         </div>
+
+        <Reveal className="flex flex-col gap-3 lg:h-[640px] lg:flex-row">
+          {industries.map((ind, i) => {
+            const meta = PANEL_META[ind.name]
+            const isActive = active === i
+            return (
+              <article
+                key={ind.name}
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                className={cn(
+                  "group relative min-h-[460px] overflow-hidden rounded-[28px] bg-[#0A1015] text-white lg:min-h-0",
+                  "transition-[flex-grow] duration-[900ms] ease-out-expo",
+                  isActive ? "lg:flex-[2.6]" : "lg:flex-1"
+                )}
+              >
+                <Image
+                  src={meta.image}
+                  alt={meta.alt}
+                  fill
+                  sizes="(min-width: 1024px) 60vw, 100vw"
+                  className={cn(
+                    "object-cover transition-[transform,opacity] duration-[1200ms] ease-out-expo",
+                    isActive ? "scale-100 opacity-100" : "scale-[1.08] opacity-60"
+                  )}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1015] via-[#0A1015]/30 to-[#0A1015]/10" />
+
+                <div className="relative flex h-full flex-col justify-between p-7 md:p-9">
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="font-mono text-[12px] uppercase tracking-[0.1em] text-white/60">
+                      {meta.systems}
+                    </span>
+                    <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md transition-colors duration-300 group-hover:bg-white group-hover:text-[#0A1015]">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-[30px] leading-[1.02] tracking-[-0.03em] text-white md:text-[40px]">
+                      {meta.title}
+                    </h3>
+                    <div
+                      className={cn(
+                        "grid transition-[grid-template-rows,opacity] duration-700 ease-out-expo",
+                        isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[1fr] opacity-100 lg:grid-rows-[0fr] lg:opacity-0"
+                      )}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="mt-4 max-w-[460px] text-[15.5px] leading-[1.6] text-white/75">{ind.description}</p>
+                        {"href" in ind && ind.href ? (
+                          <Link
+                            href={ind.href}
+                            className="mt-6 inline-flex items-center gap-2 text-[14.5px] font-medium text-white after:absolute after:inset-0 after:content-['']"
+                          >
+                            {"cta" in ind && ind.cta ? ind.cta : "Explore"}
+                            <ArrowUpRight className="h-4 w-4" />
+                          </Link>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            )
+          })}
+        </Reveal>
       </div>
     </section>
   )

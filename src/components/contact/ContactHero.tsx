@@ -119,72 +119,86 @@ export function ContactHero() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center pt-32 pb-24 px-6 overflow-hidden bg-[#0A1015]">
-      {/* Background Image Wrapper */}
-      <div className="absolute inset-0 z-0">
-        <Image 
-          src="/images/hero-mesh.jpg" 
-          alt="Contact Hero Background" 
-          fill 
-          className="object-cover object-center opacity-100"
+    <section className="relative overflow-hidden bg-[#0A1015] pb-24 pt-32 text-white md:pb-32 md:pt-40">
+      <div aria-hidden="true" className="absolute inset-0">
+        <Image
+          src="/images/industrial/cta-district.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-bottom opacity-60"
           priority
         />
-        {/* Subtle Overlay to match Framer's depth */}
-        <div className="absolute inset-0 bg-[#0a1015]/40" />
       </div>
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,16,21,0.95)_0%,rgba(10,16,21,0.75)_50%,rgba(10,16,21,0.55)_100%)]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,16,21,0.7)_0%,rgba(10,16,21,0)_35%,rgba(10,16,21,0)_65%,#0A1015_100%)]" />
+      <div aria-hidden="true" className="zy-grain absolute inset-0" />
 
-      <div className="max-w-[1400px] mx-auto w-full grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-16 lg:gap-32 relative z-10 px-6 lg:px-12 items-center">
-        {/* Left Column: Text & Contact Info */}
-        <div className="flex flex-col gap-12">
-          <div className="space-y-6">
-            <motion.p 
+      <div className="zy-container relative z-10 grid grid-cols-1 items-start gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+        <div className="flex flex-col gap-12 lg:sticky lg:top-32">
+          <div>
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-[13px] font-bold text-white tracking-[0.2em] uppercase"
+              className="mb-7 flex items-center gap-2 text-[13px] text-white/60"
             >
-              Contact
+              <Link href="/" className="transition-colors hover:text-white">
+                Zyene
+              </Link>
+              <span aria-hidden="true" className="text-white/30">/</span>
+              <span className="text-white">Assessment</span>
             </motion.p>
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-[56px] md:text-[88px] lg:text-[100px] leading-[1] font-normal tracking-[-0.04em] text-white font-display-serif"
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="zy-display text-[clamp(44px,6.4vw,92px)] text-white"
             >
-              Get started
+              Book an AI workflow assessment
             </motion.h1>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-[16px] md:text-[18px] text-white/70 max-w-[480px] leading-[1.6]"
+              className="mt-7 max-w-[480px] text-[17px] leading-[1.6] text-white/70 md:text-[18px]"
             >
-              Tell us what&apos;s slowing your team down — we&apos;ll show you how Zyene systems can automate execution and deliver measurable business outcomes.
+              Tell us where work still moves by hand between email, documents, and your ERP. We will map the workflow and recommend a pilot.
             </motion.p>
           </div>
 
-          <div className="flex flex-col border-t border-white/10">
-            <div className="py-6 flex items-center gap-4 border-b border-white/10">
-              <MapPin size={20} className="text-white" />
-              <span className="text-[16px] text-white/90">28 Geary St Ste 650 #1892, San Francisco, CA 94108</span>
-            </div>
-            <div className="py-6 flex items-center gap-4 border-b border-white/10">
-              <Phone size={20} className="text-white" />
-              <a href="tel:+14154099798" className="text-[16px] text-white/90 hover:text-white transition-colors">+1 (415) 409-9798</a>
-            </div>
-            <div className="py-6 flex items-center gap-4">
-              <Mail size={20} className="text-white" />
-              <a href="mailto:support@zyene.com" className="text-[16px] text-white/90 hover:text-white transition-colors">support@zyene.com</a>
-            </div>
-          </div>
+          <dl className="grid gap-px overflow-hidden rounded-[22px] border border-white/10 bg-white/10">
+            {[
+              { Icon: Mail, label: "Email", value: "support@zyene.com", href: "mailto:support@zyene.com" },
+              { Icon: Phone, label: "Phone", value: "+1 (415) 409-9798", href: "tel:+14154099798" },
+              { Icon: MapPin, label: "Office", value: "28 Geary St Ste 650 #1892, San Francisco, CA 94108" },
+            ].map(({ Icon, label, value, href }) => (
+              <div key={label} className="flex items-start gap-4 bg-[#0A1015]/80 px-6 py-5 backdrop-blur-xl">
+                <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04]">
+                  <Icon className="h-4 w-4 text-white/80" strokeWidth={1.6} />
+                </span>
+                <div>
+                  <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-white/45">{label}</dt>
+                  <dd className="mt-1 text-[15.5px] text-white/90">
+                    {href ? (
+                      <a href={href} className="transition-colors hover:text-white">
+                        {value}
+                      </a>
+                    ) : (
+                      value
+                    )}
+                  </dd>
+                </div>
+              </div>
+            ))}
+          </dl>
         </div>
 
-        {/* Right Column: Contact Form */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="bg-white/[0.04] backdrop-blur-2xl border border-white/10 rounded-none p-8 md:p-12"
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-[32px] border border-white/10 bg-white/[0.04] p-7 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)] backdrop-blur-2xl md:p-11"
         >
           <form
             className="space-y-6"
@@ -194,16 +208,16 @@ export function ContactHero() {
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2.5">
-                <label htmlFor="fullName" className="text-[13px] font-medium text-white/90">Full Name *</label>
+                <label htmlFor="fullName" className="text-[13px] font-medium text-white/90">Full name *</label>
                 <input 
                   id="fullName"
                   name="fullName"
                   type="text" 
                   required
                   autoComplete="name"
-                  placeholder="John Doe"
+                  placeholder="Jane Cooper"
                   aria-invalid={Boolean(fieldErrors.fullName)}
-                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                  className={`w-full bg-white/[0.03] border rounded-[14px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
                     fieldErrors.fullName
                       ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
                       : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
@@ -212,14 +226,14 @@ export function ContactHero() {
                 {fieldErrors.fullName ? <p className="text-[12px] text-[#F97066]">{fieldErrors.fullName}</p> : null}
               </div>
               <div className="space-y-2.5">
-                <label htmlFor="workEmail" className="text-[13px] font-medium text-white/90">Work Email *</label>
+                <label htmlFor="workEmail" className="text-[13px] font-medium text-white/90">Work email *</label>
                 <input 
                   id="workEmail"
                   name="workEmail"
                   type="email" 
                   required
                   autoComplete="email"
-                  placeholder="john.doe@zyene.com"
+                  placeholder="jane@company.com"
                   aria-invalid={Boolean(fieldErrors.workEmail)}
                   onChange={(event) => {
                     const value = event.currentTarget.value
@@ -250,7 +264,7 @@ export function ContactHero() {
                       return next
                     })
                   }}
-                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                  className={`w-full bg-white/[0.03] border rounded-[14px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
                     fieldErrors.workEmail
                       ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
                       : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
@@ -269,9 +283,9 @@ export function ContactHero() {
                   type="text" 
                   required
                   autoComplete="organization"
-                  placeholder="Zyene, Inc."
+                  placeholder="Company name"
                   aria-invalid={Boolean(fieldErrors.company)}
-                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                  className={`w-full bg-white/[0.03] border rounded-[14px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
                     fieldErrors.company
                       ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
                       : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
@@ -280,16 +294,16 @@ export function ContactHero() {
                 {fieldErrors.company ? <p className="text-[12px] text-[#F97066]">{fieldErrors.company}</p> : null}
               </div>
               <div className="space-y-2.5">
-                <label htmlFor="jobTitle" className="text-[13px] font-medium text-white/90">Job Title *</label>
+                <label htmlFor="jobTitle" className="text-[13px] font-medium text-white/90">Job title *</label>
                 <input 
                   id="jobTitle"
                   name="jobTitle"
                   type="text" 
                   required
                   autoComplete="organization-title"
-                  placeholder="Chief Executive Officer"
+                  placeholder="Director of Operations"
                   aria-invalid={Boolean(fieldErrors.jobTitle)}
-                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                  className={`w-full bg-white/[0.03] border rounded-[14px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
                     fieldErrors.jobTitle
                       ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
                       : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
@@ -312,7 +326,7 @@ export function ContactHero() {
                     pattern="[0-9+\-\s()]*"
                     placeholder="+1 234 567 8901"
                     aria-invalid={Boolean(fieldErrors.phone)}
-                    className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
+                    className={`w-full bg-white/[0.03] border rounded-[14px] h-[52px] px-4 text-white placeholder:text-white/25 focus:outline-none transition-all ${
                       fieldErrors.phone
                         ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
                         : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
@@ -326,21 +340,21 @@ export function ContactHero() {
                     id="country"
                     name="country"
                     required
-                    defaultValue="🇺🇸 United States"
+                    defaultValue="United States"
                     aria-invalid={Boolean(fieldErrors.country)}
-                    className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white focus:outline-none transition-all ${
+                    className={`w-full bg-white/[0.03] border rounded-[14px] h-[52px] px-4 text-white focus:outline-none transition-all ${
                       fieldErrors.country
                         ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
                         : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
                     }`}
                   >
-                    <option value="🇺🇸 United States" className="text-[#0A1015]">🇺🇸 United States</option>
-                    <option value="🇨🇦 Canada" className="text-[#0A1015]">🇨🇦 Canada</option>
-                    <option value="🇬🇧 United Kingdom" className="text-[#0A1015]">🇬🇧 United Kingdom</option>
-                    <option value="🇦🇺 Australia" className="text-[#0A1015]">🇦🇺 Australia</option>
-                    <option value="🇮🇳 India" className="text-[#0A1015]">🇮🇳 India</option>
-                    <option value="🇩🇪 Germany" className="text-[#0A1015]">🇩🇪 Germany</option>
-                    <option value="🌍 Other" className="text-[#0A1015]">🌍 Other</option>
+                    <option value="United States" className="text-[#0A1015]">United States</option>
+                    <option value="Canada" className="text-[#0A1015]">Canada</option>
+                    <option value="United Kingdom" className="text-[#0A1015]">United Kingdom</option>
+                    <option value="Australia" className="text-[#0A1015]">Australia</option>
+                    <option value="India" className="text-[#0A1015]">India</option>
+                    <option value="Germany" className="text-[#0A1015]">Germany</option>
+                    <option value="Other" className="text-[#0A1015]">Other</option>
                   </select>
                   {fieldErrors.country ? <p className="text-[12px] text-[#F97066]">{fieldErrors.country}</p> : null}
                 </div>
@@ -354,18 +368,26 @@ export function ContactHero() {
                   required
                   defaultValue=""
                   aria-invalid={Boolean(fieldErrors.helpType)}
-                  className={`w-full bg-white/[0.03] border rounded-[4px] h-[52px] px-4 text-white focus:outline-none transition-all ${
+                  className={`w-full bg-white/[0.03] border rounded-[14px] h-[52px] px-4 text-white focus:outline-none transition-all ${
                     fieldErrors.helpType
                       ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
                       : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
                   }`}
                 >
                   <option value="" disabled className="text-[#0A1015]">Select an option</option>
-                  <option value="Marketing Automation & Team ppl to hire" className="text-[#0A1015]">Marketing Automation & Team ppl to hire</option>
-                  <option value="Operations & Workflow Systems & Team ppl to hire" className="text-[#0A1015]">Operations & Workflow Systems & Team ppl to hire</option>
-                  <option value="CRM & Sales Automation & Team ppl to hire" className="text-[#0A1015]">CRM & Sales Automation & Team ppl to hire</option>
-                  <option value="AI Systems & Agents & Team ppl to build" className="text-[#0A1015]">AI Systems & Agents & Team ppl to build</option>
-                  <option value="General Inquiry & other" className="text-[#0A1015]">General Inquiry & other</option>
+                  {[
+                    "AI Workflow Assessment",
+                    "Order and Quote Automation",
+                    "Document Intelligence",
+                    "ERP and CRM Integration",
+                    "Workflow Agents",
+                    "Enterprise Knowledge Search",
+                    "General Inquiry",
+                  ].map((option) => (
+                    <option key={option} value={option} className="text-[#0A1015]">
+                      {option}
+                    </option>
+                  ))}
                 </select>
                 {fieldErrors.helpType ? <p className="text-[12px] text-[#F97066]">{fieldErrors.helpType}</p> : null}
               </div>
@@ -377,10 +399,10 @@ export function ContactHero() {
                   name="message"
                   required
                   minLength={20}
-                  placeholder="Enter your message..."
+                  placeholder="Which workflow takes the most manual time today?"
                   rows={4}
                   aria-invalid={Boolean(fieldErrors.message)}
-                  className={`w-full bg-white/[0.03] border rounded-[4px] p-4 text-white placeholder:text-white/25 focus:outline-none transition-all resize-none ${
+                  className={`w-full bg-white/[0.03] border rounded-[14px] p-4 text-white placeholder:text-white/25 focus:outline-none transition-all resize-none ${
                     fieldErrors.message
                       ? "border-[#F97066] focus:border-[#F97066] focus:ring-2 focus:ring-[#F97066]/20"
                       : "border-white/10 focus:border-[#0099FF]/70 focus:ring-2 focus:ring-[#0099FF]/20"
@@ -416,15 +438,15 @@ export function ContactHero() {
               <button 
                 type="submit"
                 disabled={submitting || isSubmitBlockedByEmail || !turnstileToken}
-                className="w-full h-[56px] bg-white text-[#0A1015] hover:bg-white/90 font-bold text-[14px] rounded-[4px] transition-all tracking-wide uppercase"
+                className="h-14 w-full rounded-full bg-[#F4F5F2] text-[15px] font-medium text-[#0A1015] transition-[background-color,transform,opacity] duration-300 hover:bg-white active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {submitting ? "Submitting..." : "Submit"}
+                {submitting ? "Sending..." : "Request assessment"}
               </button>
               {submitError ? <p className="text-[13px] text-[#F97066]">{submitError}</p> : null}
               {submitSuccess ? <p className="text-[13px] text-[#47CD89]">{submitSuccess}</p> : null}
               
               <p className="text-[13px] text-white/50 text-center leading-[1.6]">
-                By sending this form, you agree to our <Link href="/legal/terms-conditions" className="text-white hover:underline underline-offset-4">Terms & Conditions</Link> and <Link href="/legal/privacy-policy" className="text-white hover:underline underline-offset-4">Privacy Policy</Link> terms.
+                By sending this form, you agree to our <Link href="/legal/terms-conditions" className="text-white hover:underline underline-offset-4">Terms</Link> and <Link href="/legal/privacy-policy" className="text-white hover:underline underline-offset-4">Privacy Policy</Link>.
               </p>
             </div>
           </form>

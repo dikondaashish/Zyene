@@ -1,9 +1,10 @@
-import Image from "next/image"
-import Link from "next/link"
 import { notFound } from "next/navigation"
+import { ArrowUpRight } from "lucide-react"
+import { FAQ } from "@/components/home/FAQ"
 import { FooterCTA } from "@/components/home/FooterCTA"
+import { SolutionsHero } from "@/components/solutions/SolutionsHero"
 import { TalentContactWidget } from "@/components/careers/TalentContactWidget"
-import { CareerFaqAccordion } from "@/components/careers/CareerFaqAccordion"
+import { HiringCompliance } from "@/components/careers/HiringCompliance"
 
 function normalizeCareerSlug(slug: string) {
   return slug
@@ -46,20 +47,24 @@ const ALTERNATIVE_OPEN_ROLES = [
 
 const CAREER_FAQ = [
   {
-    q: "Hiring timeline",
-    a: "For open roles, most processes include screening, role interview loops, and decision updates within 2-4 weeks depending on schedule alignment.",
+    question: "How long does the hiring process take?",
+    answer:
+      "Most processes include a screening call, role-specific interviews, and a decision within two to four weeks, depending on scheduling.",
   },
   {
-    q: "Remote policy",
-    a: "Many roles support flexible location options. Some roles include hybrid requirements based on team, timezone, and project needs.",
+    question: "Is the role remote?",
+    answer:
+      "Many roles support flexible locations. Some include hybrid requirements based on the team, time zone, and project.",
   },
   {
-    q: "Visa policy",
-    a: "Visa sponsorship depends on role and location requirements. If sponsorship is needed, include that detail in your outreach.",
+    question: "Do you sponsor visas?",
+    answer:
+      "Sponsorship depends on the role and location. If you need it, mention it when you join the talent pool or email us.",
   },
   {
-    q: "Interview steps",
-    a: "Typical flow: intro screening, role-specific interview(s), practical/portfolio review (if applicable), and final team conversation.",
+    question: "What are the interview steps?",
+    answer:
+      "An introductory call, role-specific interviews, a practical or portfolio review where relevant, and a final conversation with the team.",
   },
 ]
 
@@ -88,14 +93,15 @@ export function generateMetadata({ params }: PageProps) {
   const role = resolveRole(params.slug)
   if (!role) {
     return {
-      title: "Careers | Zyene",
+      title: "Careers",
       description: "Career opportunities at Zyene.",
     }
   }
 
   return {
-    title: `${role.title} | Careers | Zyene`,
+    title: `${role.title} | Careers`,
     description: `Application status for ${role.title} at Zyene.`,
+    robots: { index: false, follow: true },
   }
 }
 
@@ -108,163 +114,48 @@ export default function CareerRoleStatusPage({ params }: PageProps) {
 
   return (
     <>
-      <section className="relative min-h-[60vh] flex items-center pt-32 pb-12 overflow-hidden bg-[#0A1015]">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/hero-mesh.jpg"
-            alt="Careers Hero Background"
-            fill
-            className="object-cover object-center opacity-100"
-            priority
-          />
-          <div className="absolute inset-0 bg-[#0a1015]/40 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]" />
-        </div>
+      <SolutionsHero
+        eyebrow="Careers"
+        headingLines={[role.title]}
+        description="This role is not accepting applications right now. Join the talent pool below and we will contact you when it reopens."
+        image="/images/industrial/sol-human-approval.jpg"
+        imageAlt="Team member reviewing an order on a laptop in a warehouse"
+        cta={{ label: "See open roles", href: "/careers#open-roles" }}
+      />
 
-        <div className="max-w-[1400px] mx-auto w-full grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-24 items-end relative z-10 px-6 lg:px-24">
-          <div className="flex flex-col">
-            <h1 className="text-[42px] md:text-[64px] lg:text-[80px] leading-[1.05] font-normal tracking-[-0.04em] text-white font-display-serif">
-              {role.title}
-            </h1>
-          </div>
-
-          <div className="flex flex-col gap-8 lg:pb-4">
-            <div className="flex items-center gap-3">
-              <div className="relative w-5 h-5 flex-shrink-0">
-                <Image
-                  src="/images/Logo_White.png"
-                  alt="Zyene Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-[16px] font-medium text-white/90">Careers</span>
-            </div>
-
-            <p className="text-[16px] md:text-[18px] text-[#CECFD0] leading-[1.7] max-w-[500px]">
-              Job applications for this role are currently full/closed. Thanks for considering us.
-              <br />
-              This role is currently closed. We review talent pool weekly.
-              Feel free to share your profile by email at{" "}
-              <Link
-                href="mailto:support@zyene.com"
-                className="text-white underline underline-offset-4 hover:text-white/80 transition-colors"
-              >
-                support@zyene.com
-              </Link>
-              .
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
-        <section className="bg-white px-6 py-24 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-[980px]">
-            <div className="rounded-[10px] border border-[#E2E8EF] bg-[#F9FBFD] px-5 py-4">
-              <p className="text-[15px] md:text-[16px] leading-[1.6] text-[#0A1015]">
-                Sorry, this job application is completed and currently full/closed.
-              </p>
-            </div>
-          </div>
-        </section>
-
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <TalentContactWidget roleSlug={role.slug} roleTitle={role.title} />
 
-        <section className="bg-white px-6 py-24 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-[980px]">
-            <div className="mb-6">
-              <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.14em] text-[#8A8F98]">
-                Alternative Open Roles
-              </p>
-              <h3 className="text-[28px] md:text-[34px] leading-[1.1] tracking-[-0.02em] text-[#0A1015]">
-                You can still apply quickly for these roles
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {ALTERNATIVE_OPEN_ROLES.map((altRole, index) => (
-                <Link
-                  key={altRole.title}
-                  href={altRole.href}
-                  className="group rounded-[12px] border border-[#E2E8EF] bg-white p-5 shadow-[0_8px_20px_rgba(10,16,21,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(10,16,21,0.08)]"
-                >
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8A8F98]">
-                      Role 0{index + 1}
+        <section className="border-t border-line bg-white">
+          <div className="zy-container zy-section grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
+            <h2 className="zy-display text-[clamp(34px,4.6vw,64px)] text-[#0A1015]">Open now.</h2>
+            <ul className="border-t border-[#0A1015]/15">
+              {ALTERNATIVE_OPEN_ROLES.map((altRole) => (
+                <li key={altRole.title} className="border-b border-[#0A1015]/10">
+                  <a
+                    href={altRole.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center justify-between gap-6 py-6"
+                  >
+                    <span className="text-[18px] font-medium leading-[1.3] tracking-[-0.015em] text-[#0A1015] md:text-[20px]">
+                      {altRole.title}
                     </span>
-                    <span className="text-[12px] font-medium text-[#4A4F59]">Quick Apply</span>
-                  </div>
-                  <p className="text-[18px] leading-[1.35] font-semibold text-[#0A1015] mb-1.5">
-                    {altRole.title}
-                  </p>
-                  <p className="text-[13px] text-[#5A616B] mb-4">
-                    {altRole.location}
-                  </p>
-                  <span className="inline-flex items-center text-[14px] font-semibold text-[#0A1015] transition-colors group-hover:text-[#0A1015]/80">
-                    Apply now
-                    <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">→</span>
-                  </span>
-                </Link>
+                    <span className="flex flex-shrink-0 items-center gap-4">
+                      <span className="hidden text-[14px] text-[#5B6470] sm:inline">{altRole.location}</span>
+                      <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#0A1015]/15 text-[#0A1015] transition-colors duration-300 group-hover:border-[#0A1015] group-hover:bg-[#0A1015] group-hover:text-white">
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
+                    </span>
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </section>
 
-        <CareerFaqAccordion items={CAREER_FAQ} />
-
-        <section className="bg-white px-6 py-24 md:px-12 lg:px-24">
-          <div className="mx-auto max-w-[980px]">
-            <div className="relative overflow-hidden rounded-[12px] border border-[#E2E8EF] bg-white p-6 md:p-7 shadow-[0_10px_24px_rgba(10,16,21,0.05)]">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#0A1015]/20 via-[#0099FF]/45 to-[#0A1015]/20" />
-              <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-[#8A8F98] mb-2">
-                Hiring Compliance
-              </p>
-              <div className="mb-4 inline-flex items-center rounded-[8px] border border-[#D8E0E8] bg-[#F7F9FC] px-3 py-2">
-                <div className="relative w-[120px] h-[30px]">
-                  <Image
-                    src="/images/e-verify-logo.svg"
-                    alt="E-Verify Logo"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-              <p className="text-[24px] md:text-[28px] leading-[1.12] tracking-[-0.02em] text-[#0A1015] mb-4">
-                U.S. hiring notices and accommodations
-              </p>
-              <p className="text-[14px] leading-[1.7] text-[#3D4145] mb-5 max-w-[820px]">
-                Zyene participates in E-Verify to confirm employment eligibility in the United States.
-                Zyene is an equal opportunity employer. If you need a reasonable accommodation during
-                the hiring process, please contact{" "}
-                <Link href="mailto:support@zyene.com" className="text-[#0A1015] underline underline-offset-4">
-                  support@zyene.com
-                </Link>
-                .
-              </p>
-              <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href="https://www.e-verify.gov/sites/default/files/everify/posters/EVerifyParticipationPoster.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-[8px] border border-[#D8E0E8] bg-[#F7F9FC] px-4 h-10 text-[13px] font-medium text-[#0A1015] hover:bg-[#EEF2F6] transition-colors"
-                >
-                  E-Verify Participation Notice
-                </a>
-                <a
-                  href="https://www.e-verify.gov/sites/default/files/everify/posters/IER_RighttoWorkPoster.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-[8px] border border-[#D8E0E8] bg-[#F7F9FC] px-4 h-10 text-[13px] font-medium text-[#0A1015] hover:bg-[#EEF2F6] transition-colors"
-                >
-                  Right to Work Notice
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <div id="footer-cta">
+        <FAQ faqs={CAREER_FAQ} aside={null} />
+        <HiringCompliance />
         <FooterCTA />
       </div>
     </>

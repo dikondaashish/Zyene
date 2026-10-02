@@ -1,22 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
-import Link from "next/link"
-
-function toCareerSlug(title: string) {
-  return title
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[\u2012-\u2015]/g, "-")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-}
+import { ArrowUpRight } from "lucide-react"
+import { Reveal, RevealText } from "@/components/ui/Reveal"
 
 const ROLES = [
-  { title: "AI Solutions Engineer", location: "SF, NY, Remote" },
-  { title: "Product Designer (UX/UI)", location: "SF, NY, Remote" },
-  { title: "Customer Success Manager", location: "SF, NY, Remote" },
-  { title: "Marketing Lead – B2B SaaS", location: "SF, NY, Remote" },
   { title: "Data Analyst", location: "SF, NY, Remote", href: "https://binary.so/izp2HB1" },
   { title: "Software Engineer", location: "SF, NY, Remote", href: "https://binary.so/d6WE4zX" },
   { title: "Full Stack Developer (Internship/Full Time)", location: "SF, NY, BLR, Hyd, Remote", href: "https://binary.so/SUjsovx" },
@@ -26,78 +13,42 @@ const ROLES = [
 ]
 
 export function OpenRoles() {
-  const LABEL_TOP_OFFSET = 164
-  const LABEL_SIDE_OFFSET = 20
-
   return (
-    <section className="bg-white border-t border-[#EEEEEE]">
-      <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row md:items-start min-h-[600px] relative">
-        
-        {/* Left: Pre-Heading Section */}
-        <div className="w-full md:w-[320px] pt-16 md:pt-24 px-8 md:px-12 flex flex-col items-start md:self-start relative">
-          <div
-            className="h-fit z-10 md:sticky"
-            style={{
-              top: LABEL_TOP_OFFSET,
-              marginLeft: LABEL_SIDE_OFFSET,
-            }}
-          >
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-[14px] font-bold text-[#0A1015] tracking-[0.05em] uppercase"
-            >
-              Open Roles
-            </motion.p>
-          </div>
+    <section id="open-roles" className="scroll-mt-24 bg-white">
+      <div className="zy-container zy-section grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <RevealText text="Open roles." className="zy-display text-[clamp(34px,4.6vw,64px)] text-[#0A1015]" />
+          <Reveal delay={0.1}>
+            <p className="mt-8 max-w-[420px] text-[17px] leading-[1.6] text-[#4B525C]">
+              {ROLES.length} positions across engineering and data, including internships.
+            </p>
+          </Reveal>
         </div>
 
-        {/* Vertical Divider Line — matching framer-xckc4f */}
-        <div className="hidden md:block w-px bg-[#EEEEEE] self-stretch" />
-
-        {/* Right: Positions Wrapper */}
-        <div className="flex-1 flex flex-col pt-16 md:pt-24">
-          {ROLES.map((role, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.05 }}
-              className="relative"
-            >
-              <Link 
-                href={role.href || `/careers/${toCareerSlug(role.title)}`}
-                className="group flex items-center justify-between py-5 md:py-6 px-6 md:px-20 transition-all duration-300 border-b border-[#EEEEEE] last:border-b-0"
-              >
-                {/* Title */}
-                <h4 className="text-[18px] md:text-[24px] font-normal text-[#0A1015] tracking-tight transition-all duration-300 group-hover:opacity-80">
-                  {role.title}
-                </h4>
-                
-                {/* CTA Wrapper (Text + Arrow) */}
-                <div className="flex items-center gap-4 md:gap-6 group-hover:translate-x-2 transition-transform duration-300">
-                  <span className="text-[14px] text-[#3D4145] font-medium transition-colors">
-                    {role.location}
+        <ul className="border-t border-[#0A1015]/15">
+          {ROLES.map((role, index) => {
+            return (
+              <Reveal as="li" key={role.title} delay={Math.min(index, 6) * 0.03} className="border-b border-[#0A1015]/10">
+                <a
+                  href={role.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between gap-6 py-6"
+                >
+                  <span className="text-[18px] font-medium leading-[1.3] tracking-[-0.015em] text-[#0A1015] md:text-[20px]">
+                    {role.title}
                   </span>
-                  
-                  {/* Exact Arrow SVG from Framer source */}
-                  <div className="w-[16px] h-[16px] flex items-center justify-center text-[#0A1015]">
-                    <svg viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                      <path d="M 0.927 11 L 0 10.073 L 8.733 1.331 L 0.794 1.331 L 0.794 0 L 11 0 L 11 10.206 L 9.669 10.206 L 9.669 2.266 Z" fill="currentColor" />
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Bottom Border Accent — matching framer-z1g3kc */}
-                <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-[#0A1015] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20" />
-              </Link>
-            </motion.div>
-          ))}
-
-        </div>
+                  <span className="flex flex-shrink-0 items-center gap-4">
+                    <span className="hidden text-[14px] text-[#5B6470] sm:inline">{role.location}</span>
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#0A1015]/15 text-[#0A1015] transition-colors duration-300 group-hover:border-[#0A1015] group-hover:bg-[#0A1015] group-hover:text-white">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
+                  </span>
+                </a>
+              </Reveal>
+            )
+          })}
+        </ul>
       </div>
     </section>
   )

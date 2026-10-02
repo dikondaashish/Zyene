@@ -1,104 +1,39 @@
 "use client"
 
-import { motion, type Variants } from "framer-motion"
 import { SITE_DATA } from "@/lib/constants"
-import { 
-  TrendingUp, 
-  DollarSign, 
-  BarChart3, 
-  RefreshCcw, 
-  Puzzle, 
-  ShieldCheck 
-} from "lucide-react"
-
-const BENEFIT_ICONS = [
-  TrendingUp,
-  DollarSign,
-  BarChart3,
-  RefreshCcw,
-  Puzzle,
-  ShieldCheck
-]
-
-const textRevealVariants: Variants = {
-  hidden: { opacity: 0, filter: "blur(10px)", y: 10 },
-  visible: (i: number) => ({
-    opacity: 1,
-    filter: "blur(0px)",
-    y: 0,
-    transition: {
-      delay: i * 0.05,
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1] as const
-    }
-  })
-}
+import { Reveal, RevealText } from "@/components/ui/Reveal"
 
 export function Benefits() {
-  const headingWords = "Let your team focus on what matters most".split(" ")
-
   return (
-    <section id="benefits" className="py-32 px-6 bg-white overflow-hidden">
-      <div className="max-w-[1200px] mx-auto">
-        {/* Title Wrapper - Left Aligned */}
-        <div className="mb-20">
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
-            className="text-[14px] font-bold text-[#0A1015] tracking-[0.2em] uppercase mb-8"
-          >
-            Benefits
-          </motion.p>
-          <h2 className="text-[44px] md:text-[64px] leading-[1.05] font-normal tracking-[-0.03em] text-[#0A1015] max-w-[700px]">
-            {headingWords.map((word, i) => (
-              <motion.span
-                key={i}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={textRevealVariants}
-                className="inline-block mr-[0.25em]"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </h2>
+    <section id="benefits" className="bg-white">
+      <div className="zy-container zy-section grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <RevealText
+            text="Built for production, not demonstrations."
+            className="zy-display max-w-[560px] text-[clamp(34px,4.6vw,64px)] text-[#0A1015]"
+          />
+          <Reveal delay={0.1}>
+            <p className="mt-8 max-w-[420px] text-[17px] leading-[1.6] text-[#4B525C]">
+              Six principles decide every engagement, from the first assessment to the workflow your team runs
+              every day.
+            </p>
+          </Reveal>
         </div>
 
-        {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20">
-          {SITE_DATA.benefits.map((benefit, index) => {
-            const Icon = BENEFIT_ICONS[index]
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] as const }}
-                className="flex flex-col gap-8"
-              >
-                {/* Icon Wrapper - Matching Framer Gradient */}
-                <div 
-                  className="w-11 h-11 flex items-center justify-center rounded-[4px] shadow-[0_6px_16px_-3px_rgba(14,23,30,0.2)]"
-                  style={{ background: 'linear-gradient(180deg, #0A1015 0%, #3B5E7B 100%)' }}
-                >
-                  <Icon className="w-5 h-5 text-white" />
-                </div>
-
-                <div className="flex flex-col gap-4">
-                  <h4 className="text-[20px] font-bold text-[#0A1015] tracking-tight">{benefit.title}</h4>
-                  <p className="text-[15px] text-[#3D4145] leading-[1.6]">
-                    {benefit.description}
-                  </p>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
+        <dl className="border-t border-[#0A1015]/15">
+          {SITE_DATA.benefits.map((benefit, index) => (
+            <Reveal
+              key={benefit.title}
+              delay={index * 0.04}
+              className="grid gap-2 border-b border-[#0A1015]/10 py-7 sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] sm:gap-10 md:py-9"
+            >
+              <dt className="text-[20px] font-medium leading-[1.25] tracking-[-0.02em] text-[#0A1015] md:text-[22px]">
+                {benefit.title}
+              </dt>
+              <dd className="text-[16px] leading-[1.6] text-[#4B525C]">{benefit.description}</dd>
+            </Reveal>
+          ))}
+        </dl>
       </div>
     </section>
   )

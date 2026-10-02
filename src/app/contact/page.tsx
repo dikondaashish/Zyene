@@ -1,6 +1,4 @@
 import { ContactHero } from "@/components/contact/ContactHero"
-import { ContactGlobalReach } from "@/components/contact/ContactGlobalReach"
-import { StrategyCallWidget } from "@/components/contact/StrategyCallWidget"
 import { WhoThisIsFor } from "@/components/contact/WhoThisIsFor"
 import { WhatHappensNext } from "@/components/contact/WhatHappensNext"
 import { FAQ } from "@/components/home/FAQ"
@@ -8,14 +6,14 @@ import { FooterCTA } from "@/components/home/FooterCTA"
 
 const CONTACT_FAQS = [
   {
-    question: "What happens after I submit the contact form?",
+    question: "What happens after I submit the form?",
     answer:
-      "Our team reviews your details, then reaches out with next steps to schedule a strategy conversation and assess fit.",
+      "We review the workflow you described and follow up to schedule an assessment.",
   },
   {
-    question: "What should I prepare before the strategy call?",
+    question: "What should I prepare?",
     answer:
-      "Bring context on your current workflows, bottlenecks, tools in use, and goals so we can recommend a practical action plan.",
+      "One painful workflow, the systems it touches, and who approves the result today.",
   },
   {
     question: "Do you work with teams in different regions?",
@@ -23,9 +21,9 @@ const CONTACT_FAQS = [
       "Yes. We support distributed teams and can align implementation timelines around your operating timezone needs.",
   },
   {
-    question: "Can Zyene support both systems and execution?",
+    question: "Do you replace our ERP?",
     answer:
-      "Yes. We can help design and deploy systems while also supporting execution so your team can move faster with less overhead.",
+      "No. The assessment looks at how to connect the workflow to the systems you already run.",
   },
   {
     question: "Is there any commitment after the first call?",
@@ -35,21 +33,20 @@ const CONTACT_FAQS = [
 ]
 
 export const metadata = {
-  title: "Contact Zyene | Start Your Digital Transformation",
+  title: "Book an AI Workflow Assessment",
   description:
-    "Ready to transform your business with AI? Contact Zyene to book a free strategy call. We'll map your workflows, identify transformation opportunities, and deliver a clear action plan.",
+    "Map one operational workflow for a distributor, manufacturer, or specialty contractor and leave with a recommended pilot.",
   keywords: [
-    "contact digital transformation company",
-    "book AI transformation call",
-    "digital transformation consultation",
+    "AI workflow assessment",
+    "industrial AI implementation",
+    "distributor order automation",
     "Zyene contact",
-    "AI transformation strategy call",
   ],
   alternates: { canonical: "https://zyene.com/contact" },
   openGraph: {
-    title: "Contact Zyene | Start Your Digital Transformation",
+    title: "Book an AI Workflow Assessment | Zyene",
     description:
-      "Book a free strategy call with Zyene. We'll map your workflows, identify AI transformation opportunities, and deliver a clear action plan.",
+      "Map one operational workflow and leave with a recommended pilot.",
     url: "https://zyene.com/contact",
     type: "website",
   },
@@ -59,13 +56,10 @@ export default function ContactPage() {
   return (
     <>
       <ContactHero />
-      
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
-        <ContactGlobalReach />
-        <WhoThisIsFor />
-        <StrategyCallWidget />
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <WhatHappensNext />
-        <FAQ faqs={CONTACT_FAQS} sectionClassName="py-24 px-6 md:px-12 lg:px-24 bg-white overflow-hidden" />
+        <WhoThisIsFor />
+        <FAQ faqs={CONTACT_FAQS} aside={null} />
         <FooterCTA />
       </div>
     </>

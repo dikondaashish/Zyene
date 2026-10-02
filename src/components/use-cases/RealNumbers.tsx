@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { SITE_DATA } from "@/lib/constants"
+import { REVEAL_VIEWPORT } from "@/lib/motion"
 
 type RealNumbersVariant = "default" | "aboutTrustedOutcomes"
 
@@ -28,34 +29,34 @@ type RealNumbersContent = {
 
 const CONTENT_BY_VARIANT: Record<RealNumbersVariant, RealNumbersContent> = {
   default: {
-    eyebrow: "Real Numbers",
-    heading: "Automation that pays for itself, fast",
-    card1Value: "3x",
-    card1Label: "Average ROI",
-    card2Eyebrow: "efficiency",
-    card2Value: "60%+",
-    card2Label: "Operational efficiency gains",
-    card3Eyebrow: "hours",
-    card3Value: "20k+",
-    card3Label: "Total hours saved annually",
-    card4Eyebrow: "sucess client",
-    card4Value: "300+",
-    card4Label: "Trusted clients worldwide",
+    eyebrow: "Outcomes",
+    heading: "Measure the outcome, not the demo",
+    card1Value: "Time",
+    card1Label: "Processing time",
+    card2Eyebrow: "touches",
+    card2Value: "Touch",
+    card2Label: "Manual touches",
+    card3Eyebrow: "quotes",
+    card3Value: "Quote",
+    card3Label: "Quote turnaround",
+    card4Eyebrow: "reply",
+    card4Value: "Reply",
+    card4Label: "Customer response time",
   },
   aboutTrustedOutcomes: {
-    eyebrow: "Trusted Outcomes",
-    heading: "Execution outcomes you can measure",
-    card1Value: "30-50%",
-    card1Label: "Average manual time saved",
-    card2Eyebrow: "speed",
-    card2Value: "2.3x",
-    card2Label: "Faster workflow execution",
-    card3Eyebrow: "quality",
-    card3Value: "40%",
-    card3Label: "Process error reduction",
-    card4Eyebrow: "response",
-    card4Value: "<24h",
-    card4Label: "Typical turnaround time",
+    eyebrow: "What we measure",
+    heading: "Every deployment starts with a business metric",
+    card1Value: "Hours",
+    card1Label: "Employee hours",
+    card2Eyebrow: "orders",
+    card2Value: "Orders",
+    card2Label: "Orders processed",
+    card3Eyebrow: "errors",
+    card3Value: "Errors",
+    card3Label: "Exception rate",
+    card4Eyebrow: "cost",
+    card4Value: "Cost",
+    card4Label: "Cost per transaction",
   },
 }
 
@@ -79,13 +80,13 @@ export function RealNumbers({ variant = "default" }: RealNumbersProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="bg-[#0A1015] rounded-[12px] p-9 flex flex-col items-center justify-between min-h-[340px] text-center shadow-lg"
           >
             <div className="flex items-center gap-2">
               <div className="relative w-7 h-7">
-                <Image src={SITE_DATA.logoDark} alt="Zyene Logo" fill className="object-contain" />
+                <Image src={SITE_DATA.logoDark} alt="Zyene Logo" fill sizes="28px" className="object-contain" />
               </div>
               <span className="text-white font-semibold text-[20px] tracking-tight">Zyene</span>
             </div>
@@ -105,7 +106,7 @@ export function RealNumbers({ variant = "default" }: RealNumbersProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-[#F5F5F5] rounded-[12px] p-9 flex flex-col justify-between min-h-[340px] shadow-sm"
           >
@@ -133,7 +134,7 @@ export function RealNumbers({ variant = "default" }: RealNumbersProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="bg-[#F5F5F5] rounded-[12px] p-9 flex flex-col justify-between min-h-[340px] shadow-sm"
           >
@@ -161,7 +162,7 @@ export function RealNumbers({ variant = "default" }: RealNumbersProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={REVEAL_VIEWPORT}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="bg-[#F5F5F5] rounded-[12px] p-9 flex flex-col justify-between min-h-[340px] shadow-sm border border-transparent hover:border-[#0099FF]/10 transition-colors"
           >

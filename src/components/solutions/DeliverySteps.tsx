@@ -1,75 +1,155 @@
 "use client"
 
-import { motion } from "framer-motion"
+import * as React from "react"
 import Image from "next/image"
+import { ArrowLeft, ArrowRight } from "lucide-react"
+import { Reveal, RevealText } from "@/components/ui/Reveal"
+import { cn } from "@/lib/utils"
 
-const steps = [
+export type DeliveryStep = {
+  title: string
+  image: string
+  description: string
+}
+
+const defaultSteps: DeliveryStep[] = [
   {
-    title: "Week 1: Audit and plan",
-    image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "We map your current process, tools, blockers, and goals. Then we choose the first workflows to automate.",
+    title: "Discover",
+    image: "/images/industrial/hero-how-we-work.jpg",
+    description: "We map the workflow, the systems, the people, and the bottlenecks.",
   },
   {
-    title: "Week 2: Build and connect",
-    image:
-      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80",
+    title: "Design",
+    image: "/images/industrial/mfg-rfq-drawings.jpg",
     description:
-      "We build your AI agents and workflow logic, then connect CRM, Notion/Airtable/Zapier, and APIs you already use.",
+      "We decide what AI should automate, what existing software should do, and what should stay human.",
   },
   {
-    title: "Week 3: Launch and run",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80",
+    title: "Build",
+    image: "/images/industrial/sol-workflow-agents.jpg",
     description:
-      "We launch with your team, automate live tasks, and monitor everything in real time so execution stays smooth.",
+      "We build the workflow with the appropriate models and integrations. We are not tied to one provider.",
   },
   {
-    title: "Week 4: Improve and scale",
-    image:
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
+    title: "Integrate",
+    image: "/images/industrial/mfg-erp-mes.jpg",
+    description: "We connect ERP, CRM, email, documents, and internal systems instead of replacing them.",
+  },
+  {
+    title: "Validate",
+    image: "/images/industrial/mfg-quality.jpg",
+    description: "We test accuracy, exceptions, permissions, failure cases, and business rules before go-live.",
+  },
+  {
+    title: "Deploy and improve",
+    image: "/images/industrial/sol-human-approval.jpg",
     description:
-      "We review results, fix weak points, and expand automation to the next high-impact workflows.",
+      "Production deployment, monitoring, measurement, employee feedback, and continuous improvement.",
   },
 ]
 
-export function DeliverySteps() {
-  return (
-    <section className="py-24 px-6 md:px-12 lg:px-24 bg-white border-t border-[#E9EDF3]">
-      <div className="max-w-[980px] mx-auto">
-        <div className="mb-12">
-          <p className="text-[12px] font-bold tracking-[0.18em] uppercase text-[#8A8F98] mb-4">Implementation Timeline</p>
-          <h2 className="text-[36px] md:text-[56px] leading-[1.08] tracking-[-0.03em] text-[#0A1015]">
-            How we start in the first 30 days
-          </h2>
-        </div>
+export function DeliverySteps({
+  eyebrow = "How we work",
+  heading = "Discover, design, build, integrate, validate, improve",
+  steps = defaultSteps,
+}: {
+  eyebrow?: string
+  heading?: string
+  steps?: DeliveryStep[]
+} = {}) {
+  const railRef = React.useRef<HTMLOListElement>(null)
+  const [edge, setEdge] = React.useState({ start: true, end: false })
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {steps.map((step, idx) => (
-            <motion.article
-              key={step.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.45, delay: idx * 0.05 }}
-              className="rounded-[12px] border border-[#E3E8EF] bg-[#F8FAFD] overflow-hidden"
-            >
-              <div className="relative h-[220px]">
-                <Image src={step.image} alt={step.title} fill className="object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
-                <div className="absolute top-4 left-4 inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#0A1015] text-white text-[13px] font-semibold">
-                  {idx + 1}
-                </div>
-              </div>
-              <div className="p-6 md:p-7">
-                <h3 className="text-[22px] text-[#0A1015] leading-[1.2] mb-3">{step.title}</h3>
-                <p className="text-[15px] text-[#4A4F59] leading-[1.65]">{step.description}</p>
-              </div>
-            </motion.article>
-          ))}
+  const updateEdges = React.useCallback(() => {
+    const el = railRef.current
+    if (!el) return
+    setEdge({
+      start: el.scrollLeft <= 4,
+      end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 4,
+    })
+  }, [])
+
+  React.useEffect(() => {
+    updateEdges()
+    const el = railRef.current
+    if (!el) return
+    el.addEventListener("scroll", updateEdges, { passive: true })
+    window.addEventListener("resize", updateEdges)
+    return () => {
+      el.removeEventListener("scroll", updateEdges)
+      window.removeEventListener("resize", updateEdges)
+    }
+  }, [updateEdges])
+
+  const scrollByCard = (dir: 1 | -1) => {
+    const el = railRef.current
+    if (!el) return
+    const card = el.querySelector("li")
+    const step = card ? card.getBoundingClientRect().width + 16 : el.clientWidth * 0.8
+    el.scrollBy({ left: dir * step, behavior: "smooth" })
+  }
+
+  return (
+    <section className="relative overflow-hidden bg-paper">
+      <div className="zy-container zy-section pb-0">
+        <div className="mb-12 flex flex-col gap-8 md:mb-16 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-[880px]">
+            <Reveal className="mb-6">
+              <span className="zy-kicker">{eyebrow}</span>
+            </Reveal>
+            <RevealText text={heading} className="zy-display text-[clamp(32px,4.6vw,64px)] text-[#0A1015]" />
+          </div>
+          <div className="flex gap-2">
+            {[
+              { dir: -1 as const, Icon: ArrowLeft, disabled: edge.start, label: "Previous step" },
+              { dir: 1 as const, Icon: ArrowRight, disabled: edge.end, label: "Next step" },
+            ].map(({ dir, Icon, disabled, label }) => (
+              <button
+                key={label}
+                type="button"
+                aria-label={label}
+                disabled={disabled}
+                onClick={() => scrollByCard(dir)}
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-[#0A1015]/15 text-[#0A1015] transition-[background-color,color,opacity] duration-300 hover:bg-[#0A1015] hover:text-white disabled:pointer-events-none disabled:opacity-30"
+              >
+                <Icon className="h-4 w-4" />
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
+      <ol
+        ref={railRef}
+        className="hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-[clamp(72px,9vw,140px)] [scroll-padding-inline:max(20px,calc((100vw-1360px)/2+56px))]"
+        style={{ paddingInline: "max(20px, calc((100vw - 1360px) / 2 + clamp(20px, 4vw, 56px)))" }}
+      >
+        {steps.map((step, idx) => (
+          <li
+            key={step.title}
+            className={cn(
+              "group relative flex w-[82vw] flex-shrink-0 snap-start flex-col overflow-hidden rounded-[28px] border border-line bg-white sm:w-[420px]"
+            )}
+          >
+            <div className="relative aspect-[5/4] overflow-hidden bg-[#0A1015]">
+              <Image
+                src={step.image}
+                alt={step.title}
+                fill
+                sizes="420px"
+                className="object-cover transition-transform duration-[1200ms] ease-out-expo group-hover:scale-[1.05]"
+              />
+            </div>
+            <div className="flex flex-1 flex-col p-7">
+              <p className="mb-4 font-mono text-[12.5px] text-muted">
+                Step {String(idx + 1).padStart(2, "0")}
+              </p>
+              <h3 className="text-[26px] leading-[1.1] tracking-[-0.03em] text-[#0A1015]">{step.title}</h3>
+              <p className="mt-3 text-[15.5px] leading-[1.6] text-[#4B525C]">{step.description}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
     </section>
   )
 }

@@ -1,70 +1,56 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { ArrowRight } from "lucide-react"
-import Image from "next/image"
+import { Reveal, RevealText } from "@/components/ui/Reveal"
 
 const flow = [
   {
-    title: "Inputs",
-    image:
-      "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80",
-    description: "Forms, CRM updates, support requests, and team tasks enter the system.",
+    title: "Understand",
+    description: "Email, PDFs, ERP, CRM, documents, and field systems are the inputs.",
   },
   {
-    title: "Logic",
-    image:
-      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80",
-    description: "Rules, AI decisions, and workflow conditions decide what should happen next.",
+    title: "Reason",
+    description: "The operations layer reads the work and checks it against your business rules.",
   },
   {
-    title: "Actions",
-    image:
-      "https://images.unsplash.com/photo-1485217988980-11786ced9454?auto=format&fit=crop&w=1200&q=80",
-    description: "Tasks run automatically across tools, teams, and customer touchpoints.",
+    title: "Validate",
+    description: "Missing data and exceptions are flagged before anything is posted.",
   },
   {
-    title: "Reporting",
-    image:
-      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80",
-    description: "You see outcomes, blockers, and next improvements in clear weekly reports.",
+    title: "Act",
+    description: "Orders, quotes, updates, and replies are prepared for your systems and your approval.",
   },
 ]
 
 export function ArchitectureSnapshot() {
   return (
-    <section className="py-24 px-6 md:px-12 lg:px-24 bg-[#F8FAFD] border-y border-[#E3E8EF]">
-      <div className="max-w-[1200px] mx-auto">
-        <div className="mb-10">
-          <p className="text-[12px] font-bold tracking-[0.18em] uppercase text-[#8A8F98] mb-4">Architecture Snapshot</p>
-          <h2 className="text-[36px] md:text-[56px] leading-[1.08] tracking-[-0.03em] text-[#0A1015]">
-            Inputs to reporting in one clear flow
-          </h2>
+    <section className="border-t border-line bg-white">
+      <div className="zy-container zy-section">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
+          <RevealText
+            text="How every solution runs."
+            className="zy-display max-w-[560px] text-[clamp(34px,4.6vw,64px)] text-[#0A1015]"
+          />
+          <Reveal delay={0.1} className="lg:self-end">
+            <p className="max-w-[520px] text-[17px] leading-[1.6] text-[#4B525C]">
+              Your business systems on one side, the outcome on the other. In between, the same four steps,
+              whichever solution you start with.
+            </p>
+          </Reveal>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <ol className="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
           {flow.map((item, idx) => (
-            <motion.article
-              key={item.title}
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.45, delay: idx * 0.05 }}
-              className="relative rounded-[12px] border border-[#E2E7EE] bg-white p-5"
-            >
-              <div className="relative h-[120px] rounded-[8px] overflow-hidden border border-[#E7ECF2] mb-4">
-                <Image src={item.image} alt={item.title} fill className="object-cover" />
-              </div>
-              <p className="text-[11px] text-[#8A8F98] uppercase tracking-[0.14em] mb-2">Step {idx + 1}</p>
-              <h3 className="text-[22px] text-[#0A1015] leading-[1.2] mb-2">{item.title}</h3>
-              <p className="text-[14px] text-[#4A4F59] leading-[1.6]">{item.description}</p>
-
-              {idx < flow.length - 1 ? (
-                <ArrowRight className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#98A2B3] bg-[#F8FAFD]" />
-              ) : null}
-            </motion.article>
+            <Reveal as="li" key={item.title} delay={idx * 0.06} className="border-t border-[#0A1015] pt-6">
+              <p className="font-mono text-[12px] tracking-[0.04em] text-[#8A8F98]">
+                {String(idx + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-6 text-[24px] font-medium leading-[1.2] tracking-[-0.02em] text-[#0A1015]">
+                {item.title}
+              </h3>
+              <p className="mt-3 max-w-[300px] text-[15.5px] leading-[1.6] text-[#4B525C]">{item.description}</p>
+            </Reveal>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   )

@@ -1,230 +1,159 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
-import Image from "next/image"
-import { Button } from "@/components/ui/Button"
-import { SITE_DATA, type MarqueePartner } from "@/lib/constants"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
 import * as React from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { Button } from "@/components/ui/Button"
 
-function renderPartnerLabel(partner: MarqueePartner): React.ReactNode {
-  switch (partner.labelVariant) {
-    case "google":
-      return (
-        <span className="text-[22px] md:text-[26px] font-bold tracking-[-0.01em] normal-case leading-none">
-          <span className="text-[#4285F4]">G</span>
-          <span className="text-[#EA4335]">o</span>
-          <span className="text-[#FBBC05]">o</span>
-          <span className="text-[#4285F4]">g</span>
-          <span className="text-[#34A853]">l</span>
-          <span className="text-[#EA4335]">e</span>
-        </span>
-      )
-    case "simple":
-      return (
-        <span className="text-[20px] md:text-[24px] text-[#E7EBF2] font-bold tracking-[0.01em] leading-none">
-          {partner.label}
-        </span>
-      )
-    case "uppercase":
-      return (
-        <span
-          className={cn(
-            "text-[18px] md:text-[22px] text-[#D8DDE6] font-bold uppercase leading-none",
-            partner.id === "scale-ai" ? "tracking-[0.08em]" : "tracking-[0.14em]"
-          )}
-        >
-          {partner.label}
-        </span>
-      )
-    case "none":
-      return null
-    default:
-      return null
-  }
-}
+const EASE = [0.16, 1, 0.3, 1] as const
 
-function partnerAlt(p: MarqueePartner): string {
-  if (p.labelVariant === "none") return "Glean"
-  if (p.labelVariant === "google") return "Google"
-  return p.label ?? p.id
-}
+const INDUSTRY_LINKS = [
+  { href: "/industries/wholesale-distribution", label: "Wholesale Distribution", detail: "Orders, quotes, product data" },
+  { href: "/industries/manufacturing", label: "Manufacturing", detail: "RFQs, drawings, purchasing" },
+  { href: "/industries/specialty-contractors", label: "Specialty Contractors", detail: "Bids, RFIs, closeout" },
+]
 
-const textRevealVariants = {
-  hidden: {
-    opacity: 0.001,
-    filter: "blur(10px)",
-    transform: "translateY(10px)",
-  },
-  visible: {
-    opacity: 1,
-    filter: "blur(0)",
-    transform: "translateY(0)",
-  }
-}
+const HEADLINE = [["Put", "AI", "to", "work"], ["inside", "your", "operations."]]
 
 export function Hero() {
   const sectionRef = React.useRef<HTMLElement>(null)
-  
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"]
-  })
+  const videoRef = React.useRef<HTMLVideoElement>(null)
+  const reduce = useReducedMotion()
 
-  // Hero content moves up as we scroll
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -150])
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] })
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -120])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.12])
+  const veil = useTransform(scrollYProgress, [0, 1], [0, 0.6])
+
+  React.useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    if (reduce) {
+      video.pause()
+      return
+    }
+    video.play().catch(() => {})
+  }, [reduce])
+
+  let wordIndex = 0
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      id="hero" 
-      className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-6 overflow-hidden rounded-b-[20px] sticky top-0 z-0"
+      id="hero"
+      className="sticky top-0 z-0 flex min-h-[100dvh] flex-col overflow-hidden bg-[#0A1015] text-white"
     >
-      {/* Background Image with Masking */}
-      <div className="absolute inset-0 z-0 h-[120vh]">
+      <motion.div aria-hidden="true" style={{ scale: reduce ? 1 : mediaScale }} className="absolute inset-0 origin-center">
         <Image
-          src={SITE_DATA.heroBg}
-          alt="Zyene — AI-Powered Digital Transformation Execution Company"
+          src="/videos/hero-home-poster.jpg"
+          alt=""
           fill
           priority
-          fetchPriority="high"
           sizes="100vw"
-          quality={100}
-          className="object-cover object-center opacity-100"
+          className="object-cover object-bottom"
         />
-        {/* Masking Gradient - matching Framer's mask-image */}
-        <div className="absolute inset-0 bg-[#0a1015]/40 [mask-image:linear-gradient(to_bottom,transparent,black_30%,black_70%,transparent)] md:[mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]" />
-      </div>
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/videos/hero-home-poster.jpg"
+          className="absolute inset-0 h-full w-full object-cover object-bottom motion-reduce:hidden"
+        >
+          <source src="/videos/hero-home-av1.mp4" type='video/mp4; codecs="av01.0.08M.10"' />
+          <source src="/videos/hero-home-hevc.mp4" type='video/mp4; codecs="hvc1"' />
+          <source src="/videos/hero-home.mp4" type="video/mp4" />
+        </video>
+      </motion.div>
 
-      {/* Content Wrapper */}
-      <motion.div 
-        style={{ y: contentY, opacity }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative z-10 w-full max-w-[1200px] mx-auto flex flex-col items-center text-center"
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,16,21,0.78)_0%,rgba(10,16,21,0.4)_45%,rgba(10,16,21,0)_100%)]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,16,21,0.45)_0%,rgba(10,16,21,0)_22%,rgba(10,16,21,0)_58%,rgba(10,16,21,0.85)_100%)]" />
+      <motion.div aria-hidden="true" style={{ opacity: veil }} className="absolute inset-0 bg-[#0A1015]" />
+      <div aria-hidden="true" className="zy-grain absolute inset-0" />
+
+      <motion.div
+        style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
+        className="zy-container relative z-10 flex flex-1 flex-col justify-end pb-12 pt-32 md:pb-16"
       >
-        {/* Badge / Pre-heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-3 px-4 py-2 rounded-[4px] border border-white/10 bg-white/[0.04] backdrop-blur-sm mb-8 shadow-lg"
+        <h1
+          aria-label="Put AI to work inside your operations."
+          className="zy-display max-w-[1280px] text-[clamp(44px,6.4vw,100px)] text-white"
         >
-          <div className="relative w-[21px] h-[18px]">
-            <Image 
-              src={SITE_DATA.badgeIcon} 
-              alt="Icon" 
-              fill 
-              className="object-contain"
-            />
-          </div>
-          <span className="text-[13px] font-medium text-white/90 tracking-[0.02em]">
-            Introducing{" "}
-            <a
-              href="https://zyenereviews.com"
-              target="_blank"
-              rel="noopener noreferrer"
-                className="font-bold hover:text-white transition-colors"
-            >
-              Zyene Reviews
-            </a>
-          </span>
-        </motion.div>
-
-        {/* Headline with simplified animation for reliability */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[32px] sm:text-[44px] md:text-[80px] leading-[1.05] font-normal tracking-[-0.04em] text-white max-w-[1000px] mb-6 font-display-serif"
-        >
-          We Build AI Systems
-          <br />
-          That Scale Your Business
-        </motion.h1>
-
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[16px] text-[#CECFD0] max-w-[640px] leading-[1.6] mb-10 font-normal text-center"
-        >
-          Automate marketing, operations, and sales with AI-powered infrastructure — so your business scales without increasing overhead.
-        </motion.p>
-
-        {/* Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-16"
-        >
-          <Button variant="primary" size="lg" className="w-full sm:w-auto sm:min-w-[200px]" asChild>
-            <Link href="/contact">Schedule a Strategy Call</Link>
-          </Button>
-          <Button variant="secondary" size="lg" className="w-full sm:w-auto sm:min-w-[200px]" asChild>
-            <Link href="/use-cases">View use cases</Link>
-          </Button>
-        </motion.div>
-
-        {/* Logo Marquee integrated into Hero */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="w-full flex flex-col items-center gap-6"
-        >
-          <p className="text-[#8A8F98] text-[12px] font-medium tracking-[0.2em] uppercase opacity-60">
-            We partner with the world&apos;s leading organizations to advance their industries:
-          </p>
-          
-          <div className="relative w-full overflow-hidden">
-            {/* Dark Masking */}
-            <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-r from-[#0a1015] via-transparent to-[#0a1015] opacity-100" />
-            
-            <div className="flex w-max animate-marquee gap-8 md:gap-20 px-4 sm:px-8 md:px-12 items-center">
-              {[...SITE_DATA.marqueePartners, ...SITE_DATA.marqueePartners, ...SITE_DATA.marqueePartners].map(
-                (partner, index) => {
-                  const labelNode = renderPartnerLabel(partner)
-                  const invertIcon = partner.iconInvert !== false
-                  const wordmarkOnly = partner.labelVariant === "none"
-                  return (
-                    <div
-                      key={`${partner.id}-${index}`}
-                      className={cn(
-                        "flex items-center gap-2 flex-shrink-0 opacity-50 hover:opacity-100 transition-all duration-700",
-                        wordmarkOnly ? "w-auto min-w-[120px] sm:min-w-[160px] md:min-w-[200px] justify-center" : "min-w-[140px] sm:min-w-[200px] md:min-w-[240px]"
-                      )}
-                    >
-                      <div
-                        className={cn(
-                          "relative flex-shrink-0",
-                          wordmarkOnly ? "h-8 w-[112px] md:h-9 md:w-[132px]" : "h-8 w-8 md:h-9 md:w-9",
-                          invertIcon && "grayscale brightness-0 invert"
-                        )}
+          {HEADLINE.map((line, li) => (
+            <span key={li} className="block">
+              {line.map((word, wi) => {
+                const i = wordIndex++
+                return (
+                  <React.Fragment key={word}>
+                    <span aria-hidden="true" className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom">
+                      <motion.span
+                        className="inline-block"
+                        initial={reduce ? false : { y: "110%" }}
+                        animate={{ y: 0 }}
+                        transition={{ duration: 1.1, delay: 0.25 + i * 0.06, ease: EASE }}
                       >
-                        <Image
-                          src={partner.icon}
-                          alt={`${partnerAlt(partner)} logo`}
-                          fill
-                          className="object-contain object-left"
-                          sizes={wordmarkOnly ? "132px" : "40px"}
-                        />
-                      </div>
-                      {labelNode ? (
-                        <span className="whitespace-nowrap leading-none">{labelNode}</span>
-                      ) : null}
-                    </div>
-                  )
-                }
-              )}
+                        {word}
+                      </motion.span>
+                    </span>
+                    {wi < line.length - 1 ? " " : null}
+                  </React.Fragment>
+                )
+              })}
+            </span>
+          ))}
+        </h1>
+
+        <div className="mt-10 grid items-end gap-10 lg:mt-14 lg:grid-cols-[1fr_auto] lg:gap-16">
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.75, ease: EASE }}
+            className="max-w-[560px]"
+          >
+            <p className="text-[17px] leading-[1.55] text-white/75 md:text-[19px]">
+              We design, build, and integrate production AI for distributors, manufacturers, and specialty
+              contractors, inside the systems you already run.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button variant="primary" size="lg" asChild>
+                <Link href="/contact">
+                  Book an AI Workflow Assessment
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
+                </Link>
+              </Button>
+              <Button variant="secondary" size="lg" asChild>
+                <Link href="/how-we-work">See How It Works</Link>
+              </Button>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+          <motion.nav
+            aria-label="Industries"
+            initial={reduce ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.95, ease: EASE }}
+            className="hidden w-full gap-px overflow-hidden rounded-[22px] border border-white/10 bg-white/10 backdrop-blur-xl md:grid md:grid-cols-3 lg:w-[620px]"
+          >
+            {INDUSTRY_LINKS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="group flex flex-col justify-between gap-6 bg-[#0A1015]/55 p-5 transition-colors duration-300 hover:bg-[#0A1015]/30"
+              >
+                <ArrowUpRight className="h-4 w-4 text-white/45 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
+                <span>
+                  <span className="block text-[14.5px] font-medium text-white">{item.label}</span>
+                  <span className="mt-1 block text-[12.5px] text-white/55">{item.detail}</span>
+                </span>
+              </Link>
+            ))}
+          </motion.nav>
+        </div>
       </motion.div>
     </section>
   )

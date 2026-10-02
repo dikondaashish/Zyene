@@ -1,103 +1,115 @@
 "use client"
 
 import * as React from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
-import { SITE_DATA } from "@/lib/constants"
+import Link from "next/link"
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
+import { ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/Button"
 
-const textRevealVariants = {
-  hidden: {
-    opacity: 0.001,
-    filter: "blur(10px)",
-    transform: "translateY(10px)",
-  },
-  visible: (i: number) => ({
-    opacity: 1,
-    filter: "blur(0)",
-    transform: "translateY(0)",
-    transition: {
-      delay: i * 0.05,
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    },
-  }),
+const EASE = [0.16, 1, 0.3, 1] as const
+
+type SolutionsHeroProps = {
+  headingLines?: string[]
+  eyebrow?: string
+  description?: string
+  imageAlt?: string
+  image?: string
+  cta?: { label: string; href: string } | null
 }
 
-export function SolutionsHero() {
+export function SolutionsHero({
+  headingLines = ["Six solutions.", "One operations layer."],
+  eyebrow = "Solutions",
+  description = "Industries tell you we understand the work. Solutions tell you what we can build: documents, orders, quotes, agents, integrations, and operational search.",
+  imageAlt = "Solutions background",
+  image = "/images/industrial/hero-solutions.jpg",
+  cta = { label: "Book an Assessment", href: "/contact" },
+}: SolutionsHeroProps = {}) {
   const sectionRef = React.useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  })
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] })
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -90])
+  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0])
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1])
 
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -100])
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
-
-  const headingLines = ["Simple tech.", "Clear execution."]
+  let wordIndex = 0
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[60vh] flex items-center pt-32 pb-12 px-6 overflow-hidden rounded-b-[20px] sticky top-0 z-0 bg-[#0A1015]"
+      className="sticky top-0 z-0 flex min-h-[86vh] flex-col overflow-hidden bg-[#0A1015] text-white md:min-h-[92vh]"
     >
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={SITE_DATA.heroBg}
-          alt="Solutions background"
-          fill
-          priority
-          className="object-cover opacity-100"
-        />
-        <div className="absolute inset-0 bg-[#0a1015]/40 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]" />
-      </div>
+      <motion.div style={reduce ? undefined : { scale }} className="absolute inset-0">
+        {image ? (
+          <Image src={image} alt={imageAlt} fill priority sizes="100vw" className="object-cover object-[70%_center]" />
+        ) : null}
+      </motion.div>
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,16,21,0.92)_0%,rgba(10,16,21,0.6)_45%,rgba(10,16,21,0.15)_100%)]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,16,21,0.6)_0%,rgba(10,16,21,0)_30%,rgba(10,16,21,0)_60%,rgba(10,16,21,0.9)_100%)]" />
+      <div aria-hidden="true" className="zy-grain absolute inset-0" />
 
       <motion.div
-        style={{ y: contentY, opacity }}
-        className="max-w-[1400px] mx-auto w-full grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-24 items-end relative z-10 md:px-6 lg:px-24"
+        style={reduce ? undefined : { y: contentY, opacity }}
+        className="zy-container relative z-10 flex flex-1 flex-col justify-end pb-14 pt-36 md:pb-20"
       >
-        <div>
-          <h1 className="text-[36px] sm:text-[44px] md:text-[80px] leading-[1.05] font-normal tracking-[-0.04em] text-white">
-            {headingLines.map((line, lineIdx) => (
-              <span key={lineIdx} className="block">
-                {line.split(" ").map((word, wordIdx) => (
-                  <motion.span
-                    key={wordIdx}
-                    custom={lineIdx * 3 + wordIdx}
-                    initial="hidden"
-                    animate="visible"
-                    variants={textRevealVariants}
-                    className="inline-block mr-[0.25em]"
-                  >
-                    {word}
-                  </motion.span>
-                ))}
-              </span>
-            ))}
-          </h1>
-        </div>
+        <motion.p
+          initial={reduce ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+          className="mb-7 flex items-center gap-2 text-[13px] text-white/60"
+        >
+          <Link href="/" className="transition-colors hover:text-white">
+            Zyene
+          </Link>
+          <span aria-hidden="true" className="text-white/30">/</span>
+          <span className="text-white">{eyebrow}</span>
+        </motion.p>
 
-        <div className="max-w-[420px] pb-4">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center gap-3 mb-6"
-          >
-            <div className="relative w-[21px] h-[18px]">
-              <Image src="/images/Logo_White.png" alt="Zyene Logo" fill className="object-contain" />
-            </div>
-            <span className="text-[16px] font-medium text-white/90">Solutions</span>
-          </motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[15px] md:text-[16px] text-[#CECFD0] leading-[1.6]"
-          >
-            Understand exactly how Zyene builds your AI systems layer, integration layer, and execution layer so your
-            business can run faster with less manual work.
-          </motion.p>
-        </div>
+        <h1 className="zy-display max-w-[1100px] text-[clamp(40px,7vw,100px)] text-white">
+          {headingLines.map((line, lineIdx) => {
+            const words = line.split(" ")
+            return (
+              <span key={lineIdx} className="block">
+                {words.map((word, wi) => {
+                  const i = wordIndex++
+                  return (
+                    <React.Fragment key={`${word}-${wi}`}>
+                      <span className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom">
+                        <motion.span
+                          className="inline-block"
+                          initial={reduce ? false : { y: "110%" }}
+                          animate={{ y: 0 }}
+                          transition={{ duration: 1.05, delay: 0.2 + i * 0.05, ease: EASE }}
+                        >
+                          {word}
+                        </motion.span>
+                      </span>
+                      {wi < words.length - 1 ? " " : null}
+                    </React.Fragment>
+                  )
+                })}
+              </span>
+            )
+          })}
+        </h1>
+
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.6, ease: EASE }}
+          className="mt-10 flex flex-col gap-8 md:mt-12 md:flex-row md:items-end md:justify-between"
+        >
+          <p className="max-w-[540px] text-[17px] leading-[1.6] text-white/75 md:text-[18px]">{description}</p>
+          {cta ? (
+            <Button variant="primary" size="lg" asChild className="w-full sm:w-auto">
+              <Link href={cta.href}>
+                {cta.label}
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
+              </Link>
+            </Button>
+          ) : null}
+        </motion.div>
       </motion.div>
     </section>
   )

@@ -26,479 +26,494 @@ export type BlogPost = {
 export const WILLIAM_SANDERS: BlogAuthor = {
   name: "William Sanders",
   role: "Content Writer",
-  avatar: "/images/team-1.jpg",
+  avatar: "",
+}
+
+const WORDS_PER_MINUTE = 220
+
+function post(input: Omit<BlogPost, "readMinutes" | "coverImage" | "author">): BlogPost {
+  const words = input.sections
+    .flatMap((section) => [section.heading ?? "", ...section.paragraphs])
+    .join(" ")
+    .split(/\s+/).length
+  return {
+    ...input,
+    readMinutes: Math.max(3, Math.round(words / WORDS_PER_MINUTE)),
+    coverImage: `/images/blog/${input.slug}.jpg`,
+    author: WILLIAM_SANDERS,
+  }
+}
+
+/** Retired article slugs and the article that replaced each one. */
+export const BLOG_REDIRECTS: Record<string, string> = {
+  "from-ai-hype-to-operational-ai": "ai-operations-layer-for-industrial-companies",
+  "how-ai-transforms-business-operations": "purchase-order-entry-for-distributors",
+  "ai-systems-vs-ai-tools": "rfq-intake-for-manufacturers",
+  "what-is-digital-transformation": "bid-intake-for-specialty-contractors",
+  "voice-and-messaging-as-a-growth-layer": "where-is-my-order-requests",
+  "crm-automation-with-ai": "keep-your-erp-as-the-system-of-record",
+  "operations-ai-for-growing-businesses": "human-approval-in-ai-workflows",
+  "ai-automation-for-marketing-teams": "choosing-your-first-ai-workflow",
+  "measuring-digital-transformation-roi": "measuring-ai-in-operations",
+  "scaling-execution-without-scaling-headcount": "what-document-ai-can-read-today",
+  "digital-transformation-roadmap": "from-assessment-to-pilot",
+  "reviews-reputation-and-systematic-follow-up": "knowledge-search-for-operations-teams",
 }
 
 export const BLOG_POSTS: BlogPost[] = [
-  {
-    slug: "from-ai-hype-to-operational-ai",
-    title: "What Zyene does: AI systems that run your marketing, ops, and sales workflows",
+  post({
+    slug: "ai-operations-layer-for-industrial-companies",
+    title: "What Zyene does: an AI operations layer for distributors, manufacturers, and contractors",
     excerpt:
-      "Zyene is not a one-off chatbot. We connect your real stack—CRM, support, telephony—and ship proprietary products plus optional execution support so work finishes end to end.",
+      "Industrial companies already bought the ERP, the CRM, and the field software. The manual work lives in the gaps between them. That gap is what we build for.",
     category: "Zyene",
     dateDisplay: "Mar 12, 2026",
     dateISO: "2026-03-12",
-    readMinutes: 6,
     featured: true,
-    coverImage: "/images/blog-cover-zyene-layer.png",
-    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
-          "Businesses come to Zyene when growth breaks down not because they lack tools, but because marketing, operations, and sales stop handing off cleanly—data lives in silos, follow-up dies in inboxes, and nobody owns the full workflow.",
-          "We build an AI operating layer on top of what you already use. Zyene agents execute repeatable steps across systems, with permissions, visibility, and human checkpoints where judgment matters.",
+          "Walk through the office of almost any distributor, manufacturer, or specialty contractor and you will find the same pattern. The company runs a capable system of record: an ERP, a CRM, an estimating or field-service platform. Around it sits a layer of people moving information by hand. Purchase orders arrive as PDFs and get retyped. RFQs arrive with drawings and get read line by line. Customers email to ask where their order is, and someone looks it up and writes back.",
+          "None of that work is strategic, but all of it is necessary, and it scales with volume. When orders grow, the order desk grows. When bids grow, estimators fall behind. Zyene exists to take that layer of manual handling and turn it into a system.",
         ],
       },
       {
-        heading: "Two products, one execution mindset",
+        heading: "What we build",
         paragraphs: [
-          "Zyene Reviews is our reputation system for operators who need review alerts in minutes, AI-assisted reply flows, automated review-request campaigns, and one dashboard across channels—built for local and multi-location teams that cannot babysit ten sites.",
-          "Zentraic AI is our voice platform for real operations: inbound and outbound AI calls, lead qualification and routing, and CRM updates in real time so telephony automation does not break how your team already sells and serves.",
+          "We design, build, and integrate production AI workflows that sit on top of the systems you already run. A typical workflow reads incoming work (an email, a PDF, a spreadsheet, a drawing), checks it against your ERP or CRM, flags what is missing or unusual, and prepares the next action: an order, a quote package, a reply, or a checklist.",
+          "The six areas we work in are document intelligence, order and quote automation, workflow agents, ERP and CRM integration, enterprise knowledge search, and AI operations assessments. Each one is a building block. Most engagements combine two or three of them around a single workflow.",
         ],
       },
       {
-        heading: "Integrations and rollout",
+        heading: "What we do not do",
         paragraphs: [
-          "Zyene connects into the stack teams already run—think HubSpot, Salesforce, Slack, Notion, Google Workspace, and the CRM and ops tools you rely on—so you are not replatforming to get automation.",
-          "Most teams start with the workflow that burns the most hours or loses the most revenue first; we aim to get initial workflows live in roughly one to two weeks and expand from there. When you need hands-on execution, our team can work alongside yours like an embedded extension—not just software on a shelf.",
+          "We do not ask you to replace your ERP. The system of record stays where it is, and the workflow writes into it the same way a person would, with the same permissions and the same audit trail.",
+          "We do not remove people from decisions that matter. Orders above a threshold, price exceptions, and anything customer-facing can wait for an employee to approve. The goal is to remove the retyping, not the judgment.",
+          "And we do not publish results we have not measured. Every engagement starts by agreeing on a metric, such as processing time, manual touches, or exception rate, and the pilot is judged against it.",
+        ],
+      },
+      {
+        heading: "How an engagement starts",
+        paragraphs: [
+          "Every project begins with an assessment of one workflow. We map how the work happens today, including the exceptions, identify which systems and data we can reach, and recommend a pilot with a clear metric. From there the work follows the same path: discover, design, build, integrate, validate, then deploy and improve from real use.",
         ],
       },
     ],
-  },
-  {
-    slug: "scaling-execution-without-scaling-headcount",
-    title: "When hiring cannot keep up: how Zyene scales execution without chaos",
+  }),
+  post({
+    slug: "purchase-order-entry-for-distributors",
+    title: "Purchase order entry: why distributors still retype orders, and how to stop",
     excerpt:
-      "Automation alone is not enough if nobody owns follow-through. Here is how Zyene pairs workflow automation with structured execution support so throughput rises without burning out your best people.",
-    category: "Zyene",
-    dateDisplay: "Feb 28, 2026",
-    dateISO: "2026-02-28",
-    readMinutes: 5,
-    coverImage: "/images/blog-cover-execution.png",
-    author: WILLIAM_SANDERS,
-    sections: [
-      {
-        paragraphs: [
-          "Every growing team hits the same wall: more leads, more tickets, more campaigns—but the same headcount. Stretching people across copy-paste work is how quality slips and SLAs quietly fail.",
-          "Zyene’s model is to take recurring paths—intake, routing, follow-up, reporting—and either automate them with agents or run them with our team where human execution is part of the product, so your specialists spend time on judgment, relationships, and exceptions.",
-        ],
-      },
-      {
-        heading: "Clear ownership, measurable throughput",
-        paragraphs: [
-          "We design each workflow with named inputs, outputs, and owners. Leaders see execution health the same way they see pipeline: backlog age, response times, and coverage—not a quarterly “AI initiative” with no scoreboard.",
-          "That is how Zyene differs from one-off pilots: the system has to show what it did yesterday and what changes next week, whether the work runs on Zyene Reviews, Zentraic AI, or core CRM and marketing automation.",
-        ],
-      },
-      {
-        paragraphs: [
-          "If your roadmap is “hire faster” with no change to process, you will scale cost faster than revenue. Zyene is for teams ready to standardize first, then automate and extend execution deliberately.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "voice-and-messaging-as-a-growth-layer",
-    title: "Zentraic AI: voice calls that qualify leads and sync your CRM automatically",
-    excerpt:
-      "Phones still drive high-intent conversations—especially in services, insurance, dental, legal, and hospitality. Zentraic is Zyene’s voice AI platform built so call outcomes land in Salesforce or HubSpot without manual note-taking.",
-    category: "Zentraic AI",
-    dateDisplay: "Feb 14, 2026",
-    dateISO: "2026-02-14",
-    readMinutes: 7,
-    coverImage: "/images/blog-cover-voice.png",
-    author: WILLIAM_SANDERS,
-    sections: [
-      {
-        paragraphs: [
-          "Most voice products stop at the transcript. Zentraic is built for operations: inbound and outbound AI calls, lead scoring and routing, and integration into the same CRM stages and tasks your managers already review.",
-          "That matters because revenue is lost in the gap between “we talked to them” and “the record was updated, the task was assigned, and the next step happened.” Zentraic closes that gap by design.",
-        ],
-      },
-      {
-        heading: "Built for teams that cannot rip out their stack",
-        paragraphs: [
-          "Zentraic helps you run telephony automation without forcing a new dialer philosophy overnight. The goal is faster qualification, fewer dropped handoffs, and reporting that reflects reality—not reconstructing the pipeline from spreadsheets.",
-          "If you are comparing voice AI vendors, ask whether outcomes sync in real time to your system of record and whether managers can coach from connection rates, qualification rates, and follow-up latency—not just call volume.",
-        ],
-      },
-      {
-        paragraphs: [
-          "Zyene can scope Zentraic alongside Zyene Reviews or broader CRM workflows so voice, reputation, and revenue operations reinforce each other instead of competing for attention.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "reviews-reputation-and-systematic-follow-up",
-    title: "Zyene Reviews: monitor every channel, reply faster, grow reviews without spam",
-    excerpt:
-      "Reputation is operations. Zyene Reviews gives operators one place for alerts, AI-assisted replies, and automated review requests—so Google and industry sites reflect the service you actually deliver.",
-    category: "Zyene Reviews",
-    dateDisplay: "Jan 22, 2026",
-    dateISO: "2026-01-22",
-    readMinutes: 5,
-    coverImage: "/images/blog-cover-reviews.png",
-    author: WILLIAM_SANDERS,
-    sections: [
-      {
-        paragraphs: [
-          "Customers read reviews before they call. Slow responses or silent profiles signal neglect—both to people and to algorithms. Zyene Reviews exists so marketing and ops leaders can run reputation on a sustainable cadence, not a crisis cadence.",
-          "You get review alerts quickly, structured flows to respond with consistency (including AI-assisted drafting where it fits your brand), and campaigns to request reviews from happy customers without awkward blast emails.",
-        ],
-      },
-      {
-        heading: "Who it is for",
-        paragraphs: [
-          "We built Zyene Reviews for businesses that live in public listings—franchises, clinics, agencies, home services, retail, and anyone juggling more than one location or brand voice.",
-          "Everything routes through a central dashboard so regional managers see coverage and local teams know what to do next. That is how reputation becomes a system, not a side project.",
-        ],
-      },
-      {
-        paragraphs: [
-          "You can explore the product directly at zyenereviews.com. When you are ready to connect reviews into broader Zyene workflows—CRM, voice with Zentraic AI, or marketing automation—we scope it as one operating layer rather than three disconnected tools.",
-        ],
-      },
-    ],
-  },
-
-  // ── New posts ──────────────────────────────────────────────────────────────
-
-  {
-    slug: "what-is-digital-transformation",
-    title: "What is digital transformation? A practical guide for business leaders",
-    excerpt:
-      "Digital transformation isn't about buying new software. It's about redesigning how work gets done — connecting your tools, automating execution, and building systems that scale with your business instead of against it.",
-    category: "Digital Transformation",
+      "EDI covers your largest accounts. Everyone else sends a PDF. Here is what it takes to turn emailed purchase orders into ERP orders without retyping them.",
+    category: "Distribution",
     dateDisplay: "Apr 21, 2026",
     dateISO: "2026-04-21",
-    readMinutes: 7,
-    coverImage: "/images/blog-cover-zyene-layer.png",
-    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
-          "Ask ten operators to define digital transformation and you will get ten different answers — most of them describing a software purchase or an IT upgrade. That framing misses the point entirely.",
-          "Digital transformation is the process of redesigning how your business executes: how work moves between people and systems, how decisions get made with data, and how your operations scale without requiring proportional increases in headcount. The technology is just the infrastructure. The transformation is in how your team works.",
+          "Most wholesale distributors have solved order entry for their largest customers. Those accounts send orders through EDI or a customer portal, and the orders land in the ERP without anyone touching them. The problem is the long tail: hundreds of smaller customers who email a PDF, paste a list into the body of a message, or attach a spreadsheet exported from their own system.",
+          "For those orders, someone on the order desk opens the email, finds the customer in the ERP, matches each line to a SKU, checks the price, and keys it in. It is careful, repetitive work, and it is where errors creep in: a transposed quantity, the wrong unit of measure, a customer part number that maps to the wrong item.",
         ],
       },
       {
-        heading: "Why most transformation initiatives stall",
+        heading: "Why templates and OCR were not enough",
         paragraphs: [
-          "The most common failure mode is buying tools in isolation. A company purchases a new CRM, a marketing platform, and an analytics dashboard — then wonders why nothing changed. Without intentional workflow design, new tools add complexity instead of removing it. Teams end up managing more logins, more disconnected data, and more manual handoffs between systems that were never meant to talk to each other.",
-          "Real transformation requires someone to own the system layer: the structure of how data flows, where automation triggers, and what humans actually need to touch versus what should run on its own. That ownership gap is why most digital transformation programs take years and deliver less than expected.",
+          "Earlier attempts at automating this relied on templates: define where the PO number sits on each customer's form and extract it. That works until a customer changes their form, and it never works for orders written in free text. Plain OCR reads the characters but does not understand that \"2 cs\" means two cases of twelve, or that a customer's internal part number corresponds to your SKU.",
+          "Modern language models change the first half of the problem. They can read a purchase order in almost any layout and pull out the customer, ship-to, requested date, and line items with their quantities and units. What they cannot do on their own is know your catalog, your contract prices, or your customer's history. That knowledge lives in your ERP.",
         ],
       },
       {
-        heading: "The three layers every transformation needs",
+        heading: "The workflow that works",
         paragraphs: [
-          "Successful digital transformation happens in three layers, and all three have to work together. The first is the AI systems layer — the automations, agents, and triggers that handle repetitive execution. The second is the integration layer — the connective tissue between your CRM, communication tools, ops platforms, and data sources. The third is the execution layer — the people and processes that run the system, measure outcomes, and continuously improve.",
-          "Most companies invest heavily in layer one (the tech) and ignore layers two and three. Zyene builds all three as a unified operating layer — which is why transformations delivered through a structured execution model tend to stick while point-solution rollouts tend to fade.",
+          "A reliable order entry workflow has four stages. First, extraction: the AI reads the email and attachments and produces structured lines. Second, matching: each line is matched against your item master and the customer's cross-reference table, and each match carries a confidence level. Third, validation: prices are checked against the contract, quantities against pack sizes, and dates against lead times. Fourth, approval: an employee reviews the prepared order, resolves anything flagged, and approves it into the ERP.",
+          "The approval step is not a formality. It is where the order desk's judgment stays in the process. The difference is that the employee now reviews a prepared order with the exceptions highlighted, instead of building it from scratch.",
         ],
       },
       {
-        heading: "What transformation looks like in practice",
+        heading: "What to measure",
         paragraphs: [
-          "For a marketing team, transformation might mean lead capture → CRM entry → automated follow-up sequence → weekly performance report all happening without manual intervention. For an operations team, it might mean service request → intake form → routing to the right team → status update to the client → closure confirmation — all tracked, all automated.",
-          "The common thread is that predictable, repeatable work stops requiring human attention. Your team focuses on judgment, relationships, and decisions that actually need them. That shift — from execution overhead to strategic output — is what digital transformation actually delivers when it works.",
+          "Before a pilot, measure three things on your current process: the time from email received to order entered, the number of manual touches per order, and the rate of orders that need correction after entry. Those are the numbers the pilot should move. If they do not move, the workflow is not working, regardless of how impressive the extraction looks in a demo.",
         ],
       },
     ],
-  },
-
-  {
-    slug: "ai-automation-for-marketing-teams",
-    title: "AI automation for marketing teams: cut manual work without losing quality",
+  }),
+  post({
+    slug: "rfq-intake-for-manufacturers",
+    title: "RFQ intake for manufacturers: getting estimators to the quote faster",
     excerpt:
-      "Marketing teams spend more time managing tools than doing marketing. AI automation changes that equation — automating campaign execution, lead routing, and performance reporting so your team can focus on strategy and creative.",
-    category: "AI Automation",
+      "An RFQ packet can hold drawings, specifications, and a quantity spreadsheet. The first pass through it is reading, not estimating. That pass can be prepared for you.",
+    category: "Manufacturing",
     dateDisplay: "Apr 14, 2026",
     dateISO: "2026-04-14",
-    readMinutes: 6,
-    coverImage: "/images/blog-cover-execution.png",
-    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
-          "Most marketing teams are underwater in operational work — scheduling emails, updating CRM records, pulling reports, routing leads to sales, and chasing data across platforms. None of that is marketing. It is coordination overhead that accumulates until your best people are spending their best hours on work that should not require them at all.",
-          "AI automation for marketing is not about replacing creative judgment. It is about removing the execution tax that slows your team down: the manual steps between idea and outcome that exist only because no one has automated them yet.",
+          "For a job shop or contract manufacturer, quote speed matters. Customers often send the same RFQ to several suppliers, and the first credible quote has an advantage. Yet the first hours of every quote are spent on work that is not estimating at all: opening the packet, reading the drawings, finding the material and tolerance requirements, noting the quantities, and searching for similar jobs you have done before.",
+          "Experienced estimators are scarce, and that preparation work consumes their time before their expertise is ever applied.",
         ],
       },
       {
-        heading: "The highest-leverage automations for marketing teams",
+        heading: "What an estimator package contains",
         paragraphs: [
-          "Lead routing is the most immediate win — ensuring every inbound lead is captured, scored, enriched, and assigned to the right sales rep within minutes instead of hours. A lead that sits for four hours converts at a fraction of the rate of one that gets a same-minute response. Automating this one workflow has a measurable, direct revenue impact.",
-          "Campaign execution is the second lever. Trigger-based email sequences, re-engagement workflows, and post-purchase nurture flows can all run on autopilot once they are designed and connected to your CRM data. The creative still requires your team. The execution should not.",
+          "The goal is not to have AI produce the quote. It is to hand the estimator a prepared package. A good package lists the parts and quantities, the materials and finishes, the critical tolerances and any special processes, the delivery requirements, and the terms in the RFQ that deserve attention.",
+          "It also flags what is missing. If a drawing revision does not match the one referenced in the request, or a quantity break is ambiguous, the package says so up front, before the estimator has invested an hour.",
         ],
       },
       {
-        heading: "Reporting without the Friday afternoon sprint",
+        heading: "Using your own history",
         paragraphs: [
-          "Marketing reporting is where hours disappear every week. Pulling data from five platforms, normalizing it into a spreadsheet, formatting a slide deck — then doing it again next week. Automated reporting systems connect your data sources and deliver structured summaries on a schedule, so leadership has visibility without the team spending Friday cleaning up numbers.",
-          "The key is designing the reporting logic once: which metrics matter, how they are calculated, where they come from, and who sees what. Once that is built, you stop recreating the same dashboard from scratch each week and start using the time to act on what it shows.",
+          "The most valuable part of the package is often a list of related historical jobs. Manufacturers have years of quotes and job records in their ERP and file shares, but finding a similar part usually depends on someone remembering it. Searching past jobs by material, geometry described in the drawing notes, customer, and process gives the estimator a starting point grounded in your actual costs.",
         ],
       },
       {
-        heading: "Starting without replacing your stack",
+        heading: "Where the estimator stays in charge",
         paragraphs: [
-          "The most practical path to marketing automation is not replatforming. Your existing CRM, email tool, and ad platform are probably fine — they just lack the connective tissue and trigger logic that makes them work together. Zyene builds that connective layer on top of what you already have, so your team keeps its familiar tools while the manual handoffs between them disappear.",
-          "Most marketing teams that work with Zyene see their first automated workflow live within two weeks — typically lead routing or a nurture sequence — and expand from there as they see what execution time they are recovering.",
+          "Pricing, lead time commitments, and the decision to bid at all remain with the estimator and the sales team. The workflow prepares; people decide. In practice this keeps the quality of your quotes where it is while giving estimators back the time they spent on intake.",
+          "A sensible pilot metric is the time from RFQ received to estimator-ready package, alongside the time from RFQ to quote sent. Track both, because a faster package only matters if quotes go out sooner.",
         ],
       },
     ],
-  },
-
-  {
-    slug: "how-ai-transforms-business-operations",
-    title: "How AI transforms business operations: from manual workflows to automated execution",
+  }),
+  post({
+    slug: "bid-intake-for-specialty-contractors",
+    title: "Bid intake for specialty contractors: from RFP packet to checklist",
     excerpt:
-      "Operational drag is the quiet killer of growing businesses. AI systems that automate intake, routing, follow-up, and reporting can recover dozens of hours per week — without replacing your team.",
-    category: "Operations AI",
+      "HVAC, electrical, mechanical, plumbing, fire protection, and roofing firms all share the same office bottleneck: someone has to read the bid documents before estimating can start.",
+    category: "Specialty Contractors",
     dateDisplay: "Apr 7, 2026",
     dateISO: "2026-04-07",
-    readMinutes: 7,
-    coverImage: "/images/blog-cover-voice.png",
-    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
-          "Operations teams are where execution lives — and where it most often gets stuck. Intake forms that trigger nothing automatically, handoffs that live in someone's inbox, status updates that require a Slack message to get, reports that require three people to compile. These are not small inefficiencies. Across a week, they account for a significant portion of your most valuable people's time.",
-          "AI transformation of business operations is about identifying the repeatable paths — the work that follows the same sequence every time — and automating them so your team can focus on the work that actually requires human judgment.",
+          "Specialty contractors live on bids. A general contractor or owner sends an invitation to bid with a set of documents: specifications, drawings, addenda, a bid form, and the general conditions. Before an estimator can price the work, someone has to read that set, determine the scope that applies to your trade, pull the deadlines, and list what must be submitted.",
+          "On a busy week, that reading backlog decides which bids you pursue. Opportunities are passed on not because they are a poor fit, but because nobody had time to read the packet.",
         ],
       },
       {
-        heading: "Where operational drag actually lives",
+        heading: "What a bid checklist should capture",
         paragraphs: [
-          "Intake and routing is the first choke point for most operations teams. Whether it is a support ticket, a new client request, a vendor inquiry, or an internal project kickoff — the work arrives in one place and someone has to manually move it to the right person, log it in the right system, and make sure nothing slips. Automating that first step alone can transform the experience for everyone downstream.",
-          "Follow-up and closure is the second major gap. Work gets started but the accountability chain breaks down between open and closed. Someone had to manually check if the response went out. Someone had to manually confirm the task was marked complete. AI systems close those loops automatically — logging outcomes, triggering the next step, and surfacing exceptions for human attention when something actually needs it.",
+          "A useful intake summary answers the questions your team asks every time. What is the scope for our trade, and which specification sections define it? When are bids due, and when are questions due? Is there a pre-bid meeting or site walk? What bonding, insurance, and licensing requirements apply? Which addenda have been issued, and what did they change? What forms must be submitted with the bid?",
+          "AI can read the full document set and draft those answers with references back to the page and section they came from. The references matter: they let the estimator verify a requirement in seconds instead of trusting a summary blindly.",
         ],
       },
       {
-        heading: "Visibility without overhead",
+        heading: "Fitting into the estimating workflow",
         paragraphs: [
-          "One of the least-discussed benefits of operational AI is reporting quality. When manual execution is replaced with structured automation, every step gets logged. That means your operations dashboards reflect reality instead of being reconstructed from memory. Leaders can see backlog volume, response times, coverage, and throughput — the metrics that tell you whether your operations are actually scaling.",
-          "This is the shift from operational chaos to operational intelligence. Not just running faster — running with clarity about what is happening and where attention is needed.",
+          "The output should land where your team already works, whether that is a shared drive folder, a project in your estimating software, or a task in your project management tool, with the checklist attached and the right people notified. If intake creates a new place to look, it adds work instead of removing it.",
         ],
       },
       {
-        heading: "How Zyene approaches operations transformation",
+        heading: "Keeping judgment with the estimator",
         paragraphs: [
-          "Zyene starts every operations engagement with a workflow map: identifying the recurring paths in your current process, where handoffs break down, and which steps are purely mechanical versus which require judgment. That map drives the automation design — so the systems we build reflect how your business actually works, not a generic template.",
-          "The goal is always the same: your team should spend more time on decisions, relationships, and outcomes — and less time on the coordination overhead that exists because the systems underneath it were never designed to talk to each other.",
+          "The decision to bid, the scope interpretation, and every number on the bid form stay with your estimators and project managers. What changes is the starting point. Instead of an unread packet, they start with a checklist and a scope summary they can confirm or correct.",
+          "Measure the time from invitation received to go or no-go decision, and the share of invitations your team is able to review at all. Those two numbers show whether intake is the constraint it appears to be.",
         ],
       },
     ],
-  },
-
-  {
-    slug: "crm-automation-with-ai",
-    title: "CRM automation with AI: keep your pipeline clean and your team focused",
+  }),
+  post({
+    slug: "where-is-my-order-requests",
+    title: "“Where is my order?”: answering status requests without pulling people off the desk",
     excerpt:
-      "A CRM full of stale records, missing fields, and unanswered follow-ups is not a revenue tool — it is a liability. AI automation fixes the data hygiene and follow-up problems that make CRMs hard to trust.",
-    category: "AI Automation",
+      "Order status questions are simple to answer and constant to receive. A workflow can look up the answer in your ERP and draft the reply for someone to send.",
+    category: "Distribution",
     dateDisplay: "Mar 28, 2026",
     dateISO: "2026-03-28",
-    readMinutes: 5,
-    coverImage: "/images/blog-cover-reviews.png",
-    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
-          "Every sales leader has the same complaint about their CRM: the data is incomplete, the pipeline view does not reflect reality, and nobody can tell you with confidence what happened to a lead after the first conversation. That problem is not a CRM problem. It is an execution problem — too many manual steps between the conversation and the record.",
-          "AI-powered CRM automation addresses this at the source by making data entry automatic, follow-up systematic, and reporting trustworthy. Instead of relying on reps to update fields after every call, the system captures and logs outcomes as part of the workflow.",
+          "Ask a customer service team what fills their inbox and the answer is usually the same: status requests. Has my order shipped? When will it arrive? Can I get the tracking number? Is the backordered item in yet? Each question takes a few minutes to answer: find the order, check the ERP, check the carrier, write the reply. Multiplied across a day, those minutes become a large share of the team's time.",
         ],
       },
       {
-        heading: "What CRM automation actually solves",
+        heading: "Why portals did not solve it",
         paragraphs: [
-          "Automatic record updates are the foundation. When a call ends, the outcome — disposition, notes, next step, deal stage — should populate your CRM without requiring the rep to spend ten minutes on admin. Zentraic AI does exactly this for voice-based workflows: call outcomes sync to Salesforce or HubSpot in real time so the CRM reflects what actually happened.",
-          "Automated follow-up sequences are the second pillar. A lead that does not hear from you within the first hour is significantly less likely to convert. AI systems can trigger personalized follow-up emails and tasks the moment a lead enters a stage — ensuring nothing falls through the gap between conversation and close.",
+          "Many distributors have built customer portals with order tracking, and they help. But a large portion of customers still email or call, because that is how they have always worked with you, or because their question is slightly different from what the portal shows. The demand does not go away; it just arrives through a different channel.",
         ],
       },
       {
-        heading: "Pipeline hygiene at scale",
+        heading: "A lookup and a draft",
         paragraphs: [
-          "Clean pipeline data means confident forecasting. When AI systems automatically log activity, update stages, and flag stale deals, your sales leaders can trust what they see. They stop spending the first ten minutes of every pipeline review asking reps to explain records — and start spending the time on strategy.",
-          "For teams running Zyene workflows alongside Zentraic AI, the outcome is a CRM that updates itself: calls logged, leads qualified, tasks assigned, and deals progressed without manual intervention. Your team shows up to the CRM to act, not to maintain it.",
+          "A status workflow does three things. It reads the incoming message and identifies the customer and the order or purchase order number they are asking about. It checks the ERP for order status, shipment, and any backorder lines, and the carrier for tracking. Then it drafts a reply with the answer in plain language.",
+          "For straightforward questions, the draft is ready for a team member to review and send in seconds. When the question is not straightforward (a damaged shipment, a dispute, a request for an exception), the workflow routes it to the right person with the order details already attached.",
+        ],
+      },
+      {
+        heading: "Why a person still sends it",
+        paragraphs: [
+          "Customer communication is part of your relationship with the account. Starting with a person reviewing each reply keeps tone and accuracy under your control, and it builds the evidence you need to decide later whether some categories of reply can be sent automatically.",
+          "The metric to watch is customer response time for status requests, along with the hours your team spends on them each week.",
         ],
       },
     ],
-  },
-
-  {
-    slug: "digital-transformation-roadmap",
-    title: "Your digital transformation roadmap: how to get your first AI workflow live in two weeks",
+  }),
+  post({
+    slug: "keep-your-erp-as-the-system-of-record",
+    title: "AI and your ERP: why the system of record should stay where it is",
     excerpt:
-      "Most digital transformation roadmaps are 18-month initiatives that lose momentum before they deliver anything. This is a practical framework for getting your first AI-powered workflow live in two weeks and building from there.",
-    category: "Digital Transformation",
+      "Replacing an ERP to get AI is the wrong trade. The better approach is a workflow layer that reads from your ERP and writes to it with the same controls a person has.",
+    category: "Integration",
     dateDisplay: "Mar 21, 2026",
     dateISO: "2026-03-21",
-    readMinutes: 8,
-    coverImage: "/images/blog-cover-zyene-layer.png",
-    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
-          "The fastest way to kill a digital transformation initiative is to make it a committee project. Large steering groups, multi-month discovery phases, and enterprise change management programs all have their place — but they are the wrong starting point for most growing businesses. The right starting point is a single workflow that is costing you real time or real revenue right now.",
-          "A two-week launch is not a shortcut or a proof of concept. It is the methodology. Start with the problem that matters most, build the solution that solves it, measure the outcome, and use that win to fund and guide the next one. Transformation is not a single initiative — it is a cadence.",
+          "Industrial companies have invested years in their ERP: configuration, customizations, item masters, pricing rules, and the habits of the people who use it every day. When AI enters the conversation, some vendors suggest that the path forward is a new platform. For most companies, that is the wrong trade. An ERP migration is one of the riskiest projects a business can take on, and it is not what stands between you and automation.",
         ],
       },
       {
-        heading: "Step 1: identify the right first workflow",
+        heading: "What actually needs to connect",
         paragraphs: [
-          "The best first workflow is high-frequency, rule-based, and currently manual. Lead routing is the classic example: every new lead follows the same logic — score it, assign it, trigger the follow-up sequence — but in most companies it requires three manual steps and takes hours instead of minutes. Automating that single path produces a measurable result quickly and builds organizational confidence that the approach works.",
-          "Good candidates are workflows where the delay or inconsistency is costing you something visible: leads going cold, client onboarding taking too long, weekly reports requiring hours of manual assembly, or service requests sitting in an inbox without acknowledgment. If you can name the bottleneck, you can automate it.",
+          "The work AI can take on usually starts outside the ERP, in email, PDFs, spreadsheets, and shared drives, and ends inside it, as an order, a quote, an update, or a record. The integration layer needs to read reference data from the ERP (customers, items, prices, inventory, open orders) and write prepared transactions back into it.",
+          "Most ERPs used by distributors and manufacturers, including NetSuite, Epicor, Infor, Microsoft Dynamics, Acumatica, and SAP, offer APIs or integration tools that make this possible. Where an API is limited, there are usually import routines or a middleware layer that can be used safely. These are integration capabilities, not partnerships, and each system is assessed on its own terms.",
         ],
       },
       {
-        heading: "Step 2: map the current state before designing the future state",
+        heading: "Writing with the same controls as a person",
         paragraphs: [
-          "Before building anything, document exactly how the workflow currently runs. Who does what, in what order, using which tools, and where does it break down. This current-state map usually reveals that the workflow is simpler than it feels — and that most of the manual work exists because systems were never connected, not because the logic is complex.",
-          "That map also helps you define success clearly: what does this workflow look like when it is working correctly, and how will you measure the improvement? Define that before you build.",
+          "The principle that keeps this safe is simple: the workflow should write into the ERP with the same permissions, validations, and audit trail as the employee it supports. If a person cannot override a credit hold, neither can the workflow. If a transaction needs approval above a threshold, the workflow submits it for approval rather than posting it.",
+          "This keeps your existing controls meaningful and makes the automation auditable. Anyone looking at a record can see what was prepared by the workflow and who approved it.",
         ],
       },
       {
-        heading: "Step 3: build, launch, and measure",
+        heading: "When the ERP is the problem",
         paragraphs: [
-          "With a clear workflow map and defined success metrics, a focused team can design, integrate, test, and launch most initial automation workflows in five to ten business days. The build phase is not the slow part — gathering approvals, getting system access, and aligning stakeholders on the design is where time gets lost. Front-load those conversations.",
-          "Once live, measure what you defined: response time, throughput, error rate, time saved. Give it two weeks before drawing conclusions. Then document what worked, what needed adjustment, and what the next highest-value workflow is. That review becomes the foundation of your ongoing transformation roadmap.",
-        ],
-      },
-      {
-        heading: "What makes Zyene's approach different",
-        paragraphs: [
-          "Zyene operates as an embedded execution partner — not a software vendor who hands you a product and documentation. We own the workflow map, the system design, the integration, and the launch. Your team provides access, context, and approval. That division of responsibility is what makes two-week timelines realistic rather than aspirational.",
-          "Most teams that start with one workflow expand to three or four within the first quarter — not because we upsell, but because seeing real results creates real appetite for the next one.",
+          "Occasionally an assessment reveals that the system of record really is the constraint: data that is too inconsistent to match against, or a platform that cannot be integrated at all. When that happens, it is better to say so plainly and fix the data or plan the migration on its own merits, rather than hide the problem underneath an AI project.",
         ],
       },
     ],
-  },
-
-  {
-    slug: "ai-systems-vs-ai-tools",
-    title: "AI systems vs. AI tools: why point solutions fail and operating layers win",
+  }),
+  post({
+    slug: "human-approval-in-ai-workflows",
+    title: "Human approval in AI workflows: where people should stay in the loop",
     excerpt:
-      "Buying AI tools is not the same as building AI systems. One adds to your stack. The other transforms how your stack works together. Understanding the difference is the key to knowing why most AI investments underdeliver.",
-    category: "AI Systems",
+      "Approval steps are not a sign that automation is incomplete. Placed well, they are what makes it safe to automate the rest of the workflow.",
+    category: "Operations",
     dateDisplay: "Mar 7, 2026",
     dateISO: "2026-03-07",
-    readMinutes: 6,
-    coverImage: "/images/blog-cover-execution.png",
-    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
-          "The AI tools market is enormous and growing — writing assistants, meeting summarizers, image generators, analytics dashboards, chatbots, call recorders. Businesses are buying more AI tools than ever. And yet most of those tools are making it harder to run a business, not easier, because they fragment attention and data without creating any coherent system of execution.",
-          "An AI tool does one thing. An AI system does one thing in the context of everything else your business needs to happen before and after it. The difference is not capability — it is architecture.",
+          "A common assumption about AI in operations is that the goal is full automation: no people involved at all. In industrial businesses, that framing usually leads to one of two outcomes. Either the project stalls because nobody is comfortable letting software post orders unsupervised, or it ships and erodes trust the first time it gets something important wrong.",
+          "A better framing is to decide deliberately where judgment is needed and design the approval step into the workflow from the start.",
         ],
       },
       {
-        heading: "Why point solutions create more problems than they solve",
+        heading: "Where approval belongs",
         paragraphs: [
-          "Every new tool requires onboarding, maintenance, and a workflow for how it connects to your existing stack. When those connections are manual — copy this output, paste it into that system, trigger the next step yourself — you have not automated your operations. You have just added another inbox to check.",
-          "The compounding problem is that every tool accumulates its own data in its own schema. After twelve months of using five AI tools, you have five data silos that your team has to reconcile manually every time leadership wants a coherent view of the business. That is not intelligence — it is information fragmentation.",
+          "Approval steps belong where an error is expensive or visible to a customer. Typical examples are orders above a value threshold, price or discount exceptions, new customers or ship-to addresses, substitutions, customer-facing replies, and anything that commits your company to a delivery date or a price.",
+          "Approval does not belong where it adds no information. If an employee would approve every instance of a routine, low-risk step without looking, the approval is a delay, not a control.",
         ],
       },
       {
-        heading: "What an operating layer looks like instead",
+        heading: "Designing a good approval screen",
         paragraphs: [
-          "An AI operating layer is a set of connected systems that share data, trigger each other, and surface exceptions for human attention. Instead of five tools with five outputs, you have one structured workflow where each step feeds the next automatically. The CRM gets updated when the call ends. The follow-up email goes out when the deal hits a new stage. The weekly report compiles itself on Friday morning.",
-          "This is what Zyene builds: not the individual AI capabilities, but the architecture that connects them into a coherent operating layer across marketing, sales, and operations. Each piece works because the pieces around it are also working — and the whole produces outcomes that no individual tool could generate on its own.",
+          "An approval step works when the reviewer can make a decision quickly and confidently. That means showing the source document next to the prepared transaction, highlighting the fields that were uncertain or that triggered a rule, and explaining why. A reviewer should never have to hunt for the reason something was flagged.",
+          "It also means giving the reviewer real options: approve, correct and approve, send back, or route to someone else. Every correction is useful feedback for improving the workflow.",
         ],
       },
       {
-        heading: "How to evaluate whether you have tools or a system",
+        heading: "Earning more automation over time",
         paragraphs: [
-          "A simple test: can you describe a workflow from trigger to outcome — including every system involved, every handoff, and every decision point — without mentioning a manual step? If the answer is no, you have tools. If the answer is yes, you have a system.",
-          "Most growing businesses land somewhere in between: a few automated paths surrounded by manual connective tissue. The transformation opportunity is in replacing that manual connective tissue with structured automation — which is exactly where an execution partner adds the most value.",
+          "Approval data tells you where the workflow is reliable. If a category of transaction is approved without changes week after week, you have evidence to consider removing the approval for that category. If corrections cluster around a specific customer or field, you know where to improve. Automation expands because it has been measured, not because it was assumed.",
         ],
       },
     ],
-  },
-
-  {
-    slug: "measuring-digital-transformation-roi",
-    title: "How to measure digital transformation ROI: the metrics that actually matter",
+  }),
+  post({
+    slug: "choosing-your-first-ai-workflow",
+    title: "Choosing your first AI workflow: a practical way to score candidates",
     excerpt:
-      "Most digital transformation initiatives are evaluated on the wrong metrics — project completion rates and tool adoption scores instead of execution speed, cost per workflow, and revenue impact. Here is how to measure what matters.",
-    category: "Digital Transformation",
+      "The best first workflow is not the most impressive one. It is frequent, rule-bound, measurable, and connected to systems you can reach.",
+    category: "Getting Started",
+    dateDisplay: "Feb 28, 2026",
+    dateISO: "2026-02-28",
+    sections: [
+      {
+        paragraphs: [
+          "When a company decides to put AI to work in operations, the list of possible starting points is usually long. Order entry, quoting, invoice matching, customer service, document control, scheduling. Choosing well matters, because the first workflow sets expectations for everything after it. A first project that drags on or cannot show a result makes the second one much harder to approve.",
+        ],
+      },
+      {
+        heading: "Five questions to score each candidate",
+        paragraphs: [
+          "Volume: how often does this work happen? A task done hundreds of times a week returns far more than one done monthly, even if the monthly one is more painful.",
+          "Structure: is there a clear right answer most of the time? Workflows governed by rules and reference data, like matching an order to your catalog, are better candidates than workflows that depend on negotiation or relationships.",
+          "Access: can the workflow reach the systems and data it needs? If the information lives in a system with no integration path, the project becomes an integration project first.",
+          "Measurability: can you measure the current process today? If you cannot say how long it takes or how often it goes wrong, you will not be able to show that it improved.",
+          "Ownership: is there a team that owns the workflow and wants it fixed? A motivated owner provides the feedback that makes the system accurate.",
+        ],
+      },
+      {
+        heading: "Common good first choices",
+        paragraphs: [
+          "For distributors, emailed purchase order entry and order status requests often score well. For manufacturers, RFQ intake and purchasing document processing are frequent candidates. For specialty contractors, bid intake and submittal preparation tend to rise to the top. The right answer depends on your volumes and systems, which is why the scoring matters more than the list.",
+        ],
+      },
+      {
+        heading: "Start narrow",
+        paragraphs: [
+          "Whatever you choose, scope it tightly. One document type, one customer segment, or one location is enough for a pilot. A narrow scope gets to a measured result sooner, and a measured result is what earns the next workflow.",
+        ],
+      },
+    ],
+  }),
+  post({
+    slug: "measuring-ai-in-operations",
+    title: "How to measure AI in operations: the metrics that actually matter",
+    excerpt:
+      "Demos measure impressiveness. Operations should measure processing time, manual touches, exception rate, and cost per transaction, against a baseline set before the pilot.",
+    category: "Measurement",
+    dateDisplay: "Feb 14, 2026",
+    dateISO: "2026-02-14",
+    sections: [
+      {
+        paragraphs: [
+          "Most AI projects are evaluated on how good the demo looks. A model reads a messy PDF perfectly, or answers a question fluently, and the project is approved. Months later, nobody can say whether the business is better off. The fix is to decide what will be measured before the pilot starts, and to measure the current process first.",
+        ],
+      },
+      {
+        heading: "The core operating metrics",
+        paragraphs: [
+          "Processing time: the elapsed time from work arriving to work completed, such as from purchase order email to order entered, or RFQ received to quote sent. This is usually the metric customers feel.",
+          "Manual touches: how many times a person has to handle each item. Reducing touches is often more valuable than reducing time, because every touch is a chance for error and an interruption.",
+          "Exception rate: the share of items the workflow could not complete without help, and why. A healthy workflow has a stable, well-understood exception rate and clear routing for the exceptions.",
+          "Cost per transaction: the fully loaded cost of handling one order, quote, or request. This is the number that connects the workflow to the business case.",
+        ],
+      },
+      {
+        heading: "Set the baseline first",
+        paragraphs: [
+          "None of these metrics mean anything without a baseline. Before a pilot, sample the current process for a few weeks: time a representative set of items, count the touches, and log the errors that are corrected downstream. It is tedious, but it is the only way to know later whether the workflow made a difference.",
+        ],
+      },
+      {
+        heading: "Report from real use",
+        paragraphs: [
+          "Once the workflow is live, report against the same metrics on a regular cadence, using the system's own logs and the approval data. Include what did not improve. A report that only shows good news is a sales document, not an operating tool, and the teams who rely on the workflow will notice the difference.",
+        ],
+      },
+    ],
+  }),
+  post({
+    slug: "what-document-ai-can-read-today",
+    title: "Document intelligence: what AI can reliably read today, and what it cannot",
+    excerpt:
+      "Purchase orders, invoices, packing slips, and specifications are now readable in almost any layout. Handwriting, poor scans, and implied context still need care.",
+    category: "Documents",
     dateDisplay: "Feb 7, 2026",
     dateISO: "2026-02-07",
-    readMinutes: 6,
-    coverImage: "/images/blog-cover-voice.png",
-    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
-          "Digital transformation is one of the most under-measured investments in business. Companies spend significant resources on new systems, integrations, and AI workflows — then struggle to quantify the return because they set up the wrong success criteria at the start.",
-          "The problem is usually that metrics get defined by the technology implementation team — percentage of workflows migrated, number of users onboarded, system uptime — rather than by the business leaders who own the outcomes the transformation was supposed to deliver. That disconnect between IT metrics and business metrics is why so many transformation programs look successful on paper while the underlying problems persist.",
+          "Industrial businesses run on documents: purchase orders, invoices, packing slips, bills of lading, certificates of conformance, specifications, drawings, and submittals. For years, automating document handling meant building templates for each layout and accepting that anything unusual would fall back to a person. Language and vision models have changed what is practical, but not everything has become easy.",
         ],
       },
       {
-        heading: "The metrics that actually tell you if transformation is working",
+        heading: "What works reliably",
         paragraphs: [
-          "Cycle time is the most direct measure. How long does it take a work item to go from open to closed? A support ticket, a sales lead, a client onboarding, an invoice. When AI automation is working correctly, cycle times shrink because manual handoffs and wait times are removed from the path. If cycle time is not decreasing, the workflow is not actually automated — it is still waiting on humans somewhere.",
-          "Throughput per person is the second key metric. If your operations team handles 40 work items per week per person today, what does that number look like after automation? If it has not moved, the automation is adding complexity without removing work. A well-designed AI system should meaningfully increase what each person on your team can handle.",
+          "Typed business documents in varied layouts are now well within reach. A model can read purchase orders, invoices, and packing slips from different customers and suppliers and extract the fields you care about without a template for each one. It can read tables that span pages, recognize that a line describes a quantity and a unit, and summarize long specifications into the requirements that matter for a given trade or part.",
+          "Models are also good at classification: deciding whether an incoming attachment is an order, an invoice, a quote request, or a certificate, and routing it accordingly.",
         ],
       },
       {
-        heading: "Financial metrics worth tracking",
+        heading: "What still needs care",
         paragraphs: [
-          "Cost per workflow execution is useful for high-volume processes: what does it cost to process one support ticket, qualify one lead, or generate one client report? Before and after automation, this number should decrease significantly — because the human time component of each execution shrinks or disappears.",
-          "Revenue impact is harder to attribute directly but matters most. Faster lead response times increase conversion rates. Better CRM data quality improves forecast accuracy. More consistent client onboarding reduces early churn. These are not always clean ROI calculations, but directional evidence of each should be trackable within the first quarter after a workflow goes live.",
+          "Handwritten notes, low-quality scans, and faxes remain harder. They can often be read, but confidence is lower and review matters more. Engineering drawings can be read for title block information, notes, and callouts, but interpreting geometry still belongs with an engineer or estimator.",
+          "The subtler challenge is implied context. A customer who writes \"same as last time\" or uses their own part numbers is relying on history that is not in the document. Resolving that requires your ERP data and cross-reference tables, which is why document reading is only half of a useful workflow.",
         ],
       },
       {
-        heading: "Setting up measurement before you build",
+        heading: "Confidence, not just extraction",
         paragraphs: [
-          "The most common mistake is waiting until after a workflow is live to decide how to measure it. By then, you have no baseline to compare against. Before any automation work starts, capture your current state: average cycle time, weekly throughput, cost per execution, and any revenue metrics directly tied to the workflow's performance.",
-          "Zyene defines these baselines as part of every workflow design — because the measurement framework is not a reporting exercise, it is the feedback loop that drives continuous improvement after launch.",
+          "The practical question is not whether a model can read a document, but whether the workflow knows when it might be wrong. Every extracted field should carry a confidence signal, and every business rule should be checked against your systems. Low-confidence fields and rule violations go to a person; everything else is prepared for approval. That is what turns impressive extraction into dependable operations.",
         ],
       },
     ],
-  },
-
-  {
-    slug: "operations-ai-for-growing-businesses",
-    title: "Operations AI for growing businesses: automate the work that slows your team down",
+  }),
+  post({
+    slug: "from-assessment-to-pilot",
+    title: "From assessment to pilot: what the first engagement looks like",
     excerpt:
-      "Growing businesses hit an execution ceiling where revenue opportunities are lost not to bad strategy but to operational drag. Operations AI removes that ceiling by automating the recurring work that consumes your team's capacity.",
-    category: "Operations AI",
+      "Six steps from the workflow you have today to a measured deployment: discover, design, build, integrate, validate, then deploy and improve.",
+    category: "Getting Started",
+    dateDisplay: "Jan 22, 2026",
+    dateISO: "2026-01-22",
+    sections: [
+      {
+        paragraphs: [
+          "Companies considering AI in their operations often ask what the first project actually involves. The honest answer is that it looks less like installing software and more like an engineering project with a defined scope. Here is how we approach it.",
+        ],
+      },
+      {
+        heading: "Discover",
+        paragraphs: [
+          "We start by mapping one workflow end to end with the people who do it. That includes the systems involved, the documents that arrive, the decisions made along the way, and, most importantly, the exceptions. The exceptions are where most of the real effort hides, and a design that ignores them will not survive contact with production.",
+        ],
+      },
+      {
+        heading: "Design",
+        paragraphs: [
+          "Design decides what AI should do, what your existing software should do, and what should stay with people. It also sets the metric the pilot will be judged on and the baseline to compare against. The output is a short, specific plan rather than a strategy document.",
+        ],
+      },
+      {
+        heading: "Build and integrate",
+        paragraphs: [
+          "We build the workflow with the models and tools that suit the problem; we are not tied to a single provider. Integration connects it to your ERP, CRM, email, and file storage with appropriate permissions. Wherever an action is critical, an approval step is built in from the beginning.",
+        ],
+      },
+      {
+        heading: "Validate",
+        paragraphs: [
+          "Before anything touches production, the workflow is tested on real historical examples from your business, including the difficult ones. Validation shows where the workflow is reliable, where it needs review, and where it should not be used yet.",
+        ],
+      },
+      {
+        heading: "Deploy and improve",
+        paragraphs: [
+          "The pilot goes live with a defined scope and the agreed metric. We monitor it, collect feedback from the people using it, and improve it from real use. At the end of the pilot, you have a measured result and the information to decide whether to expand the workflow, start the next one, or stop.",
+        ],
+      },
+    ],
+  }),
+  post({
+    slug: "knowledge-search-for-operations-teams",
+    title: "Finding answers in SOPs, manuals, and past jobs: knowledge search for operations teams",
+    excerpt:
+      "The answer usually exists somewhere in a binder, a shared drive, or an old job folder. Knowledge search finds it and shows where it came from.",
+    category: "Knowledge",
     dateDisplay: "Jan 12, 2026",
     dateISO: "2026-01-12",
-    readMinutes: 6,
-    coverImage: "/images/blog-cover-reviews.png",
-    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
-          "At some point in every growing business, the same ceiling appears. Revenue is increasing, demand is real, and the team is capable — but execution is falling behind. Leads take too long to follow up on. Onboarding takes longer than it should. Reporting is always a week late. The operations side of the business is a drag on the growth side, and hiring more people does not fully solve it because it is a systems problem, not a headcount problem.",
-          "Operations AI addresses this directly by automating the work that recurs on a predictable pattern: intake, routing, follow-up, status updates, reporting. These are not complex creative tasks — they are mechanical execution steps that consume time and attention without requiring either.",
+          "Every industrial company has institutional knowledge spread across standard operating procedures, equipment manuals, quality records, past job folders, and the memories of long-tenured employees. When someone needs an answer (how a machine is set up for a specific part, what a customer's packaging requirements are, how a similar job was priced), they search a shared drive, ask a colleague, or give up and work it out again.",
+          "As experienced people retire or move on, that knowledge becomes harder to reach.",
         ],
       },
       {
-        heading: "The operations workflows worth automating first",
+        heading: "Search that answers, with sources",
         paragraphs: [
-          "Client onboarding is consistently the highest-value automation for service businesses. The process is repeatable, the stakes are high (first impressions drive retention), and it is usually handled manually — which means it varies in quality and takes longer than it should. An automated onboarding workflow ensures every new client gets the same experience, on the same timeline, with the same quality of communication.",
-          "Internal reporting is the second high-leverage target. Most operations teams spend several hours per week compiling status updates, capacity reports, and performance summaries that should generate themselves. Connecting your work management tools and setting up automated report delivery is a one-time effort that recovers recurring time every week.",
+          "Knowledge search uses language models to answer questions in plain language from your own documents. The important design choice is that every answer cites the documents it came from, with a link to the exact page or section. Operations teams should never have to trust an answer they cannot verify, especially for procedures that affect safety or quality.",
+          "When the documents do not contain an answer, the system should say so rather than guess.",
         ],
       },
       {
-        heading: "When to add execution support alongside automation",
+        heading: "Permissions and freshness",
         paragraphs: [
-          "Not every operational function can or should be fully automated. Some workflows require judgment: managing client escalations, handling exceptions, reviewing edge cases, and making decisions that do not fit neatly into an if-this-then-that structure. For those functions, the right answer is not more automation — it is structured human execution support.",
-          "Zyene provides both: AI systems for the mechanical, repeatable paths and embedded execution support for the workflows that still need people. The result is a unified operating layer where automation handles volume and humans handle judgment — and your leadership team has visibility into both.",
+          "Not every document should be visible to every employee. Knowledge search has to respect the permissions already set on your file storage and systems, so that a question from the shop floor does not surface a pricing file meant for sales leadership.",
+          "It also has to stay current. When a procedure is revised, the old version should stop appearing in answers. Connecting search directly to the systems where documents live, rather than copying them into a separate tool, keeps the answers aligned with the current version.",
         ],
       },
       {
-        heading: "Building for scale, not just efficiency",
+        heading: "Where it helps most",
         paragraphs: [
-          "The real payoff of operations AI is not just doing the same work faster. It is changing the relationship between revenue growth and operational cost. When your core workflows are automated, adding more clients, more products, or more markets does not automatically add proportional overhead. You can scale the top line without the bottom line keeping pace — which is what operational leverage actually looks like.",
-          "That shift takes intentional system design, not just tool adoption. Zyene builds those systems from the ground up — designed around how your business actually works, integrated with the tools your team already uses, and optimized continuously as your scale grows.",
+          "Knowledge search tends to deliver value fastest where questions are frequent and the answers are documented but hard to find: onboarding new employees, supporting customer service with product information, helping estimators find similar past jobs, and giving technicians quick access to equipment procedures. Measure it by the time it takes to find an answer and how often people find one at all.",
         ],
       },
     ],
-  },
+  }),
 ]
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

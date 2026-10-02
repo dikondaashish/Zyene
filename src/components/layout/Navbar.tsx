@@ -3,237 +3,451 @@
 import * as React from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion, useScroll, useMotionValueEvent } from "framer-motion"
-import { Menu, X, ChevronDown, Building2, UserRoundSearch, Newspaper, BriefcaseBusiness } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion"
+import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { SITE_DATA } from "@/lib/constants"
 import { ScheduleCallModal } from "@/components/shared/ScheduleCallModal"
+import { cn } from "@/lib/utils"
+
+const INDUSTRY_MENU = [
+  {
+    label: "Wholesale Distribution",
+    href: "/industries/wholesale-distribution",
+    image: "/images/industrial/hero-distribution.jpg",
+    blurb: "Orders, quotes, and customer questions into the ERP.",
+  },
+  {
+    label: "Manufacturing",
+    href: "/industries/manufacturing",
+    image: "/images/industrial/hero-manufacturing.jpg",
+    blurb: "RFQs, drawings, purchasing, and quality documents.",
+  },
+  {
+    label: "Specialty Contractors",
+    href: "/industries/specialty-contractors",
+    image: "/images/industrial/hero-contractors.jpg",
+    blurb: "Bids, RFIs, submittals, change orders, and closeout.",
+  },
+]
+
+const COMPANY_BLURBS: Record<string, string> = {
+  About: "Who we are and how we operate",
+  "Case Studies": "Reference workflows and outcomes",
+  Security: "Controls we can stand behind",
+  Resources: "Field notes on industrial AI",
+  Careers: "Build production AI with us",
+}
+
+type NavItem = (typeof SITE_DATA.nav)[number]
+
+const PANEL_WIDTH: Record<string, number> = { Industries: 780 }
+const DEFAULT_PANEL_WIDTH = 620
+const VIEWPORT_GUTTER = 16
 
 export function Navbar() {
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
-  const [isDark, setIsDark] = React.useState(true) // true = over dark bg, false = over light bg
+  const [isDark, setIsDark] = React.useState(true)
   const [isCalOpen, setIsCalOpen] = React.useState(false)
+  const [openMenu, setOpenMenu] = React.useState<string | null>(null)
+  const [mobileGroup, setMobileGroup] = React.useState<string | null>(null)
+  const closeTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null)
+  const navRef = React.useRef<HTMLElement>(null)
+  const triggerRefs = React.useRef<Record<string, HTMLButtonElement | null>>({})
+  const [panel, setPanel] = React.useState({ left: 0, width: DEFAULT_PANEL_WIDTH })
   const { scrollY } = useScroll()
+
+  React.useLayoutEffect(() => {
+    if (!openMenu) return
+    const place = () => {
+      const nav = navRef.current
+      const trigger = triggerRefs.current[openMenu]
+      if (!nav || !trigger) return
+      const navRect = nav.getBoundingClientRect()
+      const triggerRect = trigger.getBoundingClientRect()
+      const width = Math.min(PANEL_WIDTH[openMenu] ?? DEFAULT_PANEL_WIDTH, window.innerWidth - VIEWPORT_GUTTER * 2)
+      const centered = triggerRect.left + triggerRect.width / 2 - width / 2
+      const left = Math.max(VIEWPORT_GUTTER, Math.min(centered, window.innerWidth - VIEWPORT_GUTTER - width))
+      setPanel({ left: left - navRect.left, width })
+    }
+    place()
+    window.addEventListener("resize", place)
+    return () => window.removeEventListener("resize", place)
+  }, [openMenu])
   const scheduleCallUrl = process.env.NEXT_PUBLIC_CAL_SCHEDULE_URL || "/contact"
-  type NavItem = (typeof SITE_DATA.nav)[number]
-  const getAboutMenuIcon = (label: string) => {
-    if (label.toLowerCase() === "about") return <Building2 className="w-3.5 h-3.5" />
-    if (label.toLowerCase() === "careers") return <UserRoundSearch className="w-3.5 h-3.5" />
-    if (label.toLowerCase() === "case studies") return <BriefcaseBusiness className="w-3.5 h-3.5" />
-    if (label.toLowerCase() === "blog") return <Newspaper className="w-3.5 h-3.5" />
-    return null
-  }
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 50)
-
-    // Navbar sits at the top, we want to know what's under it (approx 40px down)
-    const navThreshold = latest + 40
-
-    const mainContentEl = document.getElementById("main-content")
-    const footerCtaEl = document.getElementById("footer-cta")
-
-    let mainContentTop = 0
-    if (mainContentEl) {
-      // getBoundingClientRect is relative to viewport
-      mainContentTop = mainContentEl.getBoundingClientRect().top + latest
-    }
-
-    let footerCtaTop = Infinity
-    if (footerCtaEl) {
-      footerCtaTop = footerCtaEl.getBoundingClientRect().top + latest
-    }
-
-    if (navThreshold < mainContentTop) {
-      setIsDark(true) // Over Hero (dark)
-    } else if (navThreshold >= footerCtaTop) {
-      setIsDark(true) // Over FooterCTA/Footer (dark)
-    } else {
-      setIsDark(false) // Over Main Content (light)
-    }
+    setIsScrolled(latest > 24)
+    const probe = latest + 36
+    const main = document.getElementById("main-content")
+    const footerCta = document.getElementById("footer-cta")
+    const mainTop = main ? main.getBoundingClientRect().top + latest : Infinity
+    const footerTop = footerCta ? footerCta.getBoundingClientRect().top + latest : Infinity
+    setIsDark(probe < mainTop || probe >= footerTop)
   })
 
+  React.useEffect(() => {
+    setIsOpen(false)
+    setOpenMenu(null)
+  }, [pathname])
+
+  React.useEffect(() => {
+    document.documentElement.style.overflow = isOpen ? "hidden" : ""
+    return () => {
+      document.documentElement.style.overflow = ""
+    }
+  }, [isOpen])
+
+  const openWith = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    setOpenMenu(label)
+  }
+  const scheduleClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    closeTimer.current = setTimeout(() => setOpenMenu(null), 140)
+  }
+
+  const onDark = isDark && !isOpen
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname?.startsWith(href))
+
   return (
-    <motion.nav
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'py-5' : 'py-9'}`}
-    >
-      <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
-        <Link 
-          href="/" 
-          className="flex items-center gap-3 group"
-          onClick={() => {
-            window.scrollTo({ top: 0, behavior: 'instant' });
-          }}
-        >
-          <div className="relative w-8 h-8 flex-shrink-0">
-            <Image
-              src={isDark ? SITE_DATA.logoDark : SITE_DATA.logoLight}
-              alt="Zyene Logo"
-              fill
-              className="object-contain transition-all duration-300"
-            />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className={`font-space-grotesk font-bold text-[28px] tracking-[-0.02em] group-hover:opacity-80 transition-all duration-300 ${isDark ? 'text-white' : 'text-[#0A1015]'}`}>
-              Zyene
-              <sup className="ml-[-0.15em] inline-block text-[7px] translate-x-[0.8em] -translate-y-[2.1em] shadow-[0px_4px_12px_0px_rgba(0,0,0,0.15)]">TM</sup>
-            </span>
-            <span className={`font-space-grotesk text-[9px] tracking-[0.06em] mt-0.5 group-hover:opacity-80 transition-all duration-300 ${isDark ? 'text-[#CECFD0]' : 'text-[#4A4F59]'}`}>
-              Growth Powered by Intelligence
-            </span>
-          </div>
-        </Link>
-
-        {/* Desktop Nav links container */}
-        <div className={`hidden lg:flex items-center gap-8 backdrop-blur-xl px-8 py-3 rounded-[4px] transition-all duration-300 ${
-          isDark 
-            ? 'bg-white/[0.03] border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.2)]' 
-            : 'bg-black/[0.03] border border-black/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.05)]'
-        }`}>
-          {SITE_DATA.nav.map((item: NavItem) =>
-            item.children ? (
-              <div key={item.label} className="relative group">
-                <button
-                  type="button"
-                  className={`inline-flex items-center gap-1 text-[13px] font-medium transition-all duration-300 tracking-wide ${
-                    isDark ? "text-[#CECFD0] group-hover:text-white" : "text-[#4A4F59] group-hover:text-[#0A1015]"
-                  }`}
-                >
-                  {item.label}
-                  <ChevronDown className="w-3.5 h-3.5" />
-                </button>
-                <div
-                  className={`absolute left-0 top-[calc(100%+10px)] min-w-[170px] rounded-[8px] border p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ${
-                    isDark
-                      ? "bg-[#0A1015]/95 border-white/10 shadow-[0_12px_32px_rgba(0,0,0,0.35)]"
-                      : "bg-white border-black/10 shadow-[0_12px_32px_rgba(0,0,0,0.12)]"
-                  }`}
-                >
-                  {item.children.map((child) => (
-                    <Link
-                      key={child.href}
-                      href={child.href}
-                      className={`flex items-center gap-2.5 px-3 py-2 rounded-[6px] text-[13px] ${
-                        isDark ? "text-[#CECFD0] hover:bg-white/10 hover:text-white" : "text-[#4A4F59] hover:bg-black/[0.04] hover:text-[#0A1015]"
-                      }`}
-                    >
-                      {getAboutMenuIcon(child.label)}
-                      {child.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-[13px] font-medium transition-all duration-300 tracking-wide ${
-                  isDark ? "text-[#CECFD0] hover:text-white" : "text-[#4A4F59] hover:text-[#0A1015]"
-                }`}
-              >
-                {item.label}
-              </Link>
-            )
+    <>
+      <motion.header
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed inset-x-0 top-0 z-50 px-3 sm:px-5"
+        onKeyDown={(e) => {
+          if (e.key === "Escape") setOpenMenu(null)
+        }}
+      >
+        <nav
+          ref={navRef}
+          aria-label="Primary"
+          className={cn(
+            "relative mx-auto mt-3 flex h-16 max-w-[1360px] items-center justify-between rounded-full pl-5 pr-2.5 transition-[background-color,border-color,box-shadow,margin] duration-500 ease-out-expo md:h-[68px]",
+            isScrolled || openMenu
+              ? onDark
+                ? "border border-white/10 bg-[#0A1015]/70 shadow-[0_20px_60px_-24px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150"
+                : "border border-black/[0.07] bg-white/75 shadow-[0_20px_50px_-28px_rgba(10,16,21,0.35)] backdrop-blur-2xl backdrop-saturate-150"
+              : "border border-transparent bg-transparent"
           )}
-        </div>
-
-        <div className="hidden lg:flex items-center gap-3">
-          <Button 
-            variant="secondary" 
-            size="sm" 
-            className={`px-6 h-[42px] transition-all duration-300 ${
-              isDark
-                ? ""
-                : "bg-black/[0.03] text-[#0A1015] hover:bg-black/[0.06] border border-black/10"
-            }`}
-          >
-            Client Login
-          </Button>
-          <Button 
-            variant={isDark ? "primary" : "dark"} 
-            size="sm" 
-            className="px-6 h-[42px] transition-all duration-300"
-            onClick={() => setIsCalOpen(true)}
-          >
-            Schedule a Call
-          </Button>
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <button 
-          className={`lg:hidden w-11 h-11 flex items-center justify-center border rounded-[4px] transition-all duration-300 ${
-            isDark 
-              ? 'text-white bg-white/[0.05] border-white/10' 
-              : 'text-[#0A1015] bg-black/[0.03] border-black/10'
-          }`} 
-          onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-      </div>
+          <Link
+            href="/"
+            aria-label="Zyene home"
+            className="group flex items-center gap-2.5"
+            onClick={() => window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior })}
+          >
+            <span className="relative h-7 w-7 flex-shrink-0">
+              <Image
+                src={SITE_DATA.logoDark}
+                alt=""
+                fill
+                sizes="28px"
+                className={cn("object-contain transition-opacity duration-300", onDark ? "opacity-100" : "opacity-0")}
+                priority
+              />
+              <Image
+                src={SITE_DATA.logoLight}
+                alt=""
+                fill
+                sizes="28px"
+                className={cn("object-contain transition-opacity duration-300", onDark ? "opacity-0" : "opacity-100")}
+                priority
+              />
+            </span>
+            <span className="flex flex-col leading-none">
+              <span
+                className={cn(
+                  "font-space-grotesk text-[23px] font-bold tracking-[-0.02em] transition-colors duration-300",
+                  onDark ? "text-white" : "text-[#0A1015]"
+                )}
+              >
+                Zyene
+                <sup className="ml-0.5 align-super text-[6.5px] font-semibold tracking-normal">TM</sup>
+              </span>
+              <span
+                className={cn(
+                  "mt-0.5 hidden font-space-grotesk text-[8.5px] tracking-[0.08em] transition-colors duration-300 sm:block",
+                  onDark ? "text-white/55" : "text-[#0A1015]/50"
+                )}
+              >
+                Industrial AI Operations
+              </span>
+            </span>
+          </Link>
 
-      {/* Mobile Nav Overlay */}
-      {isOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="lg:hidden absolute top-[100%] left-6 right-6 bg-[#0A1015]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden p-8"
-        >
-          <div className="flex flex-col gap-6">
-            {SITE_DATA.nav.map((item: NavItem) =>
-              item.children ? (
-                <div key={item.label} className="space-y-3">
-                  <p className="text-[20px] font-medium text-white">{item.label}</p>
-                  <div className="pl-4 border-l border-white/15 space-y-2">
-                    {item.children.map((child) => (
+          <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 lg:flex">
+            {SITE_DATA.nav.map((item: NavItem) => {
+              const active = isActive(item.href)
+              const base = cn(
+                "relative inline-flex h-10 items-center gap-1 rounded-full px-4 text-[14px] font-medium transition-colors duration-200",
+                onDark
+                  ? active
+                    ? "text-white"
+                    : "text-white/65 hover:text-white"
+                  : active
+                    ? "text-[#0A1015]"
+                    : "text-[#0A1015]/60 hover:text-[#0A1015]"
+              )
+              if (!item.children) {
+                return (
+                  <li key={item.href}>
+                    <Link href={item.href} className={base} aria-current={active ? "page" : undefined}>
+                      {item.label}
+                    </Link>
+                  </li>
+                )
+              }
+              const expanded = openMenu === item.label
+              return (
+                <li key={item.label} onMouseEnter={() => openWith(item.label)} onMouseLeave={scheduleClose}>
+                  <button
+                    ref={(el) => {
+                      triggerRefs.current[item.label] = el
+                    }}
+                    type="button"
+                    className={base}
+                    aria-expanded={expanded}
+                    aria-haspopup="true"
+                    onClick={() => setOpenMenu(expanded ? null : item.label)}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={cn("h-3.5 w-3.5 transition-transform duration-300", expanded && "rotate-180")}
+                      strokeWidth={2}
+                    />
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+
+          <div className="hidden items-center gap-1.5 lg:flex">
+            <Button
+              variant={onDark ? "ghost" : "outline"}
+              size="sm"
+              className={cn("h-11 px-5", !onDark && "border-transparent")}
+            >
+              Client Login
+            </Button>
+            <Button
+              variant={onDark ? "primary" : "dark"}
+              size="sm"
+              className="h-11 px-5"
+              onClick={() => setIsCalOpen(true)}
+            >
+              Book an Assessment
+            </Button>
+          </div>
+
+          <button
+            type="button"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            className={cn(
+              "flex h-11 w-11 items-center justify-center rounded-full transition-colors lg:hidden",
+              onDark ? "bg-white/10 text-white" : "bg-[#0A1015]/[0.06] text-[#0A1015]"
+            )}
+            onClick={() => setIsOpen((v) => !v)}
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+
+          <AnimatePresence>
+            {openMenu ? (
+              <motion.div
+                key={openMenu}
+                initial={{ opacity: 0, y: -8, scale: 0.985 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6, scale: 0.985 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                onMouseEnter={() => openWith(openMenu)}
+                onMouseLeave={scheduleClose}
+                style={{ left: panel.left, width: panel.width }}
+                className="absolute top-[calc(100%+10px)] hidden origin-top overflow-hidden rounded-[28px] border border-white/10 bg-[#0A1015]/95 p-3 text-white shadow-[0_40px_120px_-30px_rgba(0,0,0,0.75)] backdrop-blur-2xl lg:block"
+              >
+                {openMenu === "Industries" ? (
+                  <div className="grid grid-cols-3 gap-3">
+                    {INDUSTRY_MENU.map((ind) => (
                       <Link
-                        key={child.href}
-                        href={child.href}
-                        className="flex items-center gap-2.5 text-[17px] text-[#CECFD0] transition-colors hover:text-white"
-                        onClick={() => setIsOpen(false)}
+                        key={ind.href}
+                        href={ind.href}
+                        className="group relative block overflow-hidden rounded-[20px] bg-[#121A22]"
                       >
-                        {getAboutMenuIcon(child.label)}
-                        {child.label}
+                        <div className="relative aspect-[4/3] overflow-hidden">
+                          <Image
+                            src={ind.image}
+                            alt=""
+                            fill
+                            sizes="280px"
+                            className="object-cover opacity-80 transition-[transform,opacity] duration-700 ease-out-expo group-hover:scale-[1.05] group-hover:opacity-100"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1015] via-[#0A1015]/20 to-transparent" />
+                        </div>
+                        <div className="absolute inset-x-0 bottom-0 p-4">
+                          <p className="flex items-center justify-between text-[15px] font-medium text-white">
+                            {ind.label}
+                            <ArrowUpRight className="h-4 w-4 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100" />
+                          </p>
+                          <p className="mt-1 text-[12.5px] leading-[1.45] text-white/60">{ind.blurb}</p>
+                        </div>
                       </Link>
                     ))}
                   </div>
-                </div>
-              ) : (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-[20px] font-medium text-white transition-colors"
-                  onClick={() => setIsOpen(false)}
+                ) : (
+                  <div className="grid grid-cols-[1fr_1.1fr] gap-3">
+                    <ul className="grid gap-1 p-2">
+                      {SITE_DATA.nav
+                        .find((n: NavItem) => n.label === openMenu)
+                        ?.children?.map((child) => (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              className="group flex items-center justify-between rounded-2xl px-4 py-3 transition-colors hover:bg-white/[0.06]"
+                            >
+                              <span>
+                                <span className="block text-[15px] font-medium text-white">{child.label}</span>
+                                <span className="mt-0.5 block text-[12.5px] text-white/50">
+                                  {COMPANY_BLURBS[child.label] ?? ""}
+                                </span>
+                              </span>
+                              <ArrowUpRight className="h-4 w-4 text-white/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white" />
+                            </Link>
+                          </li>
+                        ))}
+                    </ul>
+                    <Link
+                      href="/security"
+                      className="group relative overflow-hidden rounded-[20px] bg-[#121A22]"
+                    >
+                      <Image
+                        src="/images/industrial/hero-security.jpg"
+                        alt=""
+                        fill
+                        sizes="420px"
+                        className="object-cover opacity-75 transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A1015] via-[#0A1015]/30 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-5">
+                        <p className="text-[18px] font-medium leading-tight text-white">
+                          Human approval on every critical write.
+                        </p>
+                        <p className="mt-2 inline-flex items-center gap-1.5 text-[13px] text-white/65 group-hover:text-white">
+                          Our security approach <ArrowUpRight className="h-3.5 w-3.5" />
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                )}
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+        </nav>
+      </motion.header>
+
+      <AnimatePresence>
+        {isOpen ? (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 overflow-y-auto bg-[#0A1015] px-6 pb-10 pt-28 lg:hidden"
+            data-lenis-prevent
+          >
+            <ul className="flex flex-col">
+              {SITE_DATA.nav.map((item: NavItem, i: number) => (
+                <motion.li
+                  key={item.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.05 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                  className="border-b border-white/10"
                 >
-                  {item.label}
-                </Link>
-              )
-            )}
-            <Button
-              variant="primary"
-              className="w-full mt-2"
-              size="lg"
-              onClick={() => {
-                setIsOpen(false)
-                setIsCalOpen(true)
-              }}
-            >
-              Schedule a Call
-            </Button>
-          </div>
-        </motion.div>
-      )}
+                  {item.children ? (
+                    <>
+                      <button
+                        type="button"
+                        className="flex w-full items-center justify-between py-5 text-left font-display text-[30px] font-medium tracking-[-0.03em] text-white"
+                        aria-expanded={mobileGroup === item.label}
+                        onClick={() => setMobileGroup(mobileGroup === item.label ? null : item.label)}
+                      >
+                        {item.label}
+                        <ChevronDown
+                          className={cn(
+                            "h-5 w-5 text-white/50 transition-transform duration-300",
+                            mobileGroup === item.label && "rotate-180"
+                          )}
+                        />
+                      </button>
+                      <div
+                        className={cn(
+                          "grid transition-[grid-template-rows] duration-500 ease-out-expo",
+                          mobileGroup === item.label ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                        )}
+                      >
+                        <div className="overflow-hidden">
+                          <ul className="flex flex-col gap-1 pb-5">
+                            {item.children.map((child) => (
+                              <li key={child.href}>
+                                <Link
+                                  href={child.href}
+                                  className="flex items-center justify-between rounded-xl py-2.5 text-[17px] text-white/70 hover:text-white"
+                                  onClick={() => setIsOpen(false)}
+                                >
+                                  {child.label}
+                                  <ArrowUpRight className="h-4 w-4 text-white/40" />
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="block py-5 font-display text-[30px] font-medium tracking-[-0.03em] text-white"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </motion.li>
+              ))}
+            </ul>
+            <div className="mt-10 grid gap-3">
+              <Button
+                variant="primary"
+                size="lg"
+                className="w-full"
+                onClick={() => {
+                  setIsOpen(false)
+                  setIsCalOpen(true)
+                }}
+              >
+                Book an Assessment
+              </Button>
+              <Button variant="secondary" size="lg" className="w-full">
+                Client Login
+              </Button>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
       <ScheduleCallModal
         open={isCalOpen}
         onClose={() => setIsCalOpen(false)}
         scheduleCallUrl={scheduleCallUrl}
-        title="Schedule a Call"
+        title="Book an Assessment"
       />
-    </motion.nav>
+    </>
   )
 }

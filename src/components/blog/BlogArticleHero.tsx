@@ -1,107 +1,102 @@
 "use client"
 
-import { motion, useScroll, useTransform } from "framer-motion"
-import Image from "next/image"
-import { SITE_DATA } from "@/lib/constants"
 import * as React from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
 
-const textRevealVariants = {
-  hidden: {
-    opacity: 0.001,
-    filter: "blur(10px)",
-    transform: "translateY(10px)",
-  },
-  visible: (i: number) => ({
-    opacity: 1,
-    filter: "blur(0)",
-    transform: "translateY(0)",
-    transition: {
-      delay: i * 0.04,
-      duration: 0.75,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    },
-  }),
-}
+const EASE = [0.16, 1, 0.3, 1] as const
 
 export type BlogArticleHeroProps = {
   title: string
   category: string
   excerpt: string
+  coverImage: string
+  dateISO: string
+  dateDisplay: string
+  readMinutes: number
 }
 
-export function BlogArticleHero({ title, category, excerpt }: BlogArticleHeroProps) {
+export function BlogArticleHero({
+  title,
+  category,
+  excerpt,
+  coverImage,
+  dateISO,
+  dateDisplay,
+  readMinutes,
+}: BlogArticleHeroProps) {
   const sectionRef = React.useRef<HTMLElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  })
-
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, -100])
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] })
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -90])
+  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0])
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.08])
 
   const words = title.trim().split(/\s+/).filter(Boolean)
 
   return (
     <section
       ref={sectionRef}
-      className="relative z-0 flex min-h-[60vh] items-center overflow-hidden rounded-b-[20px] bg-[#0A1015] px-6 pb-12 pt-32 sticky top-0"
+      className="sticky top-0 z-0 flex min-h-[78vh] flex-col overflow-hidden bg-[#0A1015] text-white md:min-h-[84vh]"
     >
-      <div className="absolute inset-0 z-0">
-        <Image
-          src={SITE_DATA.heroBg}
-          alt=""
-          fill
-          priority
-          className="object-cover opacity-100"
-        />
-        <div className="absolute inset-0 bg-[#0a1015]/40 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)]" />
-      </div>
+      <motion.div style={reduce ? undefined : { scale }} className="absolute inset-0">
+        <Image src={coverImage} alt="" fill priority sizes="100vw" className="object-cover" />
+      </motion.div>
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,16,21,0.94)_0%,rgba(10,16,21,0.7)_50%,rgba(10,16,21,0.35)_100%)]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,16,21,0.6)_0%,rgba(10,16,21,0)_30%,rgba(10,16,21,0)_55%,rgba(10,16,21,0.92)_100%)]" />
+      <div aria-hidden="true" className="zy-grain absolute inset-0" />
 
       <motion.div
-        style={{ y: contentY, opacity }}
-        className="relative z-10 mx-auto grid w-full max-w-[1400px] grid-cols-1 items-end gap-10 px-6 md:grid-cols-[1.2fr_0.8fr] md:gap-12 lg:gap-24 lg:px-24"
+        style={reduce ? undefined : { y: contentY, opacity }}
+        className="zy-container relative z-10 flex flex-1 flex-col justify-end pb-14 pt-36 md:pb-20"
       >
-        <div className="min-w-0 max-w-[52rem]">
-          <h1 className="break-words text-[clamp(22px,3.6vw,46px)] font-normal leading-[1.1] tracking-[-0.035em] text-white md:text-[clamp(24px,3.8vw,48px)] md:leading-[1.08]">
-            {words.map((word, wordIdx) => (
-              <motion.span
-                key={`${word}-${wordIdx}`}
-                custom={wordIdx}
-                initial="hidden"
-                animate="visible"
-                variants={textRevealVariants}
-                className="mr-[0.28em] inline-block"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </h1>
-        </div>
+        <motion.p
+          initial={reduce ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+          className="mb-7 flex items-center gap-2 text-[13px] text-white/60"
+        >
+          <Link href="/blog" className="transition-colors hover:text-white">
+            Resources
+          </Link>
+          <span aria-hidden="true" className="text-white/30">/</span>
+          <span className="text-white">{category}</span>
+        </motion.p>
 
-        <div className="max-w-[400px] pb-4">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-6 flex flex-col gap-2"
-          >
-            <div className="flex items-center gap-3">
-              <div className="relative h-[18px] w-[21px] flex-shrink-0">
-                <Image src="/images/Logo_White.png" alt="" fill className="object-contain" />
-              </div>
-              <span className="text-[16px] font-medium text-white/90">Blog</span>
-            </div>
-            <span className="text-[13px] font-semibold uppercase tracking-[0.14em] text-white/55">{category}</span>
-          </motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[15px] leading-[1.6] text-[#CECFD0] md:text-[16px]"
-          >
-            {excerpt}
-          </motion.p>
-        </div>
+        <h1 className="zy-display max-w-[1000px] text-[clamp(36px,5.4vw,76px)] text-white">
+          {words.map((word, i) => (
+            <React.Fragment key={`${word}-${i}`}>
+              <span className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-bottom">
+                <motion.span
+                  className="inline-block"
+                  initial={reduce ? false : { y: "110%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1.05, delay: 0.2 + Math.min(i, 14) * 0.04, ease: EASE }}
+                >
+                  {word}
+                </motion.span>
+              </span>
+              {i < words.length - 1 ? " " : null}
+            </React.Fragment>
+          ))}
+        </h1>
+
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.6, ease: EASE }}
+          className="mt-10 flex flex-col gap-6 md:mt-12 md:flex-row md:items-end md:justify-between"
+        >
+          <p className="max-w-[600px] text-[17px] leading-[1.6] text-white/75 md:text-[18px]">{excerpt}</p>
+          <p className="flex items-center gap-3 text-[14px] text-white/60">
+            <time dateTime={dateISO}>{dateDisplay}</time>
+            <span aria-hidden="true" className="text-white/30">
+              ·
+            </span>
+            <span>{readMinutes} min read</span>
+          </p>
+        </motion.div>
       </motion.div>
     </section>
   )

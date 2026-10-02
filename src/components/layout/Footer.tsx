@@ -1,170 +1,127 @@
-"use client"
-
 import Link from "next/link"
 import Image from "next/image"
+import { ArrowUpRight } from "lucide-react"
+import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6"
 import { SITE_DATA } from "@/lib/constants"
 
+const pages = SITE_DATA.footerLinks.pages
+const pick = (labels: string[]) => pages.filter((p) => labels.includes(p.label))
 
-const XIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
-)
-
-const LinkedinIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-)
+const COLUMNS = [
+  { title: "Industries", links: pick(["Distribution", "Manufacturing", "Contractors"]) },
+  { title: "Platform", links: pick(["Home", "Solutions", "How we work", "Security"]) },
+  { title: "Company", links: pick(["About", "Case studies", "Resources", "Contact"]) },
+  { title: "Legal", links: SITE_DATA.footerLinks.legal },
+]
 
 export function Footer() {
   return (
-    <footer className="bg-[#0A1015] pb-12 px-6 md:px-16 lg:px-24">
-      <div className="max-w-[1400px] mx-auto">
-
-        {/* Pages Row */}
-        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-6">
-          <div className="flex items-center gap-8 w-full flex-1">
-            <span className="text-[14px] text-white font-medium whitespace-nowrap">Pages</span>
-            <div className="h-px flex-1 bg-[#1F2224] opacity-100" />
-          </div>
-          <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 justify-start md:justify-end">
-            {SITE_DATA.footerLinks.pages.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="text-[13px] text-[#8A8F98] hover:text-white transition-colors py-1">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Legal Row */}
-        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-10">
-          <div className="flex items-center gap-8 w-full flex-1">
-            <span className="text-[14px] text-white font-medium whitespace-nowrap">Legal</span>
-            <div className="h-px flex-1 bg-[#1F2224] opacity-100" />
-          </div>
-          <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 justify-start md:justify-end">
-            {SITE_DATA.footerLinks.legal.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="text-[13px] text-[#8A8F98] hover:text-white transition-colors py-1">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* SEO Row */}
-        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-10">
-          <div className="flex items-center gap-8 w-full flex-1">
-            <span className="text-[14px] text-white font-medium whitespace-nowrap">SEO</span>
-            <div className="h-px flex-1 bg-[#1F2224] opacity-100" />
-          </div>
-          <ul className="flex flex-wrap items-center gap-x-6 gap-y-3 justify-start md:justify-end">
-            {SITE_DATA.footerLinks.seo.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="text-[13px] text-[#8A8F98] hover:text-white transition-colors py-1">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Backed by — Google for Startups & Stripe */}
-        <div className="mb-14 md:mb-16 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-5">
-          <a
-            href="https://startup.google.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Google for Startups — learn more"
-            className="group inline-flex min-w-0 flex-1 items-center justify-center gap-3 rounded-lg border border-white/[0.08] bg-white/[0.03] px-5 py-3 sm:flex-initial md:px-6 md:py-3.5 transition-colors hover:border-white/[0.14] hover:bg-white/[0.05] sm:justify-start"
-          >
-            <span className="relative flex h-7 w-7 flex-shrink-0 items-center justify-center md:h-8 md:w-8">
-              <Image
-                src="/images/google-g-multicolor.png"
-                alt=""
-                width={32}
-                height={32}
-                className="object-contain"
-              />
-            </span>
-            <span className="text-left text-[13px] leading-snug text-[#A8ADB5] md:text-[14px] transition-colors group-hover:text-[#CECFD0]">
-              Backed by{" "}
-              <span className="font-semibold text-[#E8EAED]">Google for Startups</span>
-            </span>
-          </a>
-          <a
-            href="https://stripe.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Stripe — learn more"
-            className="group inline-flex min-w-0 flex-1 items-center justify-center gap-3 rounded-lg border border-white/[0.08] bg-white/[0.03] px-5 py-3 sm:flex-initial md:px-6 md:py-3.5 transition-colors hover:border-white/[0.14] hover:bg-white/[0.05] sm:justify-start"
-          >
-            <span className="relative flex h-7 w-7 shrink-0 items-center justify-center md:h-8 md:w-8">
-              <img
-                src={SITE_DATA.stripeFooterIcon}
-                alt=""
-                width={28}
-                height={28}
-                className="h-7 w-7 object-contain md:h-8 md:w-8"
-                decoding="async"
-              />
-            </span>
-            <span className="text-left text-[13px] leading-snug text-[#A8ADB5] md:text-[14px] transition-colors group-hover:text-[#CECFD0]">
-              Backed by <span className="font-semibold text-[#E8EAED]">Stripe</span>
-            </span>
-          </a>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8">
-          {/* Left: Logo + Copyright */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-            <div className="flex items-center gap-3">
-              <div className="relative w-8 h-8 flex-shrink-0">
-                <Image
-                  src={SITE_DATA.logoDark}
-                  alt="Zyene Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="font-space-grotesk font-bold text-[28px] tracking-[-0.02em] text-white">
+    <footer className="relative overflow-hidden bg-[#0A1015] text-white">
+      <div className="zy-container pt-20 md:pt-28">
+        <div className="grid gap-14 border-t border-white/10 pt-14 lg:grid-cols-[1.1fr_2fr] lg:gap-20">
+          <div className="flex flex-col gap-8">
+            <Link href="/" aria-label="Zyene home" className="flex items-center gap-3">
+              <span className="relative h-8 w-8 flex-shrink-0">
+                <Image src={SITE_DATA.logoDark} alt="" fill sizes="32px" className="object-contain" />
+              </span>
+              <span className="flex flex-col leading-none">
+                <span className="font-space-grotesk text-[26px] font-bold tracking-[-0.02em] text-white">
                   Zyene
-                  <sup className="ml-[-0.15em] inline-block text-[7px] translate-x-[0.8em] -translate-y-[2.1em] shadow-[0px_4px_12px_0px_rgba(0,0,0,0.15)]">TM</sup>
+                  <sup className="ml-0.5 align-super text-[7px] font-semibold tracking-normal">TM</sup>
                 </span>
-                <span className="font-space-grotesk text-[9px] tracking-[0.06em] mt-0.5 text-[#CECFD0]">
-                  Growth Powered by Intelligence
+                <span className="mt-1 font-space-grotesk text-[9.5px] tracking-[0.08em] text-white/55">
+                  Industrial AI Operations
                 </span>
-              </div>
-            </div>
-            <p className="text-[12px] sm:text-[13px] text-[#CECFD0]">
-              © 2026 Zyene. All Rights Reserved
+              </span>
+            </Link>
+            <p className="max-w-[340px] text-[15px] leading-[1.6] text-white/55">
+              Production AI systems for distributors, manufacturers, and specialty contractors, connected to the
+              software they already run.
             </p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="https://startup.google.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Google for Startups, learn more"
+                className="group inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-2 pl-2 pr-4 transition-colors hover:border-white/20 hover:bg-white/[0.06]"
+              >
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white">
+                  <Image src="/images/google-g-multicolor.png" alt="" width={16} height={16} className="object-contain" />
+                </span>
+                <span className="text-[13px] text-white/60">
+                  Backed by <span className="font-medium text-white">Google for Startups</span>
+                </span>
+              </a>
+              <a
+                href="https://stripe.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Stripe, learn more"
+                className="group inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] py-2 pl-2 pr-4 transition-colors hover:border-white/20 hover:bg-white/[0.06]"
+              >
+                <span className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={SITE_DATA.stripeFooterIcon} alt="" width={28} height={28} className="h-7 w-7 object-contain" />
+                </span>
+                <span className="text-[13px] text-white/60">
+                  Backed by <span className="font-medium text-white">Stripe</span>
+                </span>
+              </a>
+            </div>
           </div>
 
-          {/* Right: Social Icons */}
-          <div className="flex items-center gap-3">
-            <Link
+          <div className="grid grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-4">
+            {COLUMNS.map((col) => (
+              <div key={col.title}>
+                <p className="mb-5 font-mono text-[11.5px] uppercase tracking-[0.1em] text-white/40">{col.title}</p>
+                <ul className="flex flex-col gap-3">
+                  {col.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="group inline-flex items-center gap-1 text-[14.5px] text-white/70 transition-colors hover:text-white"
+                      >
+                        {link.label}
+                        <ArrowUpRight className="h-3.5 w-3.5 -translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-60" />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-20 flex flex-col-reverse items-start justify-between gap-6 border-t border-white/10 py-8 sm:flex-row sm:items-center">
+          <p className="text-[13px] text-white/45">© 2026 Zyene. All Rights Reserved</p>
+          <div className="flex items-center gap-2">
+            <a
               href="https://twitter.com/zyene"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Zyene on X (Twitter)"
-              className="w-10 h-10 rounded-full border border-white/[0.12] flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-white/30 hover:text-white"
             >
-              <XIcon />
-            </Link>
-            <Link
+              <FaXTwitter className="h-3.5 w-3.5" />
+            </a>
+            <a
               href="https://www.linkedin.com/company/zyene"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Zyene on LinkedIn"
-              className="w-10 h-10 rounded-full border border-white/[0.12] flex items-center justify-center text-white/60 hover:text-white hover:border-white/30 transition-all"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-white/30 hover:text-white"
             >
-              <LinkedinIcon />
-            </Link>
+              <FaLinkedinIn className="h-3.5 w-3.5" />
+            </a>
           </div>
         </div>
+      </div>
+
+      <div aria-hidden="true" className="pointer-events-none select-none overflow-hidden">
+        <p className="font-wide -mb-[0.22em] whitespace-nowrap text-center text-[25vw] font-semibold leading-[0.8] tracking-[-0.06em] text-white/[0.035] [-webkit-text-stroke:1px_rgba(255,255,255,0.08)]">
+          Zyene
+        </p>
       </div>
     </footer>
   )

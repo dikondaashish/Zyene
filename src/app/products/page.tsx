@@ -26,13 +26,13 @@ export default function ProductsPage() {
   return (
     <>
       <ProductsHero />
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[24px]">
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <ProductBlocks />
         <ReviewsDeepDive />
         <WhyZentraic />
-        <FAQ faqs={PRODUCTS_FAQS} sectionClassName="py-24 px-6 md:px-12 lg:px-24 bg-[#F8FAFD] overflow-hidden border-t border-[#E7ECF2]" />
+        <FAQ faqs={PRODUCTS_FAQS} />
       </div>
-      <div id="footer-cta">
+      <div>
         <FooterCTA />
       </div>
     </>

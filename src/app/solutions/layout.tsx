@@ -1,29 +1,38 @@
 import type { Metadata } from "next"
+import { JsonLd } from "@/components/seo/JsonLd"
+import { servicePageJsonLd } from "@/lib/seo"
 
 export const metadata: Metadata = {
-  title: "Digital Transformation Solutions | AI Systems & Execution — Zyene",
+  title: "Industrial AI Solutions",
   description:
-    "Zyene's digital transformation solutions connect your tools, deploy AI systems across marketing, sales, and operations, and provide full execution support. First workflows live in 1–2 weeks.",
-  keywords: [
-    "digital transformation solutions",
-    "AI digital transformation services",
-    "AI systems integration",
-    "AI execution services",
-    "business digital transformation",
-    "AI-powered transformation solutions",
-    "operational transformation AI",
-    "AI implementation services",
-  ],
+    "Industrial AI solutions for the work around your ERP: document intelligence, order and quote automation, workflow agents, integrations, and operational search.",
   alternates: { canonical: "https://zyene.com/solutions" },
   openGraph: {
-    title: "Digital Transformation Solutions | AI Systems & Execution — Zyene",
+    title: "Industrial AI Solutions | Zyene",
     description:
-      "Zyene connects your tools, deploys AI systems, and provides execution support so your digital transformation delivers real, measurable outcomes.",
+      "Six solutions, one operations layer. Production AI connected to the ERP, CRM, and documents your team already runs.",
     url: "https://zyene.com/solutions",
     type: "website",
   },
 }
 
 export default function SolutionsLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return (
+    <>
+      <JsonLd
+        data={servicePageJsonLd({
+          path: "/solutions",
+          name: "Industrial AI Solutions",
+          description:
+            "Document intelligence, order and quote automation, workflow agents, ERP and CRM integration, and operational search.",
+          serviceType: "Industrial AI implementation",
+          crumbs: [
+            { name: "Home", path: "/" },
+            { name: "Solutions", path: "/solutions" },
+          ],
+        })}
+      />
+      {children}
+    </>
+  )
 }

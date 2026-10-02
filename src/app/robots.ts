@@ -11,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/callback/"],
+        disallow: ["/api/"],
       },
       // OpenAI — allow for ChatGPT search visibility
       { userAgent: "GPTBot", allow: "/" },
@@ -22,6 +22,9 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "anthropic-ai", allow: "/" },
       // Perplexity — allow for Perplexity AI search
       { userAgent: "PerplexityBot", allow: "/" },
+      { userAgent: "Perplexity-User", allow: "/" },
+      { userAgent: "Claude-SearchBot", allow: "/" },
+      { userAgent: "Claude-User", allow: "/" },
       // Bing Copilot
       { userAgent: "Bingbot", allow: "/" },
       // Block training crawlers (not search — won't affect AI citation)

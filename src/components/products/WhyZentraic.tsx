@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { REVEAL_VIEWPORT } from "@/lib/motion"
 
 const pillars = [
   {
@@ -84,7 +85,7 @@ export function WhyZentraic() {
                 key={item.title}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
+                viewport={REVEAL_VIEWPORT}
                 transition={{ duration: 0.45, delay: idx * 0.05 }}
                 className="rounded-[14px] border border-white/10 bg-white/[0.04] p-6"
               >
@@ -106,7 +107,7 @@ export function WhyZentraic() {
                 key={item.title}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
+                viewport={REVEAL_VIEWPORT}
                 transition={{ duration: 0.45, delay: idx * 0.05 }}
                 className="rounded-[14px] border border-white/10 bg-white/[0.04] p-6"
               >

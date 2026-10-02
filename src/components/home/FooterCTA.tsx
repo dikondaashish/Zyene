@@ -1,109 +1,63 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/Button"
+import * as React from "react"
+import Image from "next/image"
 import Link from "next/link"
-import { SITE_DATA } from "@/lib/constants"
-
-const textRevealVariants = {
-  hidden: { opacity: 0, filter: "blur(10px)", y: 10 },
-  visible: (i: number) => ({
-    opacity: 1,
-    filter: "blur(0px)",
-    y: 0,
-    transition: {
-      delay: i * 0.05,
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1] as any
-    }
-  })
-}
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
+import { ArrowRight, Mail } from "lucide-react"
+import { Button } from "@/components/ui/Button"
+import { Reveal, RevealText } from "@/components/ui/Reveal"
 
 export function FooterCTA() {
-  const headingWords = "Don't scale harder. Scale smarter.".split(" ")
+  const ref = React.useRef<HTMLElement>(null)
+  const reduce = useReducedMotion()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
+  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"])
 
   return (
-    <section id="footer-cta" className="bg-[#0A1015] overflow-hidden relative">
-      {/* Background Image with mask: fade from bottom transparent to top black */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          mask: "linear-gradient(0deg, rgba(0,0,0,0) 0%, rgb(0,0,0) 35%)",
-          WebkitMask: "linear-gradient(0deg, rgba(0,0,0,0) 0%, rgb(0,0,0) 35%)",
-          transform: "translateX(-50%)",
-          left: "50%",
-          width: "100%",
-        }}
-      >
-        <img
-          src="/images/footer-cta-asset.png"
+    <section ref={ref} id="footer-cta" className="relative overflow-hidden bg-[#0A1015] text-white">
+      <motion.div aria-hidden="true" style={reduce ? undefined : { y }} className="absolute inset-[-10%_0]">
+        <Image
+          src="/images/industrial/cta-district.jpg"
           alt=""
-          className="block w-full h-full object-cover"
+          fill
+          sizes="100vw"
+          className="object-cover object-bottom"
         />
-      </div>
+      </motion.div>
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,#0A1015_0%,rgba(10,16,21,0.55)_35%,rgba(10,16,21,0.35)_65%,#0A1015_100%)]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,16,21,0.75)_0%,rgba(10,16,21,0)_70%)]" />
+      <div aria-hidden="true" className="zy-grain absolute inset-0" />
 
-      {/* Content */}
-      <div className="max-w-[1400px] mx-auto px-6 md:px-20 relative z-10 pt-24 md:pt-32 pb-20 md:pb-24">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-16">
-          {/* Left: Title + Description */}
-          <div className="max-w-[500px]">
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[14px] font-bold text-white tracking-[0.2em] uppercase mb-8"
-            >
-              Get started
-            </motion.p>
-            <h2 className="text-[26px] sm:text-[32px] md:text-[64px] leading-[1.05] font-normal tracking-[-0.03em] text-white mb-8">
-              {headingWords.map((word, i) => (
-                <motion.span
-                  key={i}
-                  custom={i}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={textRevealVariants}
-                  className="inline-block mr-[0.25em]"
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </h2>
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[15px] text-[#8A8F98] leading-[1.6] mb-10"
-            >
-              Zyene helps you automate complex workflows, reduce operational drag, and scale execution without growing headcount.
-            </motion.p>
-
-            {/* Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col sm:flex-row gap-3"
-            >
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center px-8 h-12 bg-white text-[#0A1015] text-[14px] font-medium rounded-[4px] hover:bg-white/90 transition-colors"
-              >
-                Get in touch
-              </Link>
-              <Link
-                href="/about"
-                className="inline-flex items-center justify-center px-8 h-12 bg-white/[0.04] text-white text-[14px] font-medium rounded-[4px] border border-white/[0.08] hover:bg-white/[0.08] transition-colors backdrop-blur-sm"
-              >
-                About us
-              </Link>
-            </motion.div>
-          </div>
-        </div>
+      <div className="zy-container relative flex min-h-[86vh] flex-col justify-center py-28 md:py-36">
+        <RevealText
+          text="Find the workflow where AI can create measurable value first."
+          className="zy-display max-w-[1000px] text-[clamp(38px,6vw,88px)] text-white"
+        />
+        <Reveal delay={0.15} className="mt-8 max-w-[560px]">
+          <p className="text-[17px] leading-[1.6] text-white/70 md:text-[18px]">
+            We&apos;ll map the process, identify the bottlenecks, and show you where AI can realistically reduce
+            repetitive work without replacing the systems your business already depends on.
+          </p>
+        </Reveal>
+        <Reveal delay={0.25} className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <Button variant="primary" size="lg" asChild>
+            <Link href="/contact">
+              Book an Assessment
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
+            </Link>
+          </Button>
+          <Button variant="secondary" size="lg" asChild>
+            <Link href="/how-we-work">How we work</Link>
+          </Button>
+          <a
+            href="mailto:support@zyene.com"
+            className="inline-flex items-center gap-2 px-2 py-3 text-[14.5px] text-white/65 transition-colors hover:text-white sm:ml-3"
+          >
+            <Mail className="h-4 w-4" />
+            support@zyene.com
+          </a>
+        </Reveal>
       </div>
     </section>
   )

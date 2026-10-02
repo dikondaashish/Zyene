@@ -2,9 +2,9 @@ import type { Metadata } from "next"
 import Script from "next/script"
 
 export const metadata: Metadata = {
-  title: "AI Products | Zyene Reviews & Zentraic AI Voice Agent",
+  title: { absolute: "Zyene Reviews & Zentraic AI | Reputation and Voice Software" },
   description:
-    "Zyene's AI-powered products drive digital transformation across reputation and voice operations. Zyene Reviews automates review management. Zentraic AI handles inbound/outbound calls, qualifies leads, and syncs your CRM.",
+    "Zyene Reviews monitors reviews and drafts replies. Zentraic AI handles inbound and outbound calls, qualifies leads, and writes the outcome back to your CRM.",
   keywords: [
     "Zyene Reviews",
     "Zentraic AI",
@@ -18,9 +18,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "https://zyene.com/products" },
   openGraph: {
-    title: "AI Products | Zyene Reviews & Zentraic AI Voice Agent",
+    title: "Zyene Reviews & Zentraic AI | Reputation and Voice Software",
     description:
-      "Zyene Reviews automates reputation management. Zentraic AI handles inbound and outbound calls, qualifies leads, and syncs your CRM — part of Zyene's AI-powered digital transformation platform.",
+      "Zyene Reviews monitors reviews and drafts replies. Zentraic AI handles calls and writes the outcome back to your CRM.",
     url: "https://zyene.com/products",
     type: "website",
   },
@@ -38,7 +38,6 @@ const productsJsonLd = {
       operatingSystem: "Web",
       description:
         "AI-powered reputation management for local businesses. Monitor reviews across platforms, generate AI-assisted replies, and grow your review count automatically.",
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD", description: "Free trial available" },
       provider: { "@id": "https://zyene.com/#organization" },
     },
     {

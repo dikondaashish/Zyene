@@ -1,9 +1,9 @@
 import PrivacyHero from '@/components/legal/PrivacyHero';
-import LegalContent from '@/components/legal/LegalContent';
+import PrivacyContent from '@/components/legal/PrivacyContent';
 import { FooterCTA } from '@/components/home/FooterCTA';
 
 export const metadata = {
-  title: "Privacy Policy | Zyene",
+  title: "Privacy Policy",
   description:
     "Read Zyene's privacy policy. Learn how we collect, use, and protect your personal information when you use our website and AI automation services.",
   alternates: { canonical: "https://zyene.com/legal/privacy-policy" },
@@ -14,10 +14,10 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <PrivacyHero />
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
-        <LegalContent />
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
+        <PrivacyContent />
       </div>
-      <div id="footer-cta">
+      <div>
         <FooterCTA />
       </div>
     </>

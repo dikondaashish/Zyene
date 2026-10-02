@@ -18,7 +18,7 @@ export function AuthorAvatar({ author, size = 36 }: { author: BlogAuthor; size?:
   const initials = getInitials(author.name)
   const fontSize = Math.round(size * 0.36)
 
-  if (imgError) {
+  if (imgError || !author.avatar) {
     return (
       <div
         aria-label={author.name}

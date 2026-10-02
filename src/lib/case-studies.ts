@@ -1,56 +1,49 @@
-export type CaseStudyResult = {
-  metric: string
-  label: string
-  iconName: "trending-up" | "clock" | "chart"
-}
-
 export type CaseStudy = {
   id: string
   industry: string
-  company: string
-  role: string
+  title: string
   challenge: string
   solution: string
-  results: CaseStudyResult[]
-  quote: string
+  before: string[]
+  after: string[]
   tags: string[]
 }
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    id: "marketing-operations-automation",
-    industry: "Professional Services",
-    company: "Growth Team",
-    role: "Lauren Meyers — Growth Strategist",
+    id: "distributor-order-desk",
+    industry: "Wholesale Distribution",
+    title: "Customer purchase orders, from inbox to ERP",
     challenge:
-      "A growing professional services team was stuck managing disconnected tools and manual handoffs across marketing and operations. Work was falling through the gaps between platforms, execution was inconsistent, and leadership had no real-time visibility into what was actually getting done.",
+      "Customer purchase orders arrive by email and PDF. An employee reads each one, matches the customer and products, and retypes the order into the ERP.",
     solution:
-      "Zyene mapped the team's core workflows across marketing and operations, identified the highest-impact automation opportunities, and deployed a unified AI operating layer connecting their CRM, marketing platform, and ops tools. Manual handoffs were replaced with automated triggers, and reporting was consolidated into a single weekly dashboard.",
-    results: [
-      { metric: "3×", label: "Average ROI within 90 days", iconName: "trending-up" },
-      { metric: "Days → Minutes", label: "Reduction in workflow cycle time", iconName: "clock" },
-      { metric: "100%", label: "Reporting automated — zero manual assembly", iconName: "chart" },
-    ],
-    quote:
-      "Before Zyene, our team was stuck in disconnected tools and manual handoffs. Within the first month, we automated core workflows across marketing and operations. What used to take days now takes minutes — with better consistency, faster execution, and clear visibility across teams.",
-    tags: ["Marketing Automation", "Operations AI", "Workflow Integration"],
+      "AI reads the order, matches the customer and products, validates prices and quantities, and prepares the ERP order. An employee approves before it posts.",
+    before: ["Email", "Employee retypes", "ERP"],
+    after: ["Email", "AI extraction", "Validation", "Approval", "ERP"],
+    tags: ["Order entry", "ERP", "Human approval"],
   },
   {
-    id: "voice-crm-automation",
-    industry: "Real Estate & Property",
-    company: "Harbor Ridge Group",
-    role: "Daniel Carter — Operations Lead",
+    id: "manufacturer-rfq",
+    industry: "Manufacturing",
+    title: "RFQ packets, turned into estimator-ready packages",
     challenge:
-      "Harbor Ridge Group was handling high inbound call volume across their property operations team. Call outcomes were being logged manually — often hours after the conversation — leading to stale CRM data, missed follow-ups, and a pipeline view that leadership could not trust for forecasting.",
+      "An RFQ arrives with drawings, specifications, and a quantity spreadsheet. Estimators spend the first pass hunting for requirements and related historical jobs.",
     solution:
-      "Zyene deployed Zentraic AI to handle inbound call qualification, routing, and post-call CRM sync. Every call outcome — lead score, disposition, assigned rep, and next action — was automatically written to HubSpot in real time. The team stopped spending time on call logging and started spending it on the conversations that needed their attention.",
-    results: [
-      { metric: "68%", label: "Faster call-to-CRM turnaround", iconName: "clock" },
-      { metric: "Zero", label: "Manual CRM updates after calls", iconName: "chart" },
-      { metric: "↑ Pipeline", label: "Forecast accuracy improved materially", iconName: "trending-up" },
-    ],
-    quote:
-      "Zentraic AI helped us handle inbound calls, qualify leads, and sync every outcome to CRM without manual follow-up. Our team now closes loops faster, misses fewer opportunities, and scales daily call operations without adding extra headcount.",
-    tags: ["Voice AI", "CRM Automation", "Zentraic AI"],
+      "AI extracts requirements, finds related historical jobs, flags missing information, and prepares an estimator package. A human estimator reviews it.",
+    before: ["RFQ packet", "Read by hand", "Estimate"],
+    after: ["RFQ packet", "Requirements extracted", "Related jobs", "Estimator review"],
+    tags: ["RFQ", "Estimating", "Documents"],
+  },
+  {
+    id: "contractor-bid-intake",
+    industry: "Specialty Contractors",
+    title: "Bid documents, summarized into a checklist",
+    challenge:
+      "An RFP lands in an inbox. Someone has to summarize scope, pull deadlines, and build a bid checklist before estimating can start.",
+    solution:
+      "AI reads the documents, summarizes scope, extracts deadlines and requirements, and creates a bid checklist for the estimating team. The same office pattern applies across HVAC, electrical, mechanical, plumbing, fire protection, and roofing.",
+    before: ["RFP", "Read by hand", "Checklist"],
+    after: ["RFP", "Scope summary", "Deadlines extracted", "Checklist review"],
+    tags: ["Bid intake", "RFP", "Estimating"],
   },
 ]

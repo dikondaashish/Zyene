@@ -12,20 +12,20 @@ import { FooterCTA } from "@/components/home/FooterCTA"
 
 const SOLUTIONS_FAQS = [
   {
-    question: "Do we need to replace our current tools?",
-    answer: "No. We connect with your current stack and make it work better together.",
+    question: "Do we need to replace our ERP?",
+    answer: "No. These solutions sit on the systems you already run.",
   },
   {
-    question: "Will your team also execute the work?",
-    answer: "Yes. Our team works like an extension of your team and handles execution with you.",
+    question: "Are the system names official partnerships?",
+    answer: "No. They are integration capabilities. We do not imply a partnership we do not have.",
   },
   {
-    question: "How quickly can we launch?",
-    answer: "Most teams can start quickly, with first workflows live in around 1-2 weeks.",
+    question: "Does every action post automatically?",
+    answer: "No. Orders, quotes, and other critical writes can require an employee approval.",
   },
   {
-    question: "Can we monitor everything clearly?",
-    answer: "Yes. You get monitoring and reporting so you always know what is happening.",
+    question: "Where do we start?",
+    answer: "With an assessment that maps one workflow and recommends a pilot.",
   },
 ]
 
@@ -33,16 +33,14 @@ export default function SolutionsPage() {
   return (
     <>
       <SolutionsHero />
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <SolutionLayers />
         <ArchitectureSnapshot />
         <UseCaseLayerMapping />
         <DeliverySteps />
         <ExecutionTeam />
         <WeeklyOutputs />
-        <FAQ faqs={SOLUTIONS_FAQS} sectionClassName="py-24 px-6 md:px-12 lg:px-24 bg-white overflow-hidden" />
-      </div>
-      <div id="footer-cta">
+        <FAQ faqs={SOLUTIONS_FAQS} />
         <FooterCTA />
       </div>
     </>

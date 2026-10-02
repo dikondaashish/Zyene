@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { REVEAL_VIEWPORT } from "@/lib/motion"
 
 const steps = [
   {
@@ -56,7 +57,7 @@ export function ReviewsDeepDive() {
         <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-8 items-center rounded-[20px] border border-[#E4E8EE] bg-[#F8FAFD] p-6 md:p-8">
           <div className="rounded-[12px] bg-white border border-[#E4E8EE] p-4">
             <Image
-              src="/images/Zyene Reviews.png"
+              src="/images/zyene-reviews.png"
               alt="Zyene Reviews logo"
               width={540}
               height={137}
@@ -83,7 +84,7 @@ export function ReviewsDeepDive() {
                 key={item.title}
                 initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
+                viewport={REVEAL_VIEWPORT}
                 transition={{ duration: 0.45, delay: idx * 0.05 }}
                 className="rounded-[14px] border border-[#E2E7EE] bg-[#F8FAFD] p-6"
               >
@@ -105,7 +106,7 @@ export function ReviewsDeepDive() {
                 key={item.title}
                 initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
+                viewport={REVEAL_VIEWPORT}
                 transition={{ duration: 0.45, delay: idx * 0.05 }}
                 className="rounded-[14px] border border-[#E2E7EE] bg-[#F8FAFD] p-6"
               >

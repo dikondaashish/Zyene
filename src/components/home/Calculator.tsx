@@ -4,6 +4,7 @@ import * as React from "react"
 import { motion, animate } from "framer-motion"
 import { Button } from "@/components/ui/Button"
 import Link from "next/link"
+import { REVEAL_VIEWPORT } from "@/lib/motion"
 
 function AnimatedNumber({ value }: { value: number }) {
   const [displayValue, setDisplayValue] = React.useState(value);
@@ -28,7 +29,6 @@ export function Calculator() {
   const totalHoursLostPerWeek = teamSize * hoursPerWeek
   const hoursLostPerMonth = totalHoursLostPerWeek * 4
   const costPerMonth = hoursLostPerMonth * hourlyCost
-  const potentialSavings = costPerMonth * 0.8
 
   return (
     <section className="py-24 px-6 bg-white overflow-hidden">
@@ -36,16 +36,16 @@ export function Calculator() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={REVEAL_VIEWPORT}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-12"
         >
           <p className="text-[13px] font-semibold text-[#0A1015] tracking-widest uppercase mb-6">ROI Calculator</p>
           <h2 className="text-[36px] md:text-[48px] leading-[1.05] font-normal tracking-[-0.03em] text-[#0A1015] max-w-[800px] mx-auto">
-            Quantify the cost of not automating
+            Estimate the cost of manual work
           </h2>
           <p className="text-[16px] text-[#4A4F59] mt-6 max-w-[600px] mx-auto">
-            How many hours per week each team member spends on manual tasks (estimated).
+            Enter your own numbers. This is an estimate of time cost, not a promised savings rate.
           </p>
         </motion.div>
 
@@ -107,7 +107,7 @@ export function Calculator() {
             </h3>
             <div className="h-px w-full bg-black/10" />
             <p className="text-[18px] text-[#4A4F59] leading-[1.6]">
-              Zyene could reclaim 80% of that — saving <span className="text-[#0A1015] font-semibold font-display tracking-tight">${(potentialSavings).toLocaleString()}/month</span>.
+              That monthly figure is the cost of the hours you entered. A pilot measures how much of it a workflow can actually recover.
             </p>
             <div className="mt-4">
               <Button size="lg" className="w-full" variant="dark" asChild>
@@ -118,7 +118,7 @@ export function Calculator() {
                     window.scrollTo(0, 0)
                   }}
                 >
-                  Get a custom automation plan
+                  Book an AI Workflow Assessment
                 </Link>
               </Button>
             </div>

@@ -1,40 +1,34 @@
 import type { Metadata } from "next"
 import Script from "next/script"
 import { Hero } from "@/components/home/Hero"
+import { PlatformStrip } from "@/components/home/PlatformStrip"
 import { Features } from "@/components/home/Features"
-import { Process } from "@/components/home/Process"
-import { Products } from "@/components/home/Products"
-import { OrbitalDemo } from "@/components/home/OrbitalDemo"
-import { Calculator } from "@/components/home/Calculator"
-import { HowItWorks } from "@/components/home/HowItWorks"
 import { Industries } from "@/components/home/Industries"
+import { SolutionLayers } from "@/components/solutions/SolutionLayers"
+import { AIAction } from "@/components/use-cases/AIAction"
+import { DeliverySteps } from "@/components/solutions/DeliverySteps"
+import { SecurityStrip } from "@/components/home/SecurityStrip"
 import { Benefits } from "@/components/home/Benefits"
-import { Comparison } from "@/components/home/Comparison"
-import { Testimonials } from "@/components/home/Testimonials"
-import { RealNumbers } from "@/components/use-cases/RealNumbers"
-import { WhoItsFor } from "@/components/home/WhoItsFor"
 import { FAQ } from "@/components/home/FAQ"
 import { FooterCTA } from "@/components/home/FooterCTA"
 
 export const metadata: Metadata = {
-  title: "Zyene | AI-Powered Digital Transformation Execution Company",
+  title: { absolute: "AI Operations for Distributors & Manufacturers | Zyene" },
   description:
-    "Zyene is an AI-powered digital transformation execution company. We design and deploy AI systems that transform how you run marketing, sales, and operations — with full execution support. Launch in 1–2 weeks.",
+    "Zyene builds production AI for distributors, manufacturers, and specialty contractors. It reads purchase orders, RFQs, and bid documents, then prepares the next step in the ERP you already run.",
   keywords: [
-    "AI-powered digital transformation",
-    "digital transformation execution company",
-    "AI digital transformation company",
-    "AI systems for business",
-    "business transformation AI",
-    "AI execution company",
-    "marketing transformation AI",
-    "operations transformation AI",
+    "AI operations for industrial businesses",
+    "wholesale distribution automation",
+    "manufacturing RFQ automation",
+    "specialty contractor AI",
+    "ERP document automation",
+    "industrial AI implementation",
   ],
   alternates: { canonical: "https://zyene.com" },
   openGraph: {
-    title: "Zyene | AI-Powered Digital Transformation Execution Company",
+    title: "AI Operations for Distributors & Manufacturers | Zyene",
     description:
-      "Zyene designs and deploys AI systems that transform how businesses run marketing, sales, and operations — with full execution support and measurable outcomes.",
+      "Production AI systems for distributors, manufacturers, and specialty contractors, connected to the email, documents, and business software they already use.",
     url: "https://zyene.com",
     type: "website",
   },
@@ -42,29 +36,29 @@ export const metadata: Metadata = {
 
 const HOME_FAQS = [
   {
-    question: "What exactly does Zyene build?",
+    question: "Who is Zyene for?",
     answer:
-      "Zyene designs and deploys AI systems that connect your marketing, sales, and operations workflows into one execution layer with clear reporting and control.",
+      "Wholesale distributors, SMB manufacturers, and specialty contractors that still move work by hand between email, documents, spreadsheets, and business systems.",
   },
   {
-    question: "How quickly can we launch our first workflow?",
+    question: "Do we need to replace our ERP or field software?",
     answer:
-      "Most teams can launch their first automation in 1-2 weeks, depending on workflow complexity, tool access, and approval speed.",
+      "No. We connect to the systems you already use and prepare actions for your team. Replacement is not the product.",
   },
   {
-    question: "Do we need to replace our current tools?",
+    question: "What does a first project look like?",
     answer:
-      "No. Zyene works with your existing stack and integrates with tools like CRM, communication, and operations platforms.",
+      "An assessment maps one workflow, the repetitive steps, system access, and a metric. Then we recommend a pilot with a human approval step where it matters.",
   },
   {
-    question: "Do you also provide team support?",
+    question: "Will the AI post orders or quotes on its own?",
     answer:
-      "Yes. Along with systems, Zyene can provide execution support so your team can operate faster without adding heavy overhead.",
+      "Only if you want that. Critical actions can require an employee to approve before anything is written to ERP, CRM, or a field system.",
   },
   {
-    question: "How do we measure results?",
+    question: "Do you publish customer results?",
     answer:
-      "We define clear performance metrics upfront and track outcomes like cycle time, response speed, and efficiency gains across workflows.",
+      "Not until we have them. Example workflows on this site use synthetic business data and are labeled that way.",
   },
 ]
 
@@ -75,20 +69,20 @@ const homeJsonLd = {
       "@type": "WebPage",
       "@id": "https://zyene.com/#webpage",
       url: "https://zyene.com",
-      name: "Zyene | AI-Powered Digital Transformation Execution Company",
+      name: "Zyene | AI Operations for Industrial Businesses",
       description:
-        "Zyene designs and deploys AI systems that transform how businesses run marketing, sales, and operations — with full execution support and measurable outcomes.",
+        "Production AI systems for distributors, manufacturers, and specialty contractors.",
       isPartOf: { "@id": "https://zyene.com/#website" },
       about: { "@id": "https://zyene.com/#organization" },
     },
     {
       "@type": "ProfessionalService",
       "@id": "https://zyene.com/#service",
-      name: "AI-Powered Digital Transformation",
+      name: "AI Operations for Industrial Businesses",
       provider: { "@id": "https://zyene.com/#organization" },
-      serviceType: "Digital Transformation Execution",
+      serviceType: "Industrial AI Implementation",
       description:
-        "Zyene designs and deploys AI systems that transform marketing, sales, and operations workflows for growing businesses. Includes system design, integration, execution support, and reporting.",
+        "Zyene designs, builds, and integrates production AI systems for distributors, manufacturers, and specialty contractors.",
       areaServed: "Worldwide",
       availableChannel: {
         "@type": "ServiceChannel",
@@ -97,33 +91,33 @@ const homeJsonLd = {
       },
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "AI Transformation Services",
+        name: "Industrial AI Operations",
         itemListElement: [
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "Marketing Automation Systems",
+              name: "Order and Quote Automation",
               description:
-                "AI-powered marketing workflow automation connecting CRM, email, and campaigns.",
+                "Read email and documents, validate against business systems, and prepare orders or quotes for approval.",
             },
           },
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "Operations Automation Systems",
+              name: "Document Intelligence",
               description:
-                "AI systems automating repetitive operations tasks with full reporting and control.",
+                "Turn POs, RFQs, invoices, drawings, and spreadsheets into structured business information.",
             },
           },
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "Sales Workflow Automation",
+              name: "ERP and CRM Integration",
               description:
-                "AI-driven sales process automation including lead follow-up, CRM sync, and pipeline reporting.",
+                "Connect AI workflows to the ERP, CRM, and field systems a company already uses.",
             },
           },
         ],
@@ -141,21 +135,16 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
       />
       <Hero />
-      {/* Content scrolls over sticky Hero — creating the card-reveal effect */}
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
+        <PlatformStrip />
         <Features />
-        <Process />
-        <HowItWorks />
-        <OrbitalDemo />
-        <Calculator />
-        <Products />
-        <Industries />
+        <Industries ctaLabel="Explore Distribution AI" ctaHref="/industries/wholesale-distribution" />
+        <SolutionLayers />
+        <AIAction />
+        <DeliverySteps />
         <Benefits />
-        <Comparison />
-        <Testimonials />
-        <RealNumbers />
-        <WhoItsFor />
-        <FAQ faqs={HOME_FAQS} sectionClassName="py-24 px-6 md:px-12 lg:px-24 bg-white overflow-hidden" />
+        <SecurityStrip />
+        <FAQ faqs={HOME_FAQS} />
         <FooterCTA />
       </div>
     </>

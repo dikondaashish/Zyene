@@ -3,7 +3,7 @@ import TermsContent from '@/components/legal/TermsContent';
 import { FooterCTA } from '@/components/home/FooterCTA';
 
 export const metadata = {
-  title: "Terms & Conditions | Zyene",
+  title: "Terms & Conditions",
   description:
     "Review the terms and conditions governing use of Zyene's website and AI automation services.",
   alternates: { canonical: "https://zyene.com/legal/terms-conditions" },
@@ -14,10 +14,10 @@ export default function TermsConditionsPage() {
   return (
     <>
       <TermsHero />
-      <div id="main-content" className="relative z-10 bg-white rounded-t-[20px]">
+      <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <TermsContent />
       </div>
-      <div id="footer-cta">
+      <div>
         <FooterCTA />
       </div>
     </>
