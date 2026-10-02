@@ -34,8 +34,10 @@ const INDUSTRY_MENU = [
 
 const COMPANY_BLURBS: Record<string, string> = {
   About: "Who we are and how we operate",
+  "Use Cases": "Order desks, RFQs, and bid intake",
+  Products: "Zyene Reviews and Zentraic AI",
   "Case Studies": "Reference workflows and outcomes",
-  Security: "Controls we can stand behind",
+  Security: "Approvals, access, and logging",
   Resources: "Field notes on industrial AI",
   Careers: "Build production AI with us",
 }
@@ -112,6 +114,9 @@ export function Navbar() {
 
   const onDark = isDark && !isOpen
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname?.startsWith(href))
+  const isPortal = pathname === "/login"
+
+  if (isPortal) return null
 
   return (
     <>
@@ -232,8 +237,9 @@ export function Navbar() {
               variant={onDark ? "ghost" : "outline"}
               size="sm"
               className={cn("h-11 px-5", !onDark && "border-transparent")}
+              asChild
             >
-              Client Login
+              <Link href="/login">Client Login</Link>
             </Button>
             <Button
               variant={onDark ? "primary" : "dark"}
@@ -434,8 +440,15 @@ export function Navbar() {
               >
                 Book an Assessment
               </Button>
-              <Button variant="secondary" size="lg" className="w-full">
-                Client Login
+              <Button
+                variant="secondary"
+                size="lg"
+                className="w-full"
+                asChild
+              >
+                <Link href="/login" onClick={() => setIsOpen(false)}>
+                  Client Login
+                </Link>
               </Button>
             </div>
           </motion.div>

@@ -1,6 +1,9 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Zyene: AI Operations for Industrial Businesses",
+  "short_name": "Zyene",
+  "description": "Production AI for distributors, manufacturers, and specialty contractors.",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/favicon/web-app-manifest-192x192.png",
@@ -15,7 +18,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "theme_color": "#0A1015",
+  "background_color": "#0A1015",
   "display": "standalone"
 }

@@ -7,55 +7,49 @@ import { REVEAL_VIEWPORT } from "@/lib/motion"
 const steps = [
   {
     step: "1",
-    title: "Connect",
+    title: "Connect the accounts you already have",
     description:
-      "Securely connect your Google Business Profile. We only request the permissions needed for review monitoring and replies.",
+      "Google Business Profile and the other review sources you use. We only request the permissions needed to read reviews and draft replies.",
   },
   {
     step: "2",
-    title: "Get Alerted",
+    title: "See new feedback",
     description:
-      "Receive instant alerts when new reviews arrive. AI checks sentiment and flags urgent low-rating reviews fast.",
+      "New reviews surface in one place. Low ratings can be flagged so someone on your team can look at them first.",
   },
   {
     step: "3",
-    title: "Reply & Grow",
+    title: "Reply, then ask the next customer",
     description:
-      "Use one-tap AI reply suggestions and automatically ask happy customers for more reviews.",
+      "Draft a reply for a person to send, and send a follow-up request after a completed job so the ask is not left to memory.",
   },
 ]
 
 const capabilities = [
   {
-    title: "Real-time monitoring",
-    text: "Track Google, Facebook, and Yelp reviews in one dashboard so your team never misses a customer signal.",
+    title: "One place to read reviews",
+    text: "Google, Facebook, Yelp, and the other sources you connect, instead of checking each one by hand.",
   },
   {
-    title: "Smart response workflow",
-    text: "Generate AI-assisted replies, review them quickly, and publish with your team’s brand voice and standards.",
+    title: "A draft, not a published reply",
+    text: "AI prepares a reply in your voice. Someone on your team can edit and send it.",
   },
   {
-    title: "Campaign automation",
-    text: "Send post-service email and SMS requests automatically to increase review volume from happy customers.",
+    title: "Ask after the work is done",
+    text: "Email or SMS after a job, so collecting service feedback is not a separate chore on the desk.",
   },
   {
-    title: "Team visibility",
-    text: "Share alerts with operators and managers so negative feedback gets resolved before it impacts reputation.",
+    title: "Visible to the people who own the job",
+    text: "Alerts can go to operators and managers when a review needs a person, not a campaign dashboard nobody opens.",
   },
-]
-
-const outcomes = [
-  { metric: "< 15 min", label: "to detect and triage new reviews" },
-  { metric: "2x faster", label: "response turnaround for critical feedback" },
-  { metric: "Higher trust", label: "from consistent public replies and follow-up" },
 ]
 
 export function ReviewsDeepDive() {
   return (
-    <section id="zyene-reviews" className="py-24 px-6 md:px-12 lg:px-24 bg-white border-t border-[#E7ECF2]">
-      <div className="max-w-[1200px] mx-auto space-y-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-8 items-center rounded-[20px] border border-[#E4E8EE] bg-[#F8FAFD] p-6 md:p-8">
-          <div className="rounded-[12px] bg-white border border-[#E4E8EE] p-4">
+    <section id="zyene-reviews" className="border-t border-[#E7ECF2] bg-white px-6 py-24 md:px-12 lg:px-24">
+      <div className="mx-auto max-w-[1200px] space-y-16">
+        <div className="grid items-center gap-8 rounded-[20px] border border-[#E4E8EE] bg-[#F8FAFD] p-6 md:grid-cols-[0.95fr_1.05fr] md:p-8">
+          <div className="rounded-[12px] border border-[#E4E8EE] bg-white p-4">
             <Image
               src="/images/zyene-reviews.png"
               alt="Zyene Reviews logo"
@@ -66,19 +60,20 @@ export function ReviewsDeepDive() {
             />
           </div>
           <div>
-            <p className="text-[12px] font-bold tracking-[0.18em] uppercase text-[#8A8F98] mb-4">Zyene Reviews</p>
-            <h2 className="text-[36px] md:text-[56px] leading-[1.08] tracking-[-0.03em] text-[#0A1015] mb-4">
-              Built for daily reputation operations
+            <p className="mb-4 text-[12px] font-bold uppercase tracking-[0.18em] text-[#8A8F98]">Zyene Reviews</p>
+            <h2 className="mb-4 text-[36px] leading-[1.08] tracking-[-0.03em] text-[#0A1015] md:text-[56px]">
+              Built because asking for feedback was too easy to skip
             </h2>
-            <p className="text-[16px] text-[#4A4F59] leading-[1.75]">
-              Zyene Reviews helps local teams monitor feedback, respond quickly, and run repeatable review growth campaigns without switching tools.
+            <p className="text-[16px] leading-[1.75] text-[#4A4F59]">
+              After a job, someone still had to remember to request a review and then watch three websites for the
+              reply. Zyene Reviews is that internal process, opened so other operators can use it.
             </p>
           </div>
         </div>
 
         <div>
-          <p className="text-[12px] font-bold tracking-[0.18em] uppercase text-[#8A8F98] mb-4">How it works</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <p className="mb-4 text-[12px] font-bold uppercase tracking-[0.18em] text-[#8A8F98]">How it works</p>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
             {steps.map((item, idx) => (
               <motion.article
                 key={item.title}
@@ -88,19 +83,19 @@ export function ReviewsDeepDive() {
                 transition={{ duration: 0.45, delay: idx * 0.05 }}
                 className="rounded-[14px] border border-[#E2E7EE] bg-[#F8FAFD] p-6"
               >
-                <div className="w-8 h-8 rounded-full bg-[#0A1015] text-white text-[13px] font-semibold flex items-center justify-center mb-4">
+                <div className="mb-4 flex h-8 w-8 items-center justify-center rounded-full bg-[#0A1015] text-[13px] font-semibold text-white">
                   {item.step}
                 </div>
-                <h3 className="text-[22px] text-[#0A1015] mb-3">{item.title}</h3>
-                <p className="text-[15px] text-[#4A4F59] leading-[1.65]">{item.description}</p>
+                <h3 className="mb-3 text-[22px] text-[#0A1015]">{item.title}</h3>
+                <p className="text-[15px] leading-[1.65] text-[#4A4F59]">{item.description}</p>
               </motion.article>
             ))}
           </div>
         </div>
 
         <div>
-          <p className="text-[12px] font-bold tracking-[0.18em] uppercase text-[#8A8F98] mb-4">Core capabilities</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <p className="mb-4 text-[12px] font-bold uppercase tracking-[0.18em] text-[#8A8F98]">What it does</p>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {capabilities.map((item, idx) => (
               <motion.article
                 key={item.title}
@@ -110,21 +105,9 @@ export function ReviewsDeepDive() {
                 transition={{ duration: 0.45, delay: idx * 0.05 }}
                 className="rounded-[14px] border border-[#E2E7EE] bg-[#F8FAFD] p-6"
               >
-                <h3 className="text-[22px] text-[#0A1015] mb-2">{item.title}</h3>
-                <p className="text-[15px] text-[#4A4F59] leading-[1.7]">{item.text}</p>
+                <h3 className="mb-2 text-[22px] text-[#0A1015]">{item.title}</h3>
+                <p className="text-[15px] leading-[1.7] text-[#4A4F59]">{item.text}</p>
               </motion.article>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-[18px] border border-[#E2E7EE] bg-[#F8FAFD] p-6 md:p-8 shadow-[0_8px_24px_rgba(15,23,42,0.05)]">
-          <p className="text-[12px] font-bold tracking-[0.18em] uppercase text-[#8A8F98] mb-5">Operational outcomes</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {outcomes.map((item) => (
-              <div key={item.metric} className="rounded-[10px] border border-[#DFE5EE] bg-white p-5">
-                <p className="text-[28px] tracking-[-0.02em] text-[#0A1015] mb-2">{item.metric}</p>
-                <p className="text-[14px] text-[#4A4F59] leading-[1.6]">{item.label}</p>
-              </div>
             ))}
           </div>
         </div>

@@ -1,6 +1,6 @@
 # Zyene Website
 
-Marketing and operations automation website built with Next.js App Router.
+zyene.com — applied AI engineering for industrial operations: distributors, manufacturers, and specialty contractors.
 
 ## Stack
 

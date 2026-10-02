@@ -29,9 +29,17 @@ export const WILLIAM_SANDERS: BlogAuthor = {
   avatar: "",
 }
 
+export const RAVI_KUMAR: BlogAuthor = {
+  name: "Ravi Kumar",
+  role: "Founder",
+  avatar: "",
+}
+
 const WORDS_PER_MINUTE = 220
 
-function post(input: Omit<BlogPost, "readMinutes" | "coverImage" | "author">): BlogPost {
+function post(
+  input: Omit<BlogPost, "readMinutes" | "coverImage" | "author"> & { author: BlogAuthor }
+): BlogPost {
   const words = input.sections
     .flatMap((section) => [section.heading ?? "", ...section.paragraphs])
     .join(" ")
@@ -40,7 +48,6 @@ function post(input: Omit<BlogPost, "readMinutes" | "coverImage" | "author">): B
     ...input,
     readMinutes: Math.max(3, Math.round(words / WORDS_PER_MINUTE)),
     coverImage: `/images/blog/${input.slug}.jpg`,
-    author: WILLIAM_SANDERS,
   }
 }
 
@@ -70,6 +77,7 @@ export const BLOG_POSTS: BlogPost[] = [
     dateDisplay: "Mar 12, 2026",
     dateISO: "2026-03-12",
     featured: true,
+    author: RAVI_KUMAR,
     sections: [
       {
         paragraphs: [
@@ -85,11 +93,11 @@ export const BLOG_POSTS: BlogPost[] = [
         ],
       },
       {
-        heading: "What we do not do",
+        heading: "How the work stays in your systems",
         paragraphs: [
-          "We do not ask you to replace your ERP. The system of record stays where it is, and the workflow writes into it the same way a person would, with the same permissions and the same audit trail.",
-          "We do not remove people from decisions that matter. Orders above a threshold, price exceptions, and anything customer-facing can wait for an employee to approve. The goal is to remove the retyping, not the judgment.",
-          "And we do not publish results we have not measured. Every engagement starts by agreeing on a metric, such as processing time, manual touches, or exception rate, and the pilot is judged against it.",
+          "The system of record stays where it is. The workflow writes into it the same way a person would, with the same permissions and the same audit trail.",
+          "People stay on decisions that matter. Orders above a threshold, price exceptions, and anything customer-facing can wait for an employee to approve. The goal is to remove the retyping, not the judgment.",
+          "Every engagement starts by agreeing on a metric, such as processing time, manual touches, or exception rate, and the pilot is judged against it.",
         ],
       },
       {
@@ -108,6 +116,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Distribution",
     dateDisplay: "Apr 21, 2026",
     dateISO: "2026-04-21",
+    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
@@ -145,6 +154,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Manufacturing",
     dateDisplay: "Apr 14, 2026",
     dateISO: "2026-04-14",
+    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
@@ -182,6 +192,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Specialty Contractors",
     dateDisplay: "Apr 7, 2026",
     dateISO: "2026-04-07",
+    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
@@ -219,6 +230,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Distribution",
     dateDisplay: "Mar 28, 2026",
     dateISO: "2026-03-28",
+    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
@@ -255,6 +267,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Integration",
     dateDisplay: "Mar 21, 2026",
     dateISO: "2026-03-21",
+    author: RAVI_KUMAR,
     sections: [
       {
         paragraphs: [
@@ -265,7 +278,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: "What actually needs to connect",
         paragraphs: [
           "The work AI can take on usually starts outside the ERP, in email, PDFs, spreadsheets, and shared drives, and ends inside it, as an order, a quote, an update, or a record. The integration layer needs to read reference data from the ERP (customers, items, prices, inventory, open orders) and write prepared transactions back into it.",
-          "Most ERPs used by distributors and manufacturers, including NetSuite, Epicor, Infor, Microsoft Dynamics, Acumatica, and SAP, offer APIs or integration tools that make this possible. Where an API is limited, there are usually import routines or a middleware layer that can be used safely. These are integration capabilities, not partnerships, and each system is assessed on its own terms.",
+          "Most ERPs used by distributors and manufacturers, including NetSuite, Epicor, Infor, Microsoft Dynamics, Acumatica, and SAP, offer APIs or integration tools that make this possible. Where an API is limited, there are usually import routines or a middleware layer that can be used safely. Each system is assessed on its own terms.",
         ],
       },
       {
@@ -291,6 +304,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Operations",
     dateDisplay: "Mar 7, 2026",
     dateISO: "2026-03-07",
+    author: RAVI_KUMAR,
     sections: [
       {
         paragraphs: [
@@ -328,6 +342,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Getting Started",
     dateDisplay: "Feb 28, 2026",
     dateISO: "2026-02-28",
+    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
@@ -366,6 +381,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Measurement",
     dateDisplay: "Feb 14, 2026",
     dateISO: "2026-02-14",
+    author: WILLIAM_SANDERS,
     sections: [
       {
         paragraphs: [
@@ -403,6 +419,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Documents",
     dateDisplay: "Feb 7, 2026",
     dateISO: "2026-02-07",
+    author: RAVI_KUMAR,
     sections: [
       {
         paragraphs: [
@@ -439,6 +456,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Getting Started",
     dateDisplay: "Jan 22, 2026",
     dateISO: "2026-01-22",
+    author: RAVI_KUMAR,
     sections: [
       {
         paragraphs: [
@@ -485,6 +503,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Knowledge",
     dateDisplay: "Jan 12, 2026",
     dateISO: "2026-01-12",
+    author: RAVI_KUMAR,
     sections: [
       {
         paragraphs: [

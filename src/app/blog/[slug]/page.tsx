@@ -95,7 +95,7 @@ export default function BlogArticlePage({ params }: Props) {
     url: `https://zyene.com/blog/${post.slug}`,
     author: {
       "@type": "Person",
-      "@id": "https://zyene.com/#william-sanders",
+      "@id": `https://zyene.com/#${post.author.name.toLowerCase().replace(/\s+/g, "-")}`,
       name: post.author.name,
       jobTitle: post.author.role,
       worksFor: { "@id": "https://zyene.com/#organization" },

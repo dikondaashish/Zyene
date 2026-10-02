@@ -51,7 +51,7 @@ const PRINCIPLES = [
   {
     title: "Measured outcomes",
     description:
-      "Hours, orders, quote turnaround, exceptions, and response time are the language we use with operators. We do not publish numbers we have not measured on your workflow.",
+      "Hours, orders, quote turnaround, exceptions, and response time are agreed before a pilot and used to judge the work.",
   },
   {
     title: "Speed with reliability",

@@ -9,7 +9,7 @@ const pick = (labels: string[]) => pages.filter((p) => labels.includes(p.label))
 
 const COLUMNS = [
   { title: "Industries", links: pick(["Distribution", "Manufacturing", "Contractors"]) },
-  { title: "Platform", links: pick(["Home", "Solutions", "How we work", "Security"]) },
+  { title: "Platform", links: pick(["Home", "Solutions", "How we work", "Use cases", "Products", "Security"]) },
   { title: "Company", links: pick(["About", "Case studies", "Resources", "Contact"]) },
   { title: "Legal", links: SITE_DATA.footerLinks.legal },
 ]

@@ -11,7 +11,7 @@ const productCards = [
     name: "Zyene Reviews",
     subtitle: "Reputation management for local businesses",
     description:
-      "Monitor reviews, reply fast, and automate review growth from one place. Built for operators who need daily visibility and better customer trust.",
+      "Monitor reviews, draft replies, and send follow-up requests after a job. Built because collecting service feedback by hand was too easy to drop.",
     image: "/images/zyene-reviews.png",
     imageAlt: "Zyene Reviews brand logo",
     imageFit: "contain",
@@ -27,7 +27,7 @@ const productCards = [
     name: "Zentraic AI",
     subtitle: "Voice AI platform for real operations",
     description:
-      "Deploy call agents, qualify leads, and sync CRM updates in real time. Zentraic helps teams run telephony automation without breaking existing workflows.",
+      "Answer and place calls, qualify the conversation, and write the outcome to the CRM. Built because that work still sat on a person between the phone and the system of record.",
     image: "/images/zentraic-ai-logo.png",
     imageAlt: "Zentraic AI logo",
     imageFit: "contain",
@@ -47,10 +47,10 @@ export function ProductBlocks() {
         <div className="max-w-[820px] mb-10">
           <p className="text-[12px] font-bold tracking-[0.16em] uppercase text-[#8A8F98] mb-3">Products Overview</p>
           <h2 className="text-[34px] md:text-[52px] tracking-[-0.03em] leading-[1.08] text-[#0A1015] mb-4">
-            Two focused products for growth and operations
+            Two products, from problems we had to solve ourselves
           </h2>
           <p className="text-[16px] text-[#4A4F59] leading-[1.7]">
-            Pick one product to solve one clear problem, or combine both for a full customer journey from first interaction to long-term trust.
+            Zyene Reviews is for the review that never gets requested after a job. Zentraic AI is for the call that still has to be answered, qualified, and written back to the CRM.
           </p>
         </div>
 

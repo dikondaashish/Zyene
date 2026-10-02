@@ -5,7 +5,7 @@ import { FooterCTA } from '@/components/home/FooterCTA';
 export const metadata = {
   title: "Privacy Policy",
   description:
-    "Read Zyene's privacy policy. Learn how we collect, use, and protect your personal information when you use our website and AI automation services.",
+    "How Zyene collects, uses, and protects personal information on zyene.com and in client engagements.",
   alternates: { canonical: "https://zyene.com/legal/privacy-policy" },
   robots: { index: false },
 };

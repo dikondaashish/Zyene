@@ -26,8 +26,8 @@ const POINTS = [
     body: "We state which model providers receive data for a deployment, and we are not tied to one vendor.",
   },
   {
-    title: "No borrowed badges",
-    body: "We do not claim SOC 2, HIPAA, ISO, or vendor partnerships unless they are actually in place.",
+    title: "Scoped deployment",
+    body: "Work can run in your cloud, ours, or a more private setup, decided with the project.",
   },
 ]
 
@@ -57,7 +57,7 @@ export function SecurityStrip() {
               <span className="zy-kicker">Security and control</span>
             </Reveal>
             <RevealText
-              text="Production control, stated only where we can stand behind it."
+              text="Approvals, access, and logging sit inside the workflow."
               className="zy-display text-[clamp(30px,3.8vw,52px)] text-[#0A1015]"
             />
 

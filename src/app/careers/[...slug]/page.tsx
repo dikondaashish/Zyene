@@ -32,7 +32,7 @@ const INTERNAL_ROLES = [
     aliases: ["customer-success-manager"],
   },
   {
-    title: "Marketing Lead – B2B SaaS",
+    title: "Marketing Lead",
     slug: "marketing-lead-b2b-saas",
     aliases: ["marketing-lead-b2b-saas", "marketing-lead-–-b2b-saas"],
   },

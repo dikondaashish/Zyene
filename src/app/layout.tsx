@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
+import { FooterGate } from "@/components/layout/FooterGate";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { NavigationHandler } from "@/components/layout/NavigationHandler";
 import { Analytics } from "@vercel/analytics/next";
@@ -189,7 +189,7 @@ export default function RootLayout({
           <main className="min-h-screen">
             {children}
           </main>
-          <Footer />
+          <FooterGate />
           <Analytics />
         </SmoothScrollProvider>
       </body>

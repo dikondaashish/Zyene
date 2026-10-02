@@ -9,15 +9,9 @@ const nextConfig = {
       { source: "/terms", destination: "/legal/terms-conditions", permanent: true },
       { source: "/terms-of-service", destination: "/legal/terms-conditions", permanent: true },
       { source: "/terms-and-conditions", destination: "/legal/terms-conditions", permanent: true },
+      { source: "/legal/subprocessors", destination: "/legal/data-processing-agreement", permanent: true },
+      { source: "/dpa", destination: "/legal/data-processing-agreement", permanent: true },
     ]
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-    ],
   },
   async headers() {
     return [

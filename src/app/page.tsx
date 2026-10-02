@@ -43,7 +43,7 @@ const HOME_FAQS = [
   {
     question: "Do we need to replace our ERP or field software?",
     answer:
-      "No. We connect to the systems you already use and prepare actions for your team. Replacement is not the product.",
+      "No. We connect to the systems you already use and prepare actions for your team.",
   },
   {
     question: "What does a first project look like?",
@@ -56,9 +56,9 @@ const HOME_FAQS = [
       "Only if you want that. Critical actions can require an employee to approve before anything is written to ERP, CRM, or a field system.",
   },
   {
-    question: "Do you publish customer results?",
+    question: "What happens to our data?",
     answer:
-      "Not until we have them. Example workflows on this site use synthetic business data and are labeled that way.",
+      "Customer operational data is kept separated. A workflow receives only the access it needs. Important actions can be logged so a decision can be reviewed later.",
   },
 ]
 

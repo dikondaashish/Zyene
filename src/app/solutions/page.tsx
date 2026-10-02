@@ -16,8 +16,9 @@ const SOLUTIONS_FAQS = [
     answer: "No. These solutions sit on the systems you already run.",
   },
   {
-    question: "Are the system names official partnerships?",
-    answer: "No. They are integration capabilities. We do not imply a partnership we do not have.",
+    question: "Which systems can you connect?",
+    answer:
+      "We connect to the ERP, CRM, field, and accounting systems already in use, including platforms such as NetSuite, Epicor, ServiceTitan, and Procore where the workflow needs them.",
   },
   {
     question: "Does every action post automatically?",

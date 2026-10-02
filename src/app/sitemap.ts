@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/blog`, lastModified: UPDATED, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/contact`, lastModified: UPDATED, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/careers`, lastModified: UPDATED, changeFrequency: "weekly", priority: 0.4 },
+    { url: `${SITE_URL}/legal/data-processing-agreement`, lastModified: UPDATED, changeFrequency: "yearly", priority: 0.4 },
   ]
 
   const blogRoutes: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({

@@ -2,25 +2,21 @@ import type { Metadata } from "next"
 import Script from "next/script"
 
 export const metadata: Metadata = {
-  title: { absolute: "Zyene Reviews & Zentraic AI | Reputation and Voice Software" },
+  title: { absolute: "Zyene Reviews & Zentraic AI | Products from Zyene" },
   description:
-    "Zyene Reviews monitors reviews and drafts replies. Zentraic AI handles inbound and outbound calls, qualifies leads, and writes the outcome back to your CRM.",
+    "Internal tools we opened as SaaS. Zyene Reviews handles post-service reviews. Zentraic AI handles calls and writes the outcome to your CRM. Separate from Zyene’s industrial operations work.",
   keywords: [
     "Zyene Reviews",
     "Zentraic AI",
-    "AI review management software",
-    "voice AI for business",
-    "AI voice agent",
-    "reputation management AI",
-    "AI call handling",
-    "CRM automation AI",
-    "AI digital transformation products",
+    "post-service review software",
+    "voice AI for CRM",
+    "review follow-up after a job",
   ],
   alternates: { canonical: "https://zyene.com/products" },
   openGraph: {
-    title: "Zyene Reviews & Zentraic AI | Reputation and Voice Software",
+    title: "Zyene Reviews & Zentraic AI | Products from Zyene",
     description:
-      "Zyene Reviews monitors reviews and drafts replies. Zentraic AI handles calls and writes the outcome back to your CRM.",
+      "Internal tools made public: review follow-up and voice AI, beside Zyene’s industrial operations work.",
     url: "https://zyene.com/products",
     type: "website",
   },
@@ -37,7 +33,7 @@ const productsJsonLd = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       description:
-        "AI-powered reputation management for local businesses. Monitor reviews across platforms, generate AI-assisted replies, and grow your review count automatically.",
+        "AI-powered reputation management. Built as an internal tool for post-service feedback, now available at zyenereviews.com.",
       provider: { "@id": "https://zyene.com/#organization" },
     },
     {
@@ -47,7 +43,7 @@ const productsJsonLd = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       description:
-        "Voice AI for business operations. Handles inbound and outbound calls, qualifies leads, routes conversations, and syncs with your CRM automatically.",
+        "Voice AI for inbound and outbound calls, built as an internal tool and opened as a product. Qualifies conversations and writes the outcome to the CRM.",
       provider: { "@id": "https://zyene.com/#organization" },
     },
   ],

@@ -10,14 +10,16 @@ const PAGES = [
   ["Solutions", "/solutions", "Document intelligence, order and quote automation, workflow agents, ERP and CRM integration, enterprise knowledge search, and AI operations assessments."],
   ["How We Work", "/how-we-work", "Discover, design, build, integrate, validate, then deploy and improve, with people kept on the approval step."],
   ["Security", "/security", "Human approval, data isolation, auditability, model and data policies, encryption, and retention."],
-  ["Case Studies", "/case-studies", "Reference implementations for each industry, built on synthetic business data. Not customer results."],
-  ["Products", "/products", "Zyene Reviews (reputation management) and Zentraic AI (voice AI with CRM sync)."],
+  ["Case Studies", "/case-studies", "Example workflows for each industry: purchase orders, RFQs, and bid intake."],
+  ["Use Cases", "/use-cases", "Order desks, RFQs, bids, and documents that still get retyped into an ERP."],
+  ["Products", "/products", "Zyene Reviews and Zentraic AI: internal tools opened as SaaS for post-service reviews and voice, separate from the industrial operations work."],
   ["About", "/about", "Zyene's mission, principles, and how the team works."],
   ["Careers", "/careers", "Open roles at Zyene."],
   ["Resources", "/blog", "Practical articles on putting AI to work inside industrial operations."],
   ["Contact", "/contact", "Book an AI workflow assessment: map one workflow and leave with a recommended pilot."],
   ["Privacy Policy", "/legal/privacy-policy", "How Zyene collects, uses, and protects personal data."],
   ["Terms & Conditions", "/legal/terms-conditions", "Terms governing use of the Zyene website and services."],
+  ["Data Processing Agreement", "/legal/data-processing-agreement", "How Zyene processes customer emails, purchase orders, and ERP data. Subprocessors: Vercel (site hosting), Cloudflare (DNS and SSL), Zoho, and model providers."],
 ] as const
 
 function body() {
@@ -28,7 +30,7 @@ function body() {
     "",
     "## What Zyene does",
     "",
-    "Zyene is an applied AI engineering company for industrial operations. We do not replace ERP, MES, field, or accounting systems; we connect to them. Critical actions such as orders, quotes, and customer replies can require employee approval. Every engagement starts with an assessment of one workflow and a metric agreed before the pilot. Example workflows on the site use synthetic data and are not customer results.",
+    "Zyene is an applied AI engineering company for industrial operations. We connect to ERP, MES, field, and accounting systems rather than replacing them. Critical actions such as orders, quotes, and customer replies can require employee approval. Every engagement starts with an assessment of one workflow and a metric agreed before the pilot.",
     "",
     "## Pages",
     "",

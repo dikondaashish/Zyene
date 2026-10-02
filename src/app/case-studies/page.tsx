@@ -8,7 +8,7 @@ import { FooterCTA } from "@/components/home/FooterCTA"
 export const metadata: Metadata = {
   title: "Industrial AI Workflow Examples",
   description:
-    "Reference implementations for distribution, manufacturing, and specialty contractors. Demonstration using synthetic business data, not customer results.",
+    "Example workflows for distribution, manufacturing, and specialty contractors: purchase orders, RFQs, and bid intake into the systems those teams already run.",
   keywords: [
     "distributor order automation example",
     "manufacturing RFQ automation",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Example Workflows | Zyene",
     description:
-      "Reference implementations using synthetic business data. Not published customer results.",
+      "Example workflows for distribution, manufacturing, and specialty contractors.",
     url: "https://zyene.com/case-studies",
     type: "website",
   },
@@ -31,7 +31,7 @@ const caseStudiesJsonLd = {
   "@id": "https://zyene.com/case-studies",
   name: "Zyene example workflows",
   description:
-    "Reference implementations using synthetic business data for distribution, manufacturing, and specialty contractors.",
+    "Example workflows for distribution, manufacturing, and specialty contractors.",
   url: "https://zyene.com/case-studies",
   isPartOf: { "@id": "https://zyene.com/#website" },
   about: { "@id": "https://zyene.com/#organization" },

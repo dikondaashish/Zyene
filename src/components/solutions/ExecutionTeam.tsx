@@ -25,7 +25,7 @@ export function ExecutionTeam() {
   return (
     <SplitList
       heading="Applied engineering, not a rented department."
-      intro="We design and integrate the workflow with your team. We do not pretend to replace your order desk, estimators, or project managers."
+      intro="We design and integrate the workflow with your team — the order desk, estimators, and project managers stay on the work that needs judgment."
       items={workFlow}
       numbered
       footer={

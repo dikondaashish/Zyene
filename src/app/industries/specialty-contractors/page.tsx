@@ -27,7 +27,7 @@ const faqs = [
   {
     question: "Which field systems?",
     answer:
-      "Integration capabilities can include ServiceTitan, Procore, ERP, and accounting. That is a capability, not an official partnership.",
+      "We connect to ServiceTitan, Procore, ERP, and accounting where the workflow needs them.",
   },
 ]
 
@@ -75,7 +75,7 @@ export default function SpecialtyContractorsPage() {
               title: "The back office retypes the job",
               subtitle: "ServiceTitan, Procore, ERP, or accounting",
               image: "/images/industrial/con-back-office.jpg",
-              points: ["Those names are integration capabilities, not partnerships.", "Records are updated after the email is read.", "A person should still approve the write."],
+              points: ["The field or accounting system stays the record.", "Records are updated after the email is read.", "A person can still approve the write."],
             },
           ]}
         />

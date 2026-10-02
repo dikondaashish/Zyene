@@ -79,9 +79,8 @@ export function CaseStudiesGrid() {
           />
           <Reveal delay={0.1} className="lg:self-end">
             <p className="max-w-[520px] text-[17px] leading-[1.6] text-[#4B525C]">
-              Three reference implementations, one per industry we serve. Each is built and demonstrated on
-              synthetic business data. They show the pattern, not a customer result, and we will publish customer
-              studies as they are approved.
+              Three example workflows, one per industry we serve. Each shows how incoming documents, the people on the
+              desk, and the system of record fit together.
             </p>
           </Reveal>
         </div>

@@ -20,7 +20,7 @@ const CAREERS_FAQS = [
   {
     question: "Do I need technical skills for every role?",
     answer:
-      "No. Technical depth depends on the role. We hire across product, operations, customer success, design, marketing, and engineering.",
+      "No. Technical depth depends on the role. We hire across engineering, data, operations, and the work around industrial AI systems.",
   },
   {
     question: "Do you support remote or hybrid work?",

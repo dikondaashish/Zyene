@@ -32,6 +32,8 @@ export const SITE_DATA = {
       href: "/about",
       children: [
         { label: "About", href: "/about" },
+        { label: "Use Cases", href: "/use-cases" },
+        { label: "Products", href: "/products" },
         { label: "Case Studies", href: "/case-studies" },
         { label: "Security", href: "/security" },
         { label: "Resources", href: "/blog" },
@@ -68,7 +70,7 @@ export const SITE_DATA = {
     },
     {
       name: "Contractors",
-      description: "Bid and RFP intake, estimating support, RFIs, submittals, change orders, job closeout, and back-office updates. ServiceTitan, Procore, and accounting are integration capabilities, not partnerships.",
+      description: "Bid and RFP intake, estimating support, RFIs, submittals, change orders, job closeout, and back-office updates into ServiceTitan, Procore, ERP, or accounting.",
       href: "/industries/specialty-contractors",
       cta: "Explore Contractor AI",
     }
@@ -80,7 +82,7 @@ export const SITE_DATA = {
     },
     {
       title: "System-independent",
-      description: "We connect the ERP, CRM, email, and documents you already run. We do not ask you to replace them."
+      description: "We connect the ERP, CRM, email, and documents you already run."
     },
     {
       title: "Human-controlled",
@@ -106,11 +108,11 @@ export const SITE_DATA = {
     },
     {
       question: "Do we have to replace our ERP or CRM?",
-      answer: "No. We integrate with the systems you already use. We do not position Zyene as a replacement for ERP, MES, field software, or accounting."
+      answer: "No. We integrate with the systems you already use — ERP, MES, field software, and accounting stay in place."
     },
     {
       question: "Which systems can you connect?",
-      answer: "Integration capabilities include platforms such as NetSuite, Epicor, Infor, Microsoft Dynamics, Acumatica, SAP, Salesforce, HubSpot, ServiceTitan, Procore, and QuickBooks. Listing a system is not an official partnership."
+      answer: "We connect to platforms such as NetSuite, Epicor, Infor, Microsoft Dynamics, Acumatica, SAP, Salesforce, HubSpot, ServiceTitan, Procore, and QuickBooks, depending on the workflow."
     },
     {
       question: "Will AI take actions on its own?",
@@ -118,7 +120,7 @@ export const SITE_DATA = {
     },
     {
       question: "How do you measure results?",
-      answer: "We agree on the metric before a pilot: processing time, manual touches, exception rate, cost per transaction, quote turnaround, employee hours, or customer response time. We do not publish invented results."
+      answer: "We agree on the metric before a pilot: processing time, manual touches, exception rate, cost per transaction, quote turnaround, employee hours, or customer response time."
     }
   ],
   footerLinks: {
@@ -129,6 +131,8 @@ export const SITE_DATA = {
       { label: "Contractors", href: "/industries/specialty-contractors" },
       { label: "Solutions", href: "/solutions" },
       { label: "How we work", href: "/how-we-work" },
+      { label: "Use cases", href: "/use-cases" },
+      { label: "Products", href: "/products" },
       { label: "Security", href: "/security" },
       { label: "Case studies", href: "/case-studies" },
       { label: "Resources", href: "/blog" },
@@ -138,6 +142,7 @@ export const SITE_DATA = {
     legal: [
       { label: "Privacy policy", href: "/legal/privacy-policy" },
       { label: "Terms & conditions", href: "/legal/terms-conditions" },
+      { label: "Data processing", href: "/legal/data-processing-agreement" },
       { label: "Email notice", href: "/legal/email-notice" },
     ],
   },

@@ -91,7 +91,7 @@ function ReviewScreen() {
     <div
       ref={ref}
       role="group"
-      aria-label="Example order review screen using synthetic data"
+      aria-label="Example order review screen"
       className="overflow-hidden rounded-[18px] border border-white/10 bg-[#0D141A] text-left shadow-[0_50px_100px_-50px_rgba(0,0,0,0.9)]"
     >
       <div className="flex h-12 items-center justify-between gap-4 border-b border-white/[0.08] px-4 md:px-5">

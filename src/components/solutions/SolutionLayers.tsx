@@ -45,12 +45,12 @@ const defaultLayers: SolutionLayer[] = [
   },
   {
     title: "ERP and CRM Integration",
-    subtitle: "Capabilities, not claimed partnerships",
+    subtitle: "The systems you already run",
     image: "/images/industrial/mfg-erp-mes.jpg",
     points: [
-      "Systems we can work with include NetSuite, Epicor, Infor, Dynamics, Acumatica, and SAP.",
+      "Connect to platforms such as NetSuite, Epicor, Infor, Dynamics, Acumatica, and SAP.",
       "Also Salesforce, HubSpot, ServiceTitan, Procore, and QuickBooks where the workflow needs them.",
-      "A logo here is an integration capability, not an official partnership.",
+      "The ERP or CRM stays the system of record. The workflow writes into it the way a person would.",
     ],
   },
   {

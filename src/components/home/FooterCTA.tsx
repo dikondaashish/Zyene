@@ -31,13 +31,13 @@ export function FooterCTA() {
 
       <div className="zy-container relative flex min-h-[86vh] flex-col justify-center py-28 md:py-36">
         <RevealText
-          text="Find the workflow where AI can create measurable value first."
+          text="Map one workflow that still moves by hand."
           className="zy-display max-w-[1000px] text-[clamp(38px,6vw,88px)] text-white"
         />
         <Reveal delay={0.15} className="mt-8 max-w-[560px]">
           <p className="text-[17px] leading-[1.6] text-white/70 md:text-[18px]">
-            We&apos;ll map the process, identify the bottlenecks, and show you where AI can realistically reduce
-            repetitive work without replacing the systems your business already depends on.
+            We&apos;ll walk through the email, documents, and ERP around that workflow, and recommend a pilot. The
+            systems you already run stay in place.
           </p>
         </Reveal>
         <Reveal delay={0.25} className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">

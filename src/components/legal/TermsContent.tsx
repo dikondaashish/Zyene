@@ -40,7 +40,7 @@ export default function TermsContent() {
           {/* 1 */}
           <Section title="1. Services">
             <P>
-              Zyene provides AI-powered digital transformation services to businesses, including but not limited to: AI workflow automation, systems integration, CRM automation, marketing and operations AI systems, AI voice and lead management tools, and execution support (&quot;Services&quot;). Specific deliverables, timelines, fees, and engagement terms for any project are set out in a separate written agreement, statement of work, or proposal (&quot;Service Agreement&quot;) between Zyene and the client.
+              Zyene designs, builds, and integrates production AI systems for distributors, manufacturers, and specialty contractors, including workflow assessments, document intelligence, order and quote automation, workflow agents, ERP, CRM, and field-system integration, operational search, and the Zyene Reviews and Zentraic AI software products (&quot;Services&quot;). Specific deliverables, timelines, fees, and engagement terms for any project are set out in a separate written agreement, statement of work, or proposal (&quot;Service Agreement&quot;) between Zyene and the client.
             </P>
             <P>
               These Terms apply to your use of our website and, where no separate Service Agreement exists, to your general engagement with Zyene. In the event of any conflict between these Terms and a Service Agreement, the Service Agreement shall prevail.
@@ -130,7 +130,7 @@ export default function TermsContent() {
               We do not warrant that our website will be uninterrupted, error-free, or free of viruses or other harmful components. We do not warrant the accuracy, completeness, or usefulness of any information on the website. Any reliance on such information is at your own risk.
             </P>
             <P>
-              Results described on our website (including case studies, testimonials, and performance statistics) represent outcomes achieved by specific clients under specific conditions and are not guarantees of results for other clients or engagements.
+              Example workflows on our website illustrate how a system can operate. They are not a guarantee of results for any engagement.
             </P>
           </Section>
 
@@ -219,6 +219,7 @@ export default function TermsContent() {
             <P>If you have questions about these Terms, please contact us:</P>
             <div className="rounded-[10px] border border-[#E3E8EF] bg-[#F8FAFB] px-6 py-5 space-y-1">
               <p className="text-[16px] font-semibold text-[#0A1015]">Zyene</p>
+              <p className="text-[15px] text-[#3D4145]">28 Geary St Ste 650 #1892, San Francisco, CA 94108, United States</p>
               <p className="text-[15px] text-[#3D4145]">Email: <a href="mailto:legal@zyene.com" className="text-[#0099FF] underline underline-offset-2">legal@zyene.com</a></p>
               <p className="text-[15px] text-[#3D4145]">Website: <a href="https://zyene.com" className="text-[#0099FF] underline underline-offset-2">zyene.com</a></p>
             </div>
@@ -227,10 +228,7 @@ export default function TermsContent() {
           {/* Footer */}
           <div className="pt-12 border-t border-[#EEEEEE] space-y-2">
             <p className="text-[14px] text-[#888888] font-medium uppercase tracking-widest italic">
-              Last updated: April 27, 2026
-            </p>
-            <p className="text-[13px] text-[#AAAAAA] leading-[1.6]">
-              This document is provided for informational purposes. Zyene recommends consulting a qualified legal professional to ensure full compliance with all applicable laws and regulations for your specific jurisdiction and business activities.
+              Last updated: October 2, 2026
             </p>
           </div>
 

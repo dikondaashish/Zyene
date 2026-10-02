@@ -41,9 +41,9 @@ export default function PrivacyContent() {
           <Section title="1. Information We Collect">
             <P>We collect information in the following ways:</P>
             <ul className="list-disc pl-6 space-y-2">
-              <Li><strong>Information you give us directly.</strong> When you fill out our contact form, book a strategy call, apply for a role, or communicate with us by email, we collect your name, email address, company name, job title, phone number, and any details you include in your message.</Li>
+              <Li><strong>Information you give us directly.</strong> When you fill out our contact form, book an assessment call, join our talent pool, apply for a role, or communicate with us by email, we collect your name, email address, company name, job title, phone number, and any details you include in your message.</Li>
               <Li><strong>Automatically collected information.</strong> When you visit our website we may automatically receive your IP address, browser type, operating system, referring URL, pages visited, and time spent on each page through standard server logs and analytics tools.</Li>
-              <Li><strong>Cookies and similar technologies.</strong> We use cookies to operate the website, remember your preferences, and understand traffic patterns. See Section 6 for details.</Li>
+              <Li><strong>Cookies and similar technologies.</strong> We do not use advertising or analytics cookies. See Section 6 for details.</Li>
               <Li><strong>Information from third-party tools.</strong> Our website uses third-party services (listed in Section 5) that may collect data in accordance with their own privacy policies.</Li>
             </ul>
           </Section>
@@ -53,7 +53,7 @@ export default function PrivacyContent() {
             <P>We use the information we collect to:</P>
             <ul className="list-disc pl-6 space-y-2">
               <Li>Respond to your enquiries and deliver the services you have requested.</Li>
-              <Li>Schedule and conduct strategy calls or discovery sessions.</Li>
+              <Li>Schedule and conduct workflow assessments and discovery sessions.</Li>
               <Li>Send you service-related communications, updates, and project information.</Li>
               <Li>Send marketing content such as newsletters or case studies — only where you have given your consent, and only until you unsubscribe.</Li>
               <Li>Improve our website and services based on aggregated, anonymised usage data.</Li>
@@ -91,25 +91,24 @@ export default function PrivacyContent() {
           <Section title="5. Third-Party Services and Data Sharing">
             <P>We share data with trusted third-party services that help us operate our business. Each provider processes data in accordance with its own privacy policy and applicable data protection law. The services we currently use include:</P>
             <ul className="list-disc pl-6 space-y-2">
-              <Li><strong>Zoho CRM / Zoho Sheets</strong> — to manage client and prospect records.</Li>
-              <Li><strong>Web3Forms</strong> — to receive and route contact form submissions.</Li>
-              <Li><strong>Vercel</strong> — our website hosting and infrastructure provider.</Li>
-              <Li><strong>Google Analytics / Google Tag Manager</strong> (if active) — to understand website traffic and user behaviour.</Li>
-              <Li><strong>Stripe</strong> — for payment processing, if applicable.</Li>
+              <Li><strong>Vercel</strong> — website hosting, and Vercel Web Analytics for aggregate traffic measurement without cookies.</Li>
+              <Li><strong>Zoho Sheets</strong> — to store contact form and talent pool submissions.</Li>
+              <Li><strong>Web3Forms</strong> — to receive and route contact form submissions by email.</Li>
+              <Li><strong>Cloudflare Turnstile</strong> — to protect our forms from spam and automated abuse.</Li>
+              <Li><strong>Abstract API</strong> — to check that an email address submitted through our contact form is valid.</Li>
+              <Li><strong>Cal.com</strong> — to schedule calls you book with us.</Li>
+              <Li><strong>Stripe</strong> — for payment processing, where an engagement or product subscription is billed.</Li>
             </ul>
+            <P>A current list of subprocessors, including Vercel, Cloudflare, Zoho, and model providers used in client work, is in our <a href="/legal/data-processing-agreement" className="text-[#0099FF] underline underline-offset-2">Data Processing Agreement</a>.</P>
             <P>We do not share your personal data with any other third party without your explicit consent, except where required by law or court order.</P>
             <P>If we ever sell or transfer any part of our business, personal data held at that time may form part of the transferred assets. We will notify affected individuals in advance wherever possible.</P>
           </Section>
 
           {/* 6 */}
           <Section title="6. Cookies">
-            <P>Cookies are small text files stored on your device when you visit our website. We use the following types of cookies:</P>
-            <ul className="list-disc pl-6 space-y-2">
-              <Li><strong>Essential cookies</strong> — required for the website to function. These cannot be disabled.</Li>
-              <Li><strong>Analytics cookies</strong> — help us understand how visitors use the site (pages viewed, session duration, referral source). We use this data in aggregate only.</Li>
-              <Li><strong>Preference cookies</strong> — remember choices you make (e.g., language or display settings).</Li>
-            </ul>
-            <P>You can control and delete cookies through your browser settings. Disabling analytics cookies will not affect your ability to use the website but will limit our ability to improve it. For more information about managing cookies, visit <a href="https://www.allaboutcookies.org" target="_blank" rel="noopener noreferrer" className="text-[#0099FF] underline underline-offset-2">allaboutcookies.org</a>.</P>
+            <P>Cookies are small text files stored on your device when you visit a website. Zyene does not use advertising, tracking, or analytics cookies. Our traffic measurement (Vercel Web Analytics) works without cookies and does not identify individual visitors.</P>
+            <P>Cloudflare Turnstile, which protects our forms, may store information needed to tell people from automated traffic. If we ever add cookies that are not strictly necessary, we will update this policy and ask for consent where the law requires it.</P>
+            <P>You can control and delete cookies through your browser settings. For more information about managing cookies, visit <a href="https://www.allaboutcookies.org" target="_blank" rel="noopener noreferrer" className="text-[#0099FF] underline underline-offset-2">allaboutcookies.org</a>.</P>
           </Section>
 
           {/* 7 */}
@@ -175,6 +174,7 @@ export default function PrivacyContent() {
             <P>If you have questions, concerns, or requests regarding this Privacy Policy or how we handle your data, please contact us:</P>
             <div className="rounded-[10px] border border-[#E3E8EF] bg-[#F8FAFB] px-6 py-5 space-y-1">
               <p className="text-[16px] font-semibold text-[#0A1015]">Zyene</p>
+              <p className="text-[15px] text-[#3D4145]">28 Geary St Ste 650 #1892, San Francisco, CA 94108, United States</p>
               <p className="text-[15px] text-[#3D4145]">Email: <a href="mailto:privacy@zyene.com" className="text-[#0099FF] underline underline-offset-2">privacy@zyene.com</a></p>
               <p className="text-[15px] text-[#3D4145]">Website: <a href="https://zyene.com" className="text-[#0099FF] underline underline-offset-2">zyene.com</a></p>
             </div>
@@ -183,10 +183,7 @@ export default function PrivacyContent() {
           {/* Footer */}
           <div className="pt-12 border-t border-[#EEEEEE] space-y-2">
             <p className="text-[14px] text-[#888888] font-medium uppercase tracking-widest italic">
-              Last updated: April 27, 2026
-            </p>
-            <p className="text-[13px] text-[#AAAAAA] leading-[1.6]">
-              This document is provided for informational purposes. Zyene recommends consulting a qualified legal professional to ensure full compliance with all applicable laws and regulations for your specific jurisdiction and business activities.
+              Last updated: October 2, 2026
             </p>
           </div>
 

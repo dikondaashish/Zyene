@@ -5,7 +5,7 @@ import { FooterCTA } from '@/components/home/FooterCTA';
 export const metadata = {
   title: "Terms & Conditions",
   description:
-    "Review the terms and conditions governing use of Zyene's website and AI automation services.",
+    "The terms that govern use of the Zyene website and Zyene's AI engineering services and software.",
   alternates: { canonical: "https://zyene.com/legal/terms-conditions" },
   robots: { index: false },
 };

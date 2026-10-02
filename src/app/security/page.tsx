@@ -7,19 +7,20 @@ import { FooterCTA } from "@/components/home/FooterCTA"
 export const metadata: Metadata = {
   title: "Industrial AI Security",
   description:
-    "Human approval, data isolation, access control, auditability, encryption, and retention. We do not claim certifications we do not hold.",
+    "Human approval, data isolation, access control, auditability, encryption, and retention for industrial AI workflows.",
   alternates: { canonical: "https://zyene.com/security" },
 }
 
 const faqs = [
   {
-    question: "Are you SOC 2 certified?",
-    answer: "No. We will not say we are certified until we are.",
+    question: "Who can see data in a workflow?",
+    answer:
+      "Access is limited to the people and systems on that engagement. A workflow receives only the permissions it needs, and customer information is kept separated.",
   },
   {
-    question: "Can we run this in our own environment later?",
+    question: "Can this run in our own environment?",
     answer:
-      "Deployment options can include your cloud, our cloud, or a more private setup as a project requires. We do not promise a private environment on day one.",
+      "Deployment can use your cloud, ours, or a more private setup. The arrangement is scoped with the project.",
   },
 ]
 
@@ -29,14 +30,14 @@ export default function SecurityPage() {
       <SolutionsHero
         headingLines={["Security and", "responsible AI."]}
         eyebrow="Security"
-        description="Industrial buyers need to know who approves an action, who can see the data, and what is logged. This page states the controls. It does not invent a certification."
+        description="Industrial buyers need to know who approves an action, who can see the data, and what is logged. These are the controls that sit inside the workflow."
         imageAlt="Security and responsible AI"
         image="/images/industrial/hero-security.jpg"
       />
       <div id="main-content" className="relative z-10 overflow-clip rounded-t-[28px] bg-white">
         <SolutionLayers
           eyebrow="Controls"
-          heading="What we will say, and what we will not claim"
+          heading="How production work stays under control"
           layers={[
             {
               title: "Human approval",
@@ -85,17 +86,17 @@ export default function SecurityPage() {
               points: [
                 "Data is encrypted in transit and at rest where the deployment supports it.",
                 "We state how long information is retained for that project.",
-                "Retention is part of the agreement, not a slogan.",
+                "Retention is written into the agreement for that project.",
               ],
             },
             {
-              title: "What we will not claim",
-              subtitle: "No borrowed enterprise badges",
+              title: "Deployment",
+              subtitle: "Scoped with the project",
               image: "/images/industrial/hero-how-we-work.jpg",
               points: [
-                "We do not say SOC 2 certified until we are.",
-                "We do not imply vendor partnerships we do not have.",
-                "Deployment in your cloud or a private environment is discussed per project.",
+                "Work can run in your cloud, ours, or a more private setup.",
+                "Model providers for a deployment are named in the agreement.",
+                "Retention and access follow that project’s terms.",
               ],
             },
           ]}

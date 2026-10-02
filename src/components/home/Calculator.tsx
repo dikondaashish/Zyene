@@ -1,23 +1,44 @@
 "use client"
 
 import * as React from "react"
-import { motion, animate } from "framer-motion"
-import { Button } from "@/components/ui/Button"
 import Link from "next/link"
-import { REVEAL_VIEWPORT } from "@/lib/motion"
+import { Button } from "@/components/ui/Button"
+import { Reveal, RevealText } from "@/components/ui/Reveal"
 
-function AnimatedNumber({ value }: { value: number }) {
-  const [displayValue, setDisplayValue] = React.useState(value);
+const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
 
-  React.useEffect(() => {
-    const controls = animate(displayValue, value, {
-      duration: 0.8,
-      onUpdate: (latest) => setDisplayValue(Math.round(latest)),
-    });
-    return () => controls.stop();
-  }, [value, displayValue]);
+type SliderProps = {
+  id: string
+  label: string
+  value: number
+  display: string
+  min: number
+  max: number
+  step?: number
+  onChange: (value: number) => void
+}
 
-  return <>{displayValue.toLocaleString()}</>;
+function Slider({ id, label, value, display, min, max, step = 1, onChange }: SliderProps) {
+  return (
+    <div>
+      <div className="flex items-baseline justify-between gap-4">
+        <label htmlFor={id} className="text-[15px] text-[#4B525C]">
+          {label}
+        </label>
+        <span className="font-mono text-[18px] text-[#0A1015]">{display}</span>
+      </div>
+      <input
+        id={id}
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="mt-4 h-1 w-full cursor-pointer appearance-none rounded-full bg-[#0A1015]/10 accent-[#0A1015]"
+      />
+    </div>
+  )
 }
 
 export function Calculator() {
@@ -25,128 +46,66 @@ export function Calculator() {
   const [hoursPerWeek, setHoursPerWeek] = React.useState(13)
   const [hourlyCost, setHourlyCost] = React.useState(40)
 
-  // Computations
-  const totalHoursLostPerWeek = teamSize * hoursPerWeek
-  const hoursLostPerMonth = totalHoursLostPerWeek * 4
-  const costPerMonth = hoursLostPerMonth * hourlyCost
+  const hoursPerMonth = teamSize * hoursPerWeek * 4
+  const costPerMonth = hoursPerMonth * hourlyCost
 
   return (
-    <section className="py-24 px-6 bg-white overflow-hidden">
-      <div className="max-w-[1200px] mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={REVEAL_VIEWPORT}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-12"
-        >
-          <p className="text-[13px] font-semibold text-[#0A1015] tracking-widest uppercase mb-6">ROI Calculator</p>
-          <h2 className="text-[36px] md:text-[48px] leading-[1.05] font-normal tracking-[-0.03em] text-[#0A1015] max-w-[800px] mx-auto">
-            Estimate the cost of manual work
-          </h2>
-          <p className="text-[16px] text-[#4A4F59] mt-6 max-w-[600px] mx-auto">
-            Enter your own numbers. This is an estimate of time cost, not a promised savings rate.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-black/10 rounded-[4px] overflow-hidden bg-[#F7F8FA] shadow-2xl">
-          
-          {/* Inputs */}
-          <div className="flex flex-col gap-12 p-10 md:p-14 bg-white border-r border-black/10">
-            <div className="space-y-8">
-              <div className="flex justify-between items-center">
-                <label className="font-medium text-[15px] text-[#4A4F59]">Team Size</label>
-                <span className="font-semibold text-[#0A1015] text-[20px]">{teamSize}</span>
-              </div>
-              <input
-                type="range"
-                min="1"
-                max="100"
-                value={teamSize}
-                onChange={(e) => setTeamSize(Number(e.target.value))}
-                className="w-full h-1 bg-black/10 rounded-full appearance-none cursor-pointer accent-brand-blue slider-thumb"
-              />
-            </div>
-
-            <div className="space-y-8">
-              <div className="flex justify-between items-center">
-                <label className="font-medium text-[15px] text-[#4A4F59]">Hours lost per week (per person)</label>
-                <span className="font-semibold text-[#0A1015] text-[20px]">{hoursPerWeek}h</span>
-              </div>
-              <input
-                type="range"
-                min="1"
-                max="40"
-                value={hoursPerWeek}
-                onChange={(e) => setHoursPerWeek(Number(e.target.value))}
-                className="w-full h-1 bg-black/10 rounded-full appearance-none cursor-pointer accent-brand-blue slider-thumb"
-              />
-            </div>
-
-            <div className="space-y-8">
-              <div className="flex justify-between items-center">
-                <label className="font-medium text-[15px] text-[#4A4F59]">Average hourly cost</label>
-                <span className="font-semibold text-[#0A1015] text-[20px]">${hourlyCost}</span>
-              </div>
-              <input
-                type="range"
-                min="10"
-                max="200"
-                step="5"
-                value={hourlyCost}
-                onChange={(e) => setHourlyCost(Number(e.target.value))}
-                className="w-full h-1 bg-black/10 rounded-full appearance-none cursor-pointer accent-brand-blue slider-thumb"
-              />
-            </div>
-          </div>
-
-          {/* Outputs */}
-          <div className="flex flex-col justify-center gap-10 p-10 md:p-14 bg-[#F7F8FA]">
-            <h3 className="text-[28px] md:text-[36px] font-normal text-[#0A1015] leading-[1.2] tracking-tight">
-              You&apos;re losing <span className="text-[#4A4F59]"><AnimatedNumber value={hoursLostPerMonth} /> hours/month</span> to repetitive tasks. That&apos;s <span className="text-[#4A4F59]">${(costPerMonth).toLocaleString()}/month</span> in time costs.
-            </h3>
-            <div className="h-px w-full bg-black/10" />
-            <p className="text-[18px] text-[#4A4F59] leading-[1.6]">
-              That monthly figure is the cost of the hours you entered. A pilot measures how much of it a workflow can actually recover.
+    <section className="border-t border-line bg-white">
+      <div className="zy-container zy-section grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-24">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <RevealText
+            text="Estimate the cost of manual work."
+            className="zy-display max-w-[560px] text-[clamp(34px,4.6vw,64px)] text-[#0A1015]"
+          />
+          <Reveal delay={0.1}>
+            <p className="mt-8 max-w-[440px] text-[17px] leading-[1.6] text-[#4B525C]">
+              Enter your own numbers. This is the cost of the time you describe, not a promised saving. A pilot
+              measures how much of it a workflow actually gives back.
             </p>
-            <div className="mt-4">
-              <Button size="lg" className="w-full" variant="dark" asChild>
-                <Link
-                  href="/contact"
-                  scroll
-                  onClick={() => {
-                    window.scrollTo(0, 0)
-                  }}
-                >
-                  Book an AI Workflow Assessment
-                </Link>
-              </Button>
-            </div>
-          </div>
+          </Reveal>
         </div>
 
-        <style jsx global>{`
-          input[type='range']::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #0099FF;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 4px solid #FFFFFF;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          }
-          input[type='range']::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #0099FF;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 4px solid #FFFFFF;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          }
-        `}</style>
+        <Reveal className="overflow-hidden rounded-[24px] border border-line">
+          <div className="grid gap-9 bg-white p-7 md:p-10">
+            <Slider
+              id="calc-team"
+              label="People doing this work"
+              value={teamSize}
+              display={String(teamSize)}
+              min={1}
+              max={100}
+              onChange={setTeamSize}
+            />
+            <Slider
+              id="calc-hours"
+              label="Hours per person, per week"
+              value={hoursPerWeek}
+              display={`${hoursPerWeek}h`}
+              min={1}
+              max={40}
+              onChange={setHoursPerWeek}
+            />
+            <Slider
+              id="calc-cost"
+              label="Loaded hourly cost"
+              value={hourlyCost}
+              display={usd.format(hourlyCost)}
+              min={10}
+              max={200}
+              step={5}
+              onChange={setHourlyCost}
+            />
+          </div>
+          <div className="border-t border-line bg-paper p-7 md:p-10" aria-live="polite">
+            <p className="font-mono text-[12px] uppercase tracking-[0.08em] text-[#8A8F98]">Each month</p>
+            <p className="mt-4 text-[28px] font-medium leading-[1.2] tracking-[-0.025em] text-[#0A1015] md:text-[34px]">
+              {hoursPerMonth.toLocaleString("en-US")} hours, about {usd.format(costPerMonth)} in time.
+            </p>
+            <Button variant="dark" size="lg" className="mt-8" asChild>
+              <Link href="/contact">Book an Assessment</Link>
+            </Button>
+          </div>
+        </Reveal>
       </div>
     </section>
   )
