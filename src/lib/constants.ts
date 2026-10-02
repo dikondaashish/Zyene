@@ -123,6 +123,13 @@ export const SITE_DATA = {
       answer: "We agree on the metric before a pilot: processing time, manual touches, exception rate, cost per transaction, quote turnaround, employee hours, or customer response time."
     }
   ],
+  socials: [
+    { id: "linkedin", label: "Zyene on LinkedIn", href: "https://www.linkedin.com/company/zyene/" },
+    { id: "x", label: "Zyene on X", href: "https://x.com/zyene" },
+    { id: "youtube", label: "Zyene on YouTube", href: "https://www.youtube.com/@Zyene-inc" },
+    { id: "instagram", label: "Zyene on Instagram", href: "https://www.instagram.com/zyene_inc/" },
+    { id: "facebook", label: "Zyene on Facebook", href: "https://www.facebook.com/zyene" },
+  ],
   footerLinks: {
     pages: [
       { label: "Home", href: "/" },

@@ -148,8 +148,11 @@ const organizationJsonLd = {
         "Document intelligence",
       ],
       sameAs: [
-        "https://www.linkedin.com/company/zyene",
-        "https://twitter.com/zyene",
+        "https://www.linkedin.com/company/zyene/",
+        "https://x.com/zyene",
+        "https://www.youtube.com/@Zyene-inc",
+        "https://www.instagram.com/zyene_inc/",
+        "https://www.facebook.com/zyene",
         "https://zyenereviews.com",
       ],
     },

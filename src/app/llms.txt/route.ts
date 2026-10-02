@@ -50,6 +50,11 @@ function body() {
     "- General: support@zyene.com",
     "- Privacy: privacy@zyene.com",
     "- Legal: legal@zyene.com",
+    "- LinkedIn: https://www.linkedin.com/company/zyene/",
+    "- X: https://x.com/zyene",
+    "- YouTube: https://www.youtube.com/@Zyene-inc",
+    "- Instagram: https://www.instagram.com/zyene_inc/",
+    "- Facebook: https://www.facebook.com/zyene",
     "- Backed by Google for Startups and Stripe",
     "",
   ]

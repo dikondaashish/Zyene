@@ -1,11 +1,19 @@
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
-import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6"
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter, FaYoutube } from "react-icons/fa6"
 import { SITE_DATA } from "@/lib/constants"
 
 const pages = SITE_DATA.footerLinks.pages
 const pick = (labels: string[]) => pages.filter((p) => labels.includes(p.label))
+
+const SOCIAL_ICONS = {
+  linkedin: FaLinkedinIn,
+  x: FaXTwitter,
+  youtube: FaYoutube,
+  instagram: FaInstagram,
+  facebook: FaFacebookF,
+} as const
 
 const COLUMNS = [
   { title: "Industries", links: pick(["Distribution", "Manufacturing", "Contractors"]) },
@@ -96,24 +104,21 @@ export function Footer() {
         <div className="mt-20 flex flex-col-reverse items-start justify-between gap-6 border-t border-white/10 py-8 sm:flex-row sm:items-center">
           <p className="text-[13px] text-white/45">© 2026 Zyene. All Rights Reserved</p>
           <div className="flex items-center gap-2">
-            <a
-              href="https://twitter.com/zyene"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Zyene on X (Twitter)"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-white/30 hover:text-white"
-            >
-              <FaXTwitter className="h-3.5 w-3.5" />
-            </a>
-            <a
-              href="https://www.linkedin.com/company/zyene"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Zyene on LinkedIn"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-white/30 hover:text-white"
-            >
-              <FaLinkedinIn className="h-3.5 w-3.5" />
-            </a>
+            {SITE_DATA.socials.map((social) => {
+              const Icon = SOCIAL_ICONS[social.id as keyof typeof SOCIAL_ICONS]
+              return (
+                <a
+                  key={social.id}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/60 transition-colors hover:border-white/30 hover:text-white"
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                </a>
+              )
+            })}
           </div>
         </div>
       </div>
