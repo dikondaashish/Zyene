@@ -36,9 +36,9 @@ export function Hero() {
       return
     }
     const start = () => {
-      video.play().catch(() => {})
+      void video.play().catch(() => {})
     }
-    if ("requestIdleCallback" in window) {
+    if (typeof window.requestIdleCallback === "function") {
       const id = window.requestIdleCallback(start, { timeout: 2000 })
       return () => window.cancelIdleCallback(id)
     }
