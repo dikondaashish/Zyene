@@ -82,7 +82,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-4">
             {COLUMNS.map((col) => (
               <div key={col.title}>
-                <p className="mb-5 font-mono text-[11.5px] uppercase tracking-[0.1em] text-white/40">{col.title}</p>
+                <p className="mb-5 font-mono text-[11.5px] uppercase tracking-[0.1em] text-white/70">{col.title}</p>
                 <ul className="flex flex-col gap-3">
                   {col.links.map((link) => (
                     <li key={link.href}>
@@ -123,11 +123,10 @@ export function Footer() {
         </div>
       </div>
 
-      <div aria-hidden="true" className="pointer-events-none select-none overflow-hidden">
-        <p className="font-wide -mb-[0.22em] whitespace-nowrap text-center text-[25vw] font-semibold leading-[0.8] tracking-[-0.06em] text-white/[0.035] [-webkit-text-stroke:1px_rgba(255,255,255,0.08)]">
-          Zyene
-        </p>
-      </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none h-[18vw] bg-[url('/images/footer-wordmark.svg')] bg-[length:100%_auto] bg-bottom bg-no-repeat"
+      />
     </footer>
   )
 }

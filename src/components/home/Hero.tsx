@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
@@ -31,11 +30,20 @@ export function Hero() {
   React.useEffect(() => {
     const video = videoRef.current
     if (!video) return
-    if (reduce) {
+    const desktop = window.matchMedia("(min-width: 768px)").matches
+    if (reduce || !desktop) {
       video.pause()
       return
     }
-    video.play().catch(() => {})
+    const start = () => {
+      video.play().catch(() => {})
+    }
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(start, { timeout: 2000 })
+      return () => window.cancelIdleCallback(id)
+    }
+    const timer = window.setTimeout(start, 1200)
+    return () => window.clearTimeout(timer)
   }, [reduce])
 
   let wordIndex = 0
@@ -47,22 +55,13 @@ export function Hero() {
       className="sticky top-0 z-0 flex min-h-[100dvh] flex-col overflow-hidden bg-[#0A1015] text-white"
     >
       <motion.div aria-hidden="true" style={{ scale: reduce ? 1 : mediaScale }} className="absolute inset-0 origin-center">
-        <Image
-          src="/videos/hero-home-poster.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-bottom"
-        />
         <video
           ref={videoRef}
-          autoPlay
           muted
           loop
           playsInline
-          preload="auto"
-          poster="/videos/hero-home-poster.jpg"
+          preload="none"
+          poster="/videos/hero-home-poster.webp"
           className="absolute inset-0 h-full w-full object-cover object-bottom motion-reduce:hidden"
         >
           <source src="/videos/hero-home-av1.mp4" type='video/mp4; codecs="av01.0.08M.10"' />
@@ -90,12 +89,12 @@ export function Hero() {
                 const i = wordIndex++
                 return (
                   <React.Fragment key={word}>
-                    <span aria-hidden="true" className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom">
+                    <span aria-hidden="true" className="inline-block align-bottom">
                       <motion.span
                         className="inline-block"
-                        initial={reduce ? false : { y: "110%" }}
+                        initial={reduce ? false : { y: 8 }}
                         animate={{ y: 0 }}
-                        transition={{ duration: 1.1, delay: 0.25 + i * 0.06, ease: EASE }}
+                        transition={{ duration: 0.7, delay: 0.04 + i * 0.03, ease: EASE }}
                       >
                         {word}
                       </motion.span>
@@ -109,17 +108,17 @@ export function Hero() {
         </h1>
 
         <div className="mt-10 grid items-end gap-10 lg:mt-14 lg:grid-cols-[1fr_auto] lg:gap-16">
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.75, ease: EASE }}
-            className="max-w-[560px]"
-          >
+          <div className="max-w-[560px]">
             <p className="text-[17px] leading-[1.55] text-white/75 md:text-[19px]">
               We design, build, and integrate production AI for distributors, manufacturers, and specialty
               contractors, inside the systems you already run.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
+              className="mt-8 flex flex-col gap-3 sm:flex-row"
+            >
               <Button variant="primary" size="lg" asChild>
                 <Link href="/contact">
                   Book an AI Workflow Assessment
@@ -129,8 +128,8 @@ export function Hero() {
               <Button variant="secondary" size="lg" asChild>
                 <Link href="/how-we-work">See How It Works</Link>
               </Button>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
           <motion.nav
             aria-label="Industries"

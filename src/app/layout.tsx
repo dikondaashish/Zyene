@@ -120,6 +120,12 @@ const organizationJsonLd = {
         width: 200,
         height: 60,
       },
+      image: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/images/og-image.jpg`,
+        width: 1200,
+        height: 630,
+      },
       email: "support@zyene.com",
       telephone: "+1-415-409-9798",
       description:

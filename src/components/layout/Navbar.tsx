@@ -162,7 +162,6 @@ export function Navbar() {
                 fill
                 sizes="28px"
                 className={cn("object-contain transition-opacity duration-300", onDark ? "opacity-0" : "opacity-100")}
-                priority
               />
             </span>
             <span className="flex flex-col leading-none">

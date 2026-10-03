@@ -59,7 +59,7 @@ function Step({
         )}
       >
         <p className="mb-6 font-mono text-[13px] text-muted">
-          {String(index + 1).padStart(2, "0")} <span className="text-[#0A1015]/25">/ 03</span>
+          {String(index + 1).padStart(2, "0")} <span className="text-[#5B6470]">/ 03</span>
         </p>
         <h3 className="max-w-[520px] text-[30px] leading-[1.08] tracking-[-0.03em] text-[#0A1015] md:text-[40px]">
           {step.title}

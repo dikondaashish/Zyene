@@ -16,13 +16,13 @@ function MetaRow({ post, className }: { post: BlogPost; className?: string }) {
         <AuthorAvatar author={post.author} size={22} />
         <span className="font-medium text-[#0A1015]">{post.author.name}</span>
       </span>
-      <span aria-hidden="true" className="text-[#0A1015]/25">
+      <span aria-hidden="true" className="text-[#5B6470]">
         ·
       </span>
       <time dateTime={post.dateISO} className="tabular-nums">
         {post.dateDisplay}
       </time>
-      <span aria-hidden="true" className="text-[#0A1015]/25">
+      <span aria-hidden="true" className="text-[#5B6470]">
         ·
       </span>
       <span>{post.readMinutes} min read</span>

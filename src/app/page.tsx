@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import Script from "next/script"
 import { Hero } from "@/components/home/Hero"
 import { PlatformStrip } from "@/components/home/PlatformStrip"
 import { Features } from "@/components/home/Features"
@@ -80,6 +79,16 @@ const homeJsonLd = {
       "@id": "https://zyene.com/#service",
       name: "AI Operations for Industrial Businesses",
       provider: { "@id": "https://zyene.com/#organization" },
+      image: "https://zyene.com/images/og-image.jpg",
+      telephone: "+1-415-409-9798",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "28 Geary St Ste 650 #1892",
+        addressLocality: "San Francisco",
+        addressRegion: "CA",
+        postalCode: "94108",
+        addressCountry: "US",
+      },
       serviceType: "Industrial AI Implementation",
       description:
         "Zyene designs, builds, and integrates production AI systems for distributors, manufacturers, and specialty contractors.",
@@ -129,8 +138,7 @@ const homeJsonLd = {
 export default function Home() {
   return (
     <>
-      <Script
-        id="homepage-jsonld"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
       />
