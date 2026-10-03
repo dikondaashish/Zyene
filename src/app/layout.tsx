@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Archivo, Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
+import { headers } from "next/headers";
 import "lenis/dist/lenis.css";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { FooterGate } from "@/components/layout/FooterGate";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { NavigationHandler } from "@/components/layout/NavigationHandler";
 import { Analytics } from "@vercel/analytics/next";
+import { isClientsHost } from "@/lib/site";
 
 const archivo = Archivo({
   subsets: ["latin"],
@@ -174,31 +175,33 @@ const organizationJsonLd = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isPortal = isClientsHost((await headers()).get("host"));
+
   return (
     <html
       lang="en"
       className={`dark ${geist.variable} ${geistMono.variable} ${archivo.variable} ${spaceGrotesk.variable}`}
     >
       <head>
-        <link rel="alternate" type="text/plain" href="/llms.txt" title="Information for AI systems" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
+        {!isPortal ? (
+          <>
+            <link rel="alternate" type="text/plain" href="/llms.txt" title="Information for AI systems" />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+            />
+          </>
+        ) : null}
       </head>
       <body className="bg-background text-foreground antialiased selection:bg-brand-blue selection:text-white">
         <SmoothScrollProvider>
           <NavigationHandler />
-          <Navbar />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <FooterGate />
+          <SiteChrome>{children}</SiteChrome>
           <Analytics />
         </SmoothScrollProvider>
       </body>

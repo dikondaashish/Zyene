@@ -238,7 +238,7 @@ export function Navbar() {
               className={cn("h-11 px-5", !onDark && "border-transparent")}
               asChild
             >
-              <Link href="/login">Client Login</Link>
+              <Link href="https://clients.zyene.com">Client Login</Link>
             </Button>
             <Button
               variant={onDark ? "primary" : "dark"}
@@ -445,7 +445,7 @@ export function Navbar() {
                 className="w-full"
                 asChild
               >
-                <Link href="/login" onClick={() => setIsOpen(false)}>
+                <Link href="https://clients.zyene.com" onClick={() => setIsOpen(false)}>
                   Client Login
                 </Link>
               </Button>

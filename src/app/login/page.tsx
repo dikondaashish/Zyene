@@ -3,17 +3,18 @@ import Image from "next/image"
 import Link from "next/link"
 import { ClientLoginForm } from "@/components/login/ClientLoginForm"
 import { SITE_DATA } from "@/lib/constants"
+import { CLIENTS_URL, SITE_URL } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Client Login",
   description: "Sign in to the Zyene client portal for an active engagement.",
   robots: { index: false, follow: false },
-  alternates: { canonical: "https://zyene.com/login" },
+  alternates: { canonical: CLIENTS_URL },
 }
 
 function Wordmark({ inverted }: { inverted?: boolean }) {
   return (
-    <Link href="/" aria-label="Zyene home" className="inline-flex items-center gap-2.5">
+    <Link href={SITE_URL} aria-label="Zyene home" className="inline-flex items-center gap-2.5">
       <span aria-hidden="true" className="relative h-7 w-7">
         <Image
           src={inverted ? SITE_DATA.logoDark : SITE_DATA.logoLight}
@@ -119,13 +120,13 @@ export default function ClientLoginPage() {
             <span aria-hidden="true" className="text-[#D0D3D6]">
               ·
             </span>
-            <Link href="/legal/privacy-policy" className="underline-offset-4 hover:text-[#0A1015] hover:underline">
+            <Link href={`${SITE_URL}/legal/privacy-policy`} className="underline-offset-4 hover:text-[#0A1015] hover:underline">
               Privacy
             </Link>
             <span aria-hidden="true" className="text-[#D0D3D6]">
               ·
             </span>
-            <Link href="/legal/terms-conditions" className="underline-offset-4 hover:text-[#0A1015] hover:underline">
+            <Link href={`${SITE_URL}/legal/terms-conditions`} className="underline-offset-4 hover:text-[#0A1015] hover:underline">
               Terms
             </Link>
           </footer>
