@@ -67,71 +67,107 @@ export function Industries({
           </Reveal>
         </div>
 
-        <Reveal className="flex flex-col gap-3 lg:h-[640px] lg:flex-row">
-          {industries.map((ind, i) => {
-            const meta = PANEL_META[ind.name]
-            const isActive = active === i
-            return (
-              <article
-                key={ind.name}
-                onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
-                className={cn(
-                  "group relative min-h-[460px] overflow-hidden rounded-[28px] bg-[#0A1015] text-white lg:min-h-0",
-                  "transition-[flex-grow] duration-[900ms] ease-out-expo",
-                  isActive ? "lg:flex-[2.6]" : "lg:flex-1"
-                )}
-              >
-                <Image
-                  src={meta.image}
-                  alt={meta.alt}
-                  fill
-                  sizes="(min-width: 1024px) 60vw, 100vw"
+        <Reveal className="relative">
+          <div className="flex flex-col gap-3 lg:h-[640px] lg:flex-row">
+            {industries.map((ind, i) => {
+              const meta = PANEL_META[ind.name]
+              const isActive = active === i
+              return (
+                <article
+                  key={ind.name}
                   className={cn(
-                    "object-cover transition-[transform,opacity] duration-[1200ms] ease-out-expo",
-                    isActive ? "scale-100 opacity-100" : "scale-[1.08] opacity-60"
+                    "relative min-h-[460px] overflow-hidden rounded-[28px] bg-[#0A1015] text-white lg:min-h-0",
+                    "transition-[flex-grow] duration-700 ease-out-expo",
+                    isActive ? "lg:flex-[2.6]" : "lg:flex-1"
                   )}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1015] via-[#0A1015]/30 to-[#0A1015]/10" />
+                >
+                  <Image
+                    src={meta.image}
+                    alt={meta.alt}
+                    fill
+                    sizes="(min-width: 1024px) 60vw, 100vw"
+                    className={cn(
+                      "object-cover transition-transform duration-700 ease-out-expo",
+                      isActive ? "scale-100" : "scale-[1.04]"
+                    )}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1015] via-[#0A1015]/30 to-[#0A1015]/10" />
 
-                <div className="relative flex h-full flex-col justify-between p-7 md:p-9">
-                  <div className="flex items-start justify-between gap-4">
-                    <span className="font-mono text-[12px] uppercase tracking-[0.1em] text-white/60">
-                      {meta.systems}
-                    </span>
-                    <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md transition-colors duration-300 group-hover:bg-white group-hover:text-[#0A1015]">
-                      <ArrowUpRight className="h-4 w-4" />
-                    </span>
-                  </div>
+                  <div className="relative flex h-full flex-col justify-between p-7 md:p-9">
+                    <div className="flex items-start justify-between gap-4">
+                      <span className="font-mono text-[12px] uppercase tracking-[0.1em] text-white/60">
+                        {meta.systems}
+                      </span>
+                      <span
+                        className={cn(
+                          "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-white/20 backdrop-blur-md transition-colors duration-300",
+                          isActive ? "bg-white text-[#0A1015]" : "bg-white/10 text-white"
+                        )}
+                      >
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
+                    </div>
 
-                  <div>
-                    <h3 className="text-[30px] leading-[1.02] tracking-[-0.03em] text-white md:text-[40px]">
-                      {meta.title}
-                    </h3>
-                    <div
-                      className={cn(
-                        "grid transition-[grid-template-rows,opacity] duration-700 ease-out-expo",
-                        isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[1fr] opacity-100 lg:grid-rows-[0fr] lg:opacity-0"
-                      )}
-                    >
-                      <div className="overflow-hidden">
-                        <p className="mt-4 max-w-[460px] text-[15.5px] leading-[1.6] text-white/75">{ind.description}</p>
-                        {"href" in ind && ind.href ? (
-                          <Link
-                            href={ind.href}
-                            className="mt-6 inline-flex items-center gap-2 text-[14.5px] font-medium text-white after:absolute after:inset-0 after:content-['']"
-                          >
-                            {"cta" in ind && ind.cta ? ind.cta : "Explore"}
-                            <ArrowUpRight className="h-4 w-4" />
-                          </Link>
-                        ) : null}
+                    <div>
+                      <h3 className="text-[30px] leading-[1.02] tracking-[-0.03em] text-white md:text-[40px]">
+                        {meta.title}
+                      </h3>
+                      <div
+                        className={cn(
+                          "grid transition-[grid-template-rows,opacity] duration-500 ease-out-expo",
+                          isActive
+                            ? "grid-rows-[1fr] opacity-100"
+                            : "grid-rows-[1fr] opacity-100 lg:grid-rows-[0fr] lg:opacity-0"
+                        )}
+                      >
+                        <div className="overflow-hidden">
+                          <p className="mt-4 max-w-[460px] text-[15.5px] leading-[1.6] text-white/75">
+                            {ind.description}
+                          </p>
+                          {"href" in ind && ind.href ? (
+                            <>
+                              <Link
+                                href={ind.href}
+                                className="mt-6 inline-flex items-center gap-2 text-[14.5px] font-medium text-white after:absolute after:inset-0 after:content-[''] lg:hidden"
+                              >
+                                {"cta" in ind && ind.cta ? ind.cta : "Explore"}
+                                <ArrowUpRight className="h-4 w-4" />
+                              </Link>
+                              <span
+                                aria-hidden="true"
+                                className="mt-6 hidden items-center gap-2 text-[14.5px] font-medium text-white lg:inline-flex"
+                              >
+                                {"cta" in ind && ind.cta ? ind.cta : "Explore"}
+                                <ArrowUpRight className="h-4 w-4" />
+                              </span>
+                            </>
+                          ) : null}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </article>
-            )
-          })}
+                </article>
+              )
+            })}
+          </div>
+
+          {/* Equal-width hit targets so expanding panels don't steal hover mid-animation. */}
+          <div className="absolute inset-0 z-10 hidden lg:flex">
+            {industries.map((ind, i) => {
+              const meta = PANEL_META[ind.name]
+              if (!("href" in ind) || !ind.href) return null
+              return (
+                <Link
+                  key={`hit-${ind.name}`}
+                  href={ind.href}
+                  onMouseEnter={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  className="flex-1 rounded-[28px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  aria-label={`${meta.title}. ${"cta" in ind && ind.cta ? ind.cta : "Explore"}`}
+                />
+              )
+            })}
+          </div>
         </Reveal>
       </div>
     </section>
